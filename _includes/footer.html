@@ -1,0 +1,38 @@
+<footer class="site-footer">
+
+    <div class="wrapper">
+  
+      <h2 class="footer-heading">{{ site.title }}</h2>
+  
+      <div class="footer-col-wrapper">
+        <div class="footer-col  footer-col-1">
+          <ul class="contact-list">
+        <li>Lorenzo Molfetta</li>
+            <li><a href="mailto:{{ site.email }}">Email</a></li>
+        <li><a href="{{ "/aboutsite" | prepend: site.baseurl}}">Su questo sito</a></li>
+          </ul>
+        </div>
+  
+        <div class="footer-col  footer-col-2">
+          <ul class="social-media-list">
+            <li>
+              <a href="https://twitter.com/Lorenzo_molf">
+            <span class="fa-stack fa-lg">
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x"></i>
+            </span>
+              </a>
+            </li>
+  
+          </ul>
+        </div>
+  
+        <div class="footer-col  footer-col-3">
+          <p class="text">{{ site.description }}</p>
+        </div>
+      </div>
+  
+    </div>
+  <script src="{{ "/js/prism.js" | prepend: site.baseurl }}"></script>
+  </footer>
+  
