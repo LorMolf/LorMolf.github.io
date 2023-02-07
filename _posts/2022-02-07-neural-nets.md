@@ -5,5 +5,5 @@ published: true
 tags: [AI]
 ---
 
+Here are some equations $$-\nabla \mathcal{L}_\theta$$
 
-Here are some equations $$-\nable \mathcal{L}_\theta$$
