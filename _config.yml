@@ -1,4 +1,5 @@
 
+
 # Where things are
 source              : .
 destination         : ./_site
@@ -12,11 +13,20 @@ sass:
 collections:
   posts:
     output          : true
+    future          : true
 
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "posts" # previously `post` in Jekyll 2.2.
+    values:
+      layout: "default"
 
 # Site settings
 title: Meteci Testimoni
-email: lorenzo.molfetta@studio.unibo.it
+email: lorenzo.molfetta9@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
        "Presto ti accorgerai
        com'è facile farsi 
@@ -24,9 +34,19 @@ description: > # this means to ignore newlines until "baseurl:"
        
        F. Guccini
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://LorMolf.github.io" # the base hostname & protocol for your site
+url: "" #"http://LorMolf.github.io" # the base hostname & protocol for your site
 twitter_username: Lorenzo_molf
 github_username:  LorMolf
+
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
+
+# include:
+#   - _static
+
 
 # Build settings
 markdown: kramdown
@@ -56,5 +76,6 @@ permalink           : date
 paginate_path       : /page:num
 timezone            : null
 
-  #plugins:
-#        - jekyll-redirect-from
+
+
+

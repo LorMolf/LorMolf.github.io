@@ -1,0 +1,10 @@
+---
+type: posts
+layout: post
+title:  "Nerual Reasoning"
+published: true
+tags: [AI]
+---
+
+
+Here are some equations $$-\nable \mathcal{L}_\theta$$
