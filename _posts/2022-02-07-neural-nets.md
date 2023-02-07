@@ -1,7 +1,6 @@
 ---
-type: posts
 layout: post
-title:  "Nerual Reasoning"
+title:  "Neural Reasoning"
 published: true
 tags: [AI]
 ---
