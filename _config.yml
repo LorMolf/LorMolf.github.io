@@ -15,9 +15,13 @@ github_username:  LorMolf
 
 
 # Build settings
-theme: minima
-plugins:
-  - jekyll-feed
+# theme: minima
+# plugins:
+#   - jekyll-feed
+
+# sass:
+# load_paths:
+# - _sass
 
 
 # Build settings
