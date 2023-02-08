@@ -58,10 +58,21 @@ $base-line-height: 1.5;
 
 $spacing-unit:     30px;
 
-$text-color:       #111;
-$background-color: #fffff8;
-//$brand-color:      #2a7ae2;
-$brand-color: #a00000;
+$text-color:       #109;
+$first-letter-color: #6d0000;
+
+
+$background-color: #d3cca8;
+$brand-color: #f19122;
+$link-color: rgb(94, 11, 5);
+
+$site-title-color: #a50000;
+$site-header-format: 17px solid #6d0303;
+$site-bottom-format: 1px solid #e8e8e8;
+
+$site-footer-format: 1px solid #e8e8e8;
+$site-footer-col-color: #828282;
+
 $grey-color:       #828282;
 $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);

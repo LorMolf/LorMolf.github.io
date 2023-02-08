@@ -32,9 +32,9 @@ kramdown:
         extensions: ["footnotes"]
 permalink: pretty
 
-collections:
-        reti:
-                output: true
+# collections:
+#         reti:
+#                 output: true
 
 highlighter: none
 

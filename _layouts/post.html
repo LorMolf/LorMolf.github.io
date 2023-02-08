@@ -8,15 +8,11 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if
     page.categories %} • {{ page.categories }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %} • tags: <span class="post_meta">{% for tag in page.tags %}<a href="/tags/#{{ tag }}">{{ tag }}</a>{% if forloop.last != true %}, {% endif %}{% endfor %}</span></p>
-    <link rel="stylesheet" href="/css/tufte.css"/>
   </header>
 
   <article class="post-content">
     {{ content }}
   </article>
-
-  <!-- include LaTeX -->
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
 </div>
 
