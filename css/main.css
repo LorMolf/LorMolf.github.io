@@ -244,7 +244,7 @@ pre > code {
  */
 .site-header {
   min-height: 56px;
-  border-top: 10px solid #6d0303;/*site-header-format;*/
+  border-top: 10px solid #6d030346;/*site-header-format;*/
   border-bottom: 4px solid #6d0303;/*site-bottom-format;*/
   position: relative;
 }
@@ -689,5 +689,3 @@ pre > code {
 .highlight .il {
   color: #099;
 }
-
-/*# sourceMappingURL=main.css.map */
