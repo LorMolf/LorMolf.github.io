@@ -4,8 +4,18 @@ layout: default
 
 <header class="post-header">
   <h1 class="post-title">{{ page.title }}</h1>
+  
   <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if
   page.categories %} • {{ page.categories }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %} • tags: <span class="post_meta">{% for tag in page.tags %}<a href="/tags/#{{ tag }}">{{ tag }}</a>{% if forloop.last != true %}, {% endif %}{% endfor %}</span></p>
+  
+  <style>
+    .site-header {
+      min-height: 56px;
+      border-top: 10px solid #6d030346;/*site-header-format;*/
+      border-bottom: 4px solid #6d0303;/*site-bottom-format;*/
+      position: relative;
+    }
+  </style>
 </header> 
 
 <div class="post-container">

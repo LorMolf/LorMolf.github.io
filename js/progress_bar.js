@@ -6,7 +6,6 @@ const progressBarEl = document.querySelector(".progress-bar-container__progress"
 const updateScrollProgressBar = () => {
   // get full scroll height
   const scrollHeight = progressContainerEl.scrollHeight - heightInViewport(progressContainerEl);
-  console.log(scrollHeight);
   // get current scroll position
   const scrollPosition = progressContainerEl.scrollTop;
   
@@ -15,9 +14,19 @@ const updateScrollProgressBar = () => {
   progressBarEl.style.width = scrollPercentage + "%";
 }
 
-// bind window onload and onscroll events to update scroll progress bar width
-progressContainerEl.addEventListener("scroll", updateScrollProgressBar)
-progressContainerEl.addEventListener("load", updateScrollProgressBar)
+
+const is_scrollable = progressContainerEl.scrollHeight > progressContainerEl.clientHeight;
+
+if(is_scrollable){
+  // bind window onload and onscroll events to update scroll progress bar width
+  progressContainerEl.addEventListener("scroll", updateScrollProgressBar)
+  progressContainerEl.addEventListener("load", updateScrollProgressBar)
+} else{
+  const scrollPercentage = 100;
+  progressBarEl.style.width = scrollPercentage + "%";
+}
+
+
 
 // function to get visible height in viewport
 // some code taken from user Roko C. Buljan on https://stackoverflow.com/questions/24768795/get-the-visible-height-of-a-div-with-jquery
