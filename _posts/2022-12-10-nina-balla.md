@@ -10,6 +10,10 @@ Nel mezzo del cammin di nostra vita
 mi ritrovai per una selva oscura,
 ché la diritta via era smarrita.
 
+<span class="sidenote">
+  Nina balla qui di lato
+</span>
+
 Ahi quanto a dir qual era è cosa dura
 esta selva selvaggia e aspra e forte
 che nel pensier rinova la paura!
