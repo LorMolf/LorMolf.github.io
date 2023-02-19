@@ -1,5 +1,6 @@
 // variables for progress bar and post container elements
-const progressContainerEl = document.querySelector(".post-container");
+// const progressContainerEl = document.querySelector(".post-container");
+const progressContainerEl = document.querySelector(".page-content");
 const progressBarEl = document.querySelector(".progress-bar-container__progress");
 
 // function to check scroll position and update scroll progress bar accordingly

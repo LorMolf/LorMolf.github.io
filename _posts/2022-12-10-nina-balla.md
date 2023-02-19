@@ -10,22 +10,32 @@ Nel mezzo del cammin di nostra vita
 mi ritrovai per una selva oscura,
 ché la diritta via era smarrita.
 
-<span class="sidenote">
-  Nina balla qui di lato
-</span>
+<!-- <span class="sidenote">
+  <em>Stand-alone marginnote</em>
+</span> -->
 
 Ahi quanto a dir qual era è cosa dura
 esta selva selvaggia e aspra e forte
 che nel pensier rinova la paura!
-
+<section>
 Tant’è amara che poco è più morte;
 ma per trattar del ben ch’i’ vi trovai,
 dirò de l’altre cose ch’i’ v’ho scorte.
 
+<span class="newthought">
+Nina balla
+<label for="sn-in-his-later-books" class="margin-toggle sidenote-number">
+</label></span>
+<input type="hidden" id="sn-in-his-later-books" class="margin-toggle"/>
+<span class="sidenote"><a href="http://www.edwardtufte.com/tufte/books_be">
+  <em>Marginnote with reference</em></a>
+</span>
+e invece io...
+
 Io non so ben ridir com’i’ v’intrai,
 tant’era pien di sonno a quel punto
 che la verace via abbandonai.
-
+</section>
 Ma poi ch’i’ fui al piè d’un colle giunto,
 là dove terminava quella valle
 che m’avea di paura il cor compunto,
