@@ -5,9 +5,9 @@ email: lorenzo.molfetta9@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
        "Presto ti accorgerai
        com'è facile farsi 
-       un'inutile software di scienza."
+       un'inutile software di scienza."           
        
-       F. Guccini
+       F.Guccini
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://LorMolf.github.io" # the base hostname & protocol for your site
 twitter_username: Lorenzo_molf
