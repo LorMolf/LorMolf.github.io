@@ -10,7 +10,7 @@ Se l'inerzia rimanente è quantomeno superiore a quella che hanno le pagine dei 
 </span> -->
 
 
-La pila di quei pianerottoli vuole essere il tentativo di dare un contesto alle stupide e scorrelate piccole storie di questi testimoni che di certo ogni tanto si saranno pur chiesti perché al primo piano non mettono mai l'allarme. 
+La pila di quei pianerottoli vuole essere il tentativo di dare un contesto alle stupide e scorrelate piccole storie di questi testimoni che di certo ogni tanto si saranno pur chiesti perché ci sono appartamenti che non mettono mai l'allarme. 
 
 Personaggi che manco a dirlo non si palesano mai alle riunioni di condominio, ma sai bene che ascoltano. Anche perché un porta fatta di carta velina sarebbe meglio di questa qui.
 
