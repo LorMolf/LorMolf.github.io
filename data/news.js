@@ -1,0 +1,23 @@
+export const news = [
+  { date: "2026",
+    text: "\"Sycophants in the Courtroom: Are LLMs Fragile to Juridical Authority and Evolving Legal Standards?\" accepted to ACL.",
+    href: "/publications/" },
+  { date: "2026",
+    text: "\"Graph-of-Mark\" accepted to AAAI.",
+    href: "/publications/" },
+  { date: "2026",
+    text: "\"COMMA: a multi-task and multi-lingual dataset of constitutional verdicts\" published in Artificial Intelligence and Law.",
+    href: "/publications/" },
+  { date: "2025",
+    text: "\"PORTS: Preference-Optimized Retrievers for Tool Selection\" accepted to EMNLP.",
+    href: "/publications/" },
+  { date: "2025",
+    text: "\"FEAST: Retrieval-Augmented Multi-Hierarchical Food Classification\" accepted to ECAI.",
+    href: "/publications/" },
+  { date: "2025",
+    text: "\"Neuro-Symbolic AI: A Task-Directed Survey\" accepted to IJCAI.",
+    href: "https://arxiv.org/abs/2603.03177" },
+  { date: "2023",
+    text: "\"Retrieve-and-rank end-to-end summarization of biomedical studies\" presented at SISAP.",
+    href: "/publications/" }
+];
