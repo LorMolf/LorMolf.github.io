@@ -11,10 +11,13 @@ export const site = {
   email: "lorenzo.molfetta [at] unibo.it",
   emailHref: "mailto:lorenzo.molfetta@unibo.it",
   homepage: "https://www.unibo.it/sitoweb/lorenzo.molfetta",
-  photo: "/photo.svg",
-  status: "available — open to collaborations in NLP, retrieval & reasoning.",
+  photo: "/photo.jpg",
+  status: [
+    { c: 0, text: "visiting researcher at the University of Edinburgh until the end of July." },
+    { c: 1, text: "at San Diego for ACL '26." }
+  ],
   bio: [
-    "I'm a PhD student at the [University of Bologna](https://www.unibo.it/en) advised by [Gianluca Moro](https://www.unibo.it/sitoweb/gianluca.moro), working on natural language processing, retrieval-augmented language models and graph-based reasoning. My research sits at the intersection of retrieval, tool-use and structured (graph) representations for LLMs.",
+    "I'm a PhD student in the [UniboNLP group](https://disi-unibo-nlp.github.io) at the [University of Bologna](https://www.unibo.it/en), working on natural language processing, retrieval-augmented language models and graph-based reasoning. My research sits at the intersection of retrieval, tool-use and structured (graph) representations for LLMs.",
     "Recent work spans tool-selection retrievers ([PORTS](https://lormolf.github.io/publications/)), legal language models and dataset construction ([COMMA](https://lormolf.github.io/publications/)), food taxonomy classification ([FEAST](https://lormolf.github.io/publications/)), and graph-based visual prompting for multimodal reasoning ([Graph-of-Mark](https://lormolf.github.io/publications/)). I also contribute to surveys on [neuro-symbolic AI](https://arxiv.org/abs/2603.03177).",
     "Before my PhD I worked on retrieve-and-rank summarisation of biomedical studies. I'm broadly interested in making language models more reliable, grounded and interpretable."
   ],

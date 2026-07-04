@@ -1,14 +1,15 @@
 /* ===== Lorenzo Molfetta — design tokens ===== */
 *{box-sizing:border-box}
 :root{
-  --paper:#f2f0eb;             /* light warm background */
+  --paper:#e8e6d3;             /* light warm background */
   --ink:#1a1611;
   --muted:#6f685c;
   --line:#1e4d33;              /* dark green structural borders */
-  --line-soft:#dad6cc;
-  --green:#1e4d33;             /* dark green — links, marks, conference */
+  --line-soft:#cfcabb;
+  --green:#1e4d33;             /* dark green — links, conference */
   --red:#8a2424;               /* dark red — labels, journal */
   --gold:#9a7b1a;              /* muted gold — selection, preprint */
+  --y:#dbce56; --b:#4295e3; --p:#e352c6;   /* tag/status palette */
 }
 [data-theme="dark"]{
   --paper:#15120d; --ink:#efeadf; --muted:#9a9282;
@@ -38,12 +39,9 @@ img{max-width:100%;display:block}
 .nav-role{font-family:'Computer Modern Typewriter',monospace;font-size:13px;letter-spacing:.04em;color:var(--muted);line-height:1.5;margin-bottom:24px}
 .nav-divider{height:0;border:none;border-top:2px solid var(--line);margin:0 0 22px}
 .nav-items{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
-.nav-item{display:flex;align-items:baseline;gap:12px;font-size:20px;color:var(--ink);border:none;padding:0}
-.nav-item .mk{flex:none;font-family:'Computer Modern Typewriter',monospace;font-size:18px;line-height:1;color:var(--muted)}
+.nav-item{display:flex;align-items:center;gap:12px;font-size:20px;color:var(--ink);border:none;padding:0}
 .nav-item:hover{background:none;color:var(--ink);text-decoration:none}
-.nav-item:hover .mk{color:var(--green)}
 .nav-item.active{font-weight:700}
-.nav-item.active .mk{color:var(--green)}
 .nav-links{margin-top:auto;display:flex;flex-direction:column;gap:9px;font-family:'Computer Modern Typewriter',monospace;font-size:13px;letter-spacing:.04em}
 .nav-links a{color:var(--muted);border:none}
 .nav-links a:hover{color:var(--ink);background:none;text-decoration:underline}
@@ -58,11 +56,17 @@ img{max-width:100%;display:block}
 .page-title{font-size:40px;line-height:1.15;font-weight:700;margin:0 0 10px}
 .page-lede{font-size:19px;color:var(--muted);margin:0 0 36px;line-height:1.5}
 
-/* ===== status prompt (replaces availability banner) ===== */
-.status{margin-bottom:32px;padding:14px 16px;border-left:2px solid var(--green);font-family:'Computer Modern Typewriter',monospace;font-size:14px;line-height:1.7}
-.status .prompt{color:var(--green)}
-.status .out{color:var(--ink)}
-.status .hint{color:var(--muted)}
+/* ===== status (multiple colored messages) ===== */
+.status{display:flex;flex-direction:column;gap:8px;margin-bottom:32px}
+.status-item{padding:10px 14px;border-radius:4px;font-family:'Computer Modern Typewriter',monospace;font-size:13.5px;line-height:1.5;display:flex;gap:10px;align-items:baseline}
+.status-item .prompt{font-weight:700;flex:none}
+.status-item .out{color:var(--ink)}
+.status-item.s0{background:color-mix(in srgb,var(--b) 16%,var(--paper))}
+.status-item.s0 .prompt{color:var(--b)}
+.status-item.s1{background:color-mix(in srgb,var(--p) 16%,var(--paper))}
+.status-item.s1 .prompt{color:var(--p)}
+.status-item.s2{background:color-mix(in srgb,var(--y) 24%,var(--paper))}
+.status-item.s2 .prompt{color:#8a7a1a}
 .status .cur{display:inline-block;width:7px;height:14px;background:var(--ink);vertical-align:-2px;margin-left:2px;animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 
@@ -72,23 +76,25 @@ img{max-width:100%;display:block}
 .bio p{margin:0}
 .photo-frame{width:172px;flex:none}
 .photo-frame .fr{width:172px;height:200px;border:2px solid var(--line);overflow:hidden;background:var(--paper)}
-.photo-frame img{width:100%;height:100%;object-fit:cover}
+.photo-frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04)}
 .photo-cap{font-family:'Computer Modern Typewriter',monospace;font-size:11px;letter-spacing:.06em;color:var(--muted);margin-top:7px}
 
 /* ===== research ===== */
 .research{margin-top:44px}
 .research-lead{font-size:20px;line-height:1.5;margin-bottom:20px;font-weight:700}
-.research-list{display:flex;flex-direction:column;gap:16px}
+.research-list{display:flex;flex-direction:column;gap:18px}
 .research-item{display:flex;gap:14px;align-items:flex-start}
+.research-item .mk{margin-top:1px}
 .research-item .t{font-size:19px;font-weight:700;line-height:1.3}
 .research-item .b{font-size:16px;color:var(--muted);line-height:1.45;margin-top:3px}
 
-/* ===== marks (LaTeX glyphs § ¶ † ‡) ===== */
-.mk{display:inline-block;flex:none;margin-top:5px;font-family:'Computer Modern Typewriter',monospace;font-size:18px;line-height:1}
-.mk.g0{color:var(--green)}
-.mk.g1{color:var(--red)}
-.mk.g2{color:var(--gold)}
-.mk.g3{color:var(--green)}
+/* ===== marks: colored boxes around LaTeX glyphs (§ ¶ ∇ ‡) ===== */
+.mk{display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:24px;border-radius:5px;margin-top:2px;font-family:'Computer Modern Typewriter',monospace;font-size:14px;line-height:1}
+.mk.c0{background:var(--y);color:#1a1611}
+.mk.c1{background:var(--b);color:#fff}
+.mk.c2{background:var(--p);color:#fff}
+.nav-item .mk{width:22px;height:22px;font-size:13px;margin-top:0}
+.news-item .mk{margin-top:4px;width:20px;height:20px;font-size:12px}
 
 /* ===== section header ===== */
 .section{margin-top:60px}
@@ -101,13 +107,12 @@ img{max-width:100%;display:block}
 /* ===== news ===== */
 .news-list{display:flex;flex-direction:column;gap:15px}
 .news-item{display:flex;gap:14px;font-size:18px;line-height:1.45;align-items:flex-start}
-.news-item .mk{margin-top:6px;font-size:15px}
 .news-date{font-family:'Computer Modern Typewriter',monospace;font-size:13px;flex:none;width:78px;color:var(--muted)}
 
 /* ===== publications ===== */
 .pub-list{display:flex;flex-direction:column}
 .pub-item{padding:15px 0;border-bottom:1.5px solid var(--line-soft)}
-.pub-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pub-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .pub-item .pt{font-size:19px;font-weight:700;line-height:1.28}
 .pub-item .pa{font-size:15px;color:var(--muted);line-height:1.4;margin-top:3px}
 .pub-item .pm{font-family:'Computer Modern Typewriter',monospace;font-size:13px;color:var(--muted);margin-top:5px}
@@ -116,6 +121,9 @@ img{max-width:100%;display:block}
 .typelabel.conference{color:var(--green);border-color:var(--green)}
 .typelabel.journal{color:var(--red);border-color:var(--red)}
 .typelabel.preprint{color:var(--gold);border-color:var(--gold)}
+.authortag{font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;letter-spacing:.06em;font-size:11px;padding:2px 7px;border-radius:4px;border:1px solid;white-space:nowrap}
+.authortag.first{background:var(--b);color:#fff;border-color:var(--b)}
+.authortag.cofirst{background:transparent;color:var(--p);border-color:var(--p)}
 .year-head{font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;letter-spacing:.1em;font-size:14px;color:var(--red);margin:30px 0 6px}
 .year-head:first-child{margin-top:0}
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
@@ -147,6 +155,18 @@ img{max-width:100%;display:block}
 .cv-skills{display:grid;grid-template-columns:130px 1fr;gap:8px 18px;font-size:16px}
 .cv-skills .k{font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;letter-spacing:.06em;font-size:13px;color:var(--red);padding-top:2px}
 .cv-list{margin:0;padding-left:18px;font-size:16px;color:var(--muted);line-height:1.5}
+
+/* ===== supervised theses ===== */
+.thesis{display:flex;gap:14px;padding:10px 0;border-bottom:1.5px solid var(--line-soft);align-items:baseline}
+.thesis:last-child{border-bottom:none}
+.thesis .lvl{flex:none;width:34px;font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;font-size:11px;text-align:center;padding:2px 0;border-radius:4px;border:1px solid}
+.thesis .lvl.m{color:var(--b);border-color:var(--b)}
+.thesis .lvl.b{color:var(--p);border-color:var(--p)}
+.thesis .body{flex:1;min-width:0}
+.thesis .tt{font-size:15.5px;line-height:1.35;color:var(--ink)}
+.thesis .tc{font-family:'Computer Modern Typewriter',monospace;font-size:12px;color:var(--muted);margin-top:2px}
+.thesis-yr{font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;letter-spacing:.1em;font-size:13px;color:var(--red);margin:22px 0 4px}
+.thesis-yr:first-child{margin-top:0}
 
 /* ===== responsive ===== */
 @media (max-width:860px){

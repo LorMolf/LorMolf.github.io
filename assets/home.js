@@ -1,16 +1,20 @@
 import { site } from "/data/site.js";
 import { news } from "/data/news.js";
 import { publications, me, venueLinks } from "/data/publications.js";
-import { escapeHtml, parseLinks, boldAuthor, markByIndex, typeLabel, venueHtml } from "/assets/util.js";
+import { escapeHtml, parseLinks, boldAuthor, markByIndex, typeLabel, authorTag, venueHtml } from "/assets/util.js";
 
 export function renderHome(){
   const root = document.getElementById("content");
   if(!root) return;
 
-  const status = site.status ? `
+  const st = site.status || [];
+  const status = st.length ? `
     <div class="status">
-      <div><span class="prompt">$ status</span></div>
-      <div><span class="out">${escapeHtml(site.status)}</span><span class="cur"></span></div>
+      ${st.map((s,i)=>`
+        <div class="status-item s${s.c}">
+          <span class="prompt">$</span>
+          <span class="out">${escapeHtml(s.text)}${i===st.length-1?'<span class="cur"></span>':''}</span>
+        </div>`).join("")}
     </div>` : "";
 
   const bio = (site.bio||[]).map(p => `<p>${parseLinks(p)}</p>`).join("");
@@ -33,7 +37,7 @@ export function renderHome(){
   const pubs = selected.map(p=>{
     const arxiv = p.links && p.links.arxiv;
     return `<div class="pub-item">
-      <div class="pub-top"><div class="pt">${escapeHtml(p.title)}</div>${typeLabel(p.type)}</div>
+      <div class="pub-top"><div class="pt">${escapeHtml(p.title)}</div>${typeLabel(p.type)}${authorTag(p.role)}</div>
       <div class="pm">${venueHtml(p.venue,venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}</div>
     </div>`;
   }).join("");
@@ -45,7 +49,7 @@ export function renderHome(){
       <div class="bio">${bio}</div>
       <div class="photo-frame">
         <div class="fr"><img src="${escapeHtml(site.photo)}" alt="${escapeHtml(site.name)}"></div>
-        <div class="photo-cap">[ replace /photo.svg with a portrait ]</div>
+        <div class="photo-cap">[ B/W portrait ]</div>
       </div>
     </div>
     <div class="research">

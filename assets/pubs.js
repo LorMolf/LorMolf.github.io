@@ -1,5 +1,5 @@
 import { publications, me, venueLinks } from "/data/publications.js";
-import { escapeHtml, boldAuthor, typeLabel, venueHtml } from "/assets/util.js";
+import { escapeHtml, boldAuthor, typeLabel, authorTag, venueHtml } from "/assets/util.js";
 
 const FILTERS = [
   { id: "all", label: "All" },
@@ -25,7 +25,7 @@ export function renderPubs(){
     const arxiv = p.links && p.links.arxiv;
     const code = p.links && p.links.code;
     body += `<div class="pub-item">
-      <div class="pub-top"><div class="pt">${escapeHtml(p.title)}</div>${typeLabel(p.type)}</div>
+      <div class="pub-top"><div class="pt">${escapeHtml(p.title)}</div>${typeLabel(p.type)}${authorTag(p.role)}</div>
       <div class="pa">${boldAuthor(p.authors, me)}</div>
       <div class="pm">${venueHtml(p.venue, venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}${code?` <a href="${escapeHtml(code)}" target="_blank" rel="noopener">code ↗</a>`:""}</div>
     </div>`;

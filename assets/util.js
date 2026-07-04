@@ -1,4 +1,4 @@
-export const GLYPHS = ["§","¶","†","‡"];
+export const GLYPHS = ["§","¶","∇","‡"];
 
 export function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -23,15 +23,22 @@ export function boldAuthor(authors, name){
   return escapeHtml(authors).replace(name, `<strong>${name}</strong>`);
 }
 
-// LaTeX-glyph mark cycling § ¶ † ‡
+// LaTeX-glyph mark in a colored box (cycles § ¶ ∇ ‡ and 3 tag colors)
 export function markByIndex(i){
-  return `<span class="mk g${i%4}">${GLYPHS[i%4]}</span>`;
+  return `<span class="mk c${i%3}">${GLYPHS[i%4]}</span>`;
 }
 
 // small-caps typewriter publication type label
 export function typeLabel(type){
   const t = type === "conference" ? "Conf" : type === "journal" ? "Journal" : "Preprint";
   return `<span class="typelabel ${escapeHtml(type)}">${t}</span>`;
+}
+
+// first / co-first author tag
+export function authorTag(role){
+  if(role === "first") return `<span class="authortag first">First author</span>`;
+  if(role === "cofirst") return `<span class="authortag cofirst">Co-first</span>`;
+  return "";
 }
 
 export function venueHtml(venue, venueLinks){

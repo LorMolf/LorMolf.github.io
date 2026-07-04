@@ -24,6 +24,23 @@ export function renderCV(){
   const awards = (cv.awards||[]).map(s=>`<li>${parseLinks(s)}</li>`).join("");
   const talks = (cv.talks||[]).map(t=>`<li>${escapeHtml(t.title)} — ${escapeHtml(t.venue)}, ${escapeHtml(t.date||"")}</li>`).join("");
 
+  function thesesBlock(list){
+    if(!list || !list.length) return "";
+    const years = [...new Set(list.map(t=>t.y))].sort((a,b)=>b-a);
+    let html = "";
+    for(const y of years){
+      html += `<div class="thesis-yr">${y}</div>`;
+      for(const th of list.filter(t=>t.y===y)){
+        const title = th.h ? `<a href="${escapeHtml(th.h)}" target="_blank" rel="noopener">${escapeHtml(th.t)}</a>` : escapeHtml(th.t);
+        html += `<div class="thesis">
+          <span class="lvl ${escapeHtml(th.l)}">${th.l==="m"?"MSc":"BSc"}</span>
+          <div class="body"><div class="tt">${title}</div><div class="tc">${escapeHtml(th.c)}</div></div>
+        </div>`;
+      }
+    }
+    return `<div class="cv-block"><div class="cv-h">Supervised theses</div>${html}</div>`;
+  }
+
   root.innerHTML = `
     <div class="eyebrow">Curriculum vitae</div>
     <h1 class="page-title">CV</h1>
@@ -34,6 +51,7 @@ export function renderCV(){
     ${talks?`<div class="cv-block"><div class="cv-h">Talks & posters</div><ul class="cv-list">${talks}</ul></div>`:""}
     ${service?`<div class="cv-block"><div class="cv-h">Service</div><ul class="cv-list">${service}</ul></div>`:""}
     ${awards?`<div class="cv-block"><div class="cv-h">Awards</div><ul class="cv-list">${awards}</ul></div>`:""}
+    ${thesesBlock(cv.theses)}
     <div class="cv-block"><div class="cv-h">Skills & languages</div><div class="cv-skills">${skills}</div></div>
     <div class="cv-block"><div class="cv-h">Interests</div><p style="margin:0;font-size:16px;color:var(--muted)">${escapeHtml(cv.interests||"")}</p></div>`;
 }
