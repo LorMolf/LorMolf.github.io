@@ -1,5 +1,5 @@
 import { site } from "/data/site.js";
-import { escapeHtml, parseLinks } from "/assets/util.js";
+import { escapeHtml, parseLinks, GLYPHS } from "/assets/util.js";
 
 const NAV = [
   { id: "home", label: "About", href: "/", cls: "" },
@@ -10,10 +10,11 @@ const NAV = [
 export function renderNav(current){
   const host = document.getElementById("nav");
   if(!host) return;
+  host.className = "nav";
   const role = (site.roleLines || []).map(r => `<div>${parseLinks(r)}</div>`).join("");
-  const items = NAV.map(n => `
+  const items = NAV.map((n,i) => `
     <a class="nav-item ${n.cls} ${current===n.id?"active":""}" href="${n.href}">
-      <span class="mk"></span>${escapeHtml(n.label)}
+      <span class="mk g${i%4}">${GLYPHS[i%4]}</span>${escapeHtml(n.label)}
     </a>`).join("");
   const links = (site.links || []).map(l =>
     `<a href="${escapeHtml(l.href)}" target="_blank" rel="me noopener">${escapeHtml(l.label)} ↗</a>`).join("");

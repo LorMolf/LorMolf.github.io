@@ -1,18 +1,16 @@
 import { site } from "/data/site.js";
 import { news } from "/data/news.js";
 import { publications, me, venueLinks } from "/data/publications.js";
-import { escapeHtml, parseLinks, boldAuthor, markByIndex, venueHtml } from "/assets/util.js";
+import { escapeHtml, parseLinks, boldAuthor, markByIndex, typeLabel, venueHtml } from "/assets/util.js";
 
 export function renderHome(){
   const root = document.getElementById("content");
   if(!root) return;
 
-  const avail = site.available ? `
-    <div class="availability">
-      <div class="lbl">AVAILABLE</div>
-      <div class="txt">${parseLinks(site.available)} <span id="avail-more" style="display:none;color:var(--muted)"> ${escapeHtml(site.availableMore||"")}</span>
-        ${site.availableMore?`<button class="btn" id="avail-toggle" style="margin-left:10px">details</button>`:""}
-      </div>
+  const status = site.status ? `
+    <div class="status">
+      <div><span class="prompt">$ status</span></div>
+      <div><span class="out">${escapeHtml(site.status)}</span><span class="cur"></span></div>
     </div>` : "";
 
   const bio = (site.bio||[]).map(p => `<p>${parseLinks(p)}</p>`).join("");
@@ -24,8 +22,9 @@ export function renderHome(){
       <div><div class="t">${escapeHtml(r.title)}</div><div class="b">${escapeHtml(r.blurb)}</div></div>
     </div>`).join("");
 
-  const newsItems = (news||[]).slice(0,5).map(n=>`
+  const newsItems = (news||[]).slice(0,5).map((n,i)=>`
     <div class="news-item">
+      ${markByIndex(i)}
       <span class="news-date">${escapeHtml(n.date)}</span>
       <span>${parseLinks(n.text)} ${n.href?`<a href="${escapeHtml(n.href)}" target="_blank" rel="noopener">↗</a>`:""}</span>
     </div>`).join("");
@@ -34,14 +33,14 @@ export function renderHome(){
   const pubs = selected.map(p=>{
     const arxiv = p.links && p.links.arxiv;
     return `<div class="pub-item">
-      <div><div class="pt">${escapeHtml(p.title)}</div>
-      <div class="pm">${venueHtml(p.venue,venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}</div></div>
+      <div class="pub-top"><div class="pt">${escapeHtml(p.title)}</div>${typeLabel(p.type)}</div>
+      <div class="pm">${venueHtml(p.venue,venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}</div>
     </div>`;
   }).join("");
 
   root.innerHTML = `
-    <div class="eyebrow">NLP · RETRIEVAL-AUGMENTED LMs · GRAPH REASONING</div>
-    ${avail}
+    <div class="eyebrow">NLP · Retrieval-augmented LMs · Graph reasoning</div>
+    ${status}
     <div class="bio-row">
       <div class="bio">${bio}</div>
       <div class="photo-frame">
@@ -55,11 +54,11 @@ export function renderHome(){
       ${site.research.more && site.research.more.length ? `<button class="btn" id="more-btn" style="margin-top:18px">${state.showMore?"− show less":"+ more topics"}</button>`:""}
     </div>
     <div class="section">
-      <div class="section-head"><span class="lbl">NEWS</span><span class="sq"></span></div>
+      <div class="section-head"><span class="lbl">News</span><span class="mark">§</span></div>
       <div class="news-list">${newsItems}</div>
     </div>
     <div class="section">
-      <div class="section-head"><span class="lbl">SELECTED PUBLICATIONS</span><a class="all" href="/publications/">all →</a></div>
+      <div class="section-head"><span class="lbl">Selected publications</span><a class="all" href="/publications/">all →</a></div>
       <div class="pub-list">${pubs}</div>
     </div>
     <div class="contact">
@@ -70,11 +69,6 @@ export function renderHome(){
 
   const mb = document.getElementById("more-btn");
   if(mb) mb.addEventListener("click", ()=>{ state.showMore = !state.showMore; renderHome(); });
-  const tg = document.getElementById("avail-toggle");
-  if(tg) tg.addEventListener("click", ()=>{
-    const m = document.getElementById("avail-more");
-    m.style.display = m.style.display==="none"?"inline":"none";
-  });
 }
 
 const state = { showMore: false };

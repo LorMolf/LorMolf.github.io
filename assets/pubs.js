@@ -1,20 +1,14 @@
 import { publications, me, venueLinks } from "/data/publications.js";
-import { escapeHtml, boldAuthor, mark, venueHtml } from "/assets/util.js";
+import { escapeHtml, boldAuthor, typeLabel, venueHtml } from "/assets/util.js";
 
 const FILTERS = [
-  { id: "all", label: "ALL" },
-  { id: "conference", label: "CONFERENCE" },
-  { id: "journal", label: "JOURNAL" },
-  { id: "preprint", label: "PREPRINT" }
+  { id: "all", label: "All" },
+  { id: "conference", label: "Conference" },
+  { id: "journal", label: "Journal" },
+  { id: "preprint", label: "Preprint" }
 ];
 
 const state = { filter: "all" };
-
-function markFor(type){
-  if(type === "conference") return mark("circle");
-  if(type === "journal") return mark("square");
-  return mark("triangle");
-}
 
 export function renderPubs(){
   const root = document.getElementById("content");
@@ -31,19 +25,16 @@ export function renderPubs(){
     const arxiv = p.links && p.links.arxiv;
     const code = p.links && p.links.code;
     body += `<div class="pub-item">
-      ${markFor(p.type)}
-      <div>
-        <div class="pt">${escapeHtml(p.title)}</div>
-        <div class="pa">${boldAuthor(p.authors, me)}</div>
-        <div class="pm">${venueHtml(p.venue, venueLinks)} · ${p.type}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}${code?` <a href="${escapeHtml(code)}" target="_blank" rel="noopener">code ↗</a>`:""}</div>
-      </div>
+      <div class="pub-top"><div class="pt">${escapeHtml(p.title)}</div>${typeLabel(p.type)}</div>
+      <div class="pa">${boldAuthor(p.authors, me)}</div>
+      <div class="pm">${venueHtml(p.venue, venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}${code?` <a href="${escapeHtml(code)}" target="_blank" rel="noopener">code ↗</a>`:""}</div>
     </div>`;
   }
 
   const chips = FILTERS.map(f=>`<button class="chip ${state.filter===f.id?"on":""}" data-f="${f.id}">${f.label}</button>`).join("");
 
   root.innerHTML = `
-    <div class="eyebrow">PUBLICATIONS</div>
+    <div class="eyebrow">Publications</div>
     <h1 class="page-title">Publications</h1>
     <p class="page-lede">Full list, newest first. <strong>${escapeHtml(me)}</strong> is highlighted in author lists.</p>
     <div class="filters">${chips}</div>

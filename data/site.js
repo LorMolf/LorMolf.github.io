@@ -12,8 +12,7 @@ export const site = {
   emailHref: "mailto:lorenzo.molfetta@unibo.it",
   homepage: "https://www.unibo.it/sitoweb/lorenzo.molfetta",
   photo: "/photo.svg",
-  available: "I'm open to research collaborations and internship opportunities in NLP, retrieval-augmented LLMs and reasoning.",
-  availableMore: "Particularly interested in tool-use / retrieval, legal and biomedical NLP, and neuro-symbolic methods. Feel free to reach out via email.",
+  status: "available — open to collaborations in NLP, retrieval & reasoning.",
   bio: [
     "I'm a PhD student at the [University of Bologna](https://www.unibo.it/en) advised by [Gianluca Moro](https://www.unibo.it/sitoweb/gianluca.moro), working on natural language processing, retrieval-augmented language models and graph-based reasoning. My research sits at the intersection of retrieval, tool-use and structured (graph) representations for LLMs.",
     "Recent work spans tool-selection retrievers ([PORTS](https://lormolf.github.io/publications/)), legal language models and dataset construction ([COMMA](https://lormolf.github.io/publications/)), food taxonomy classification ([FEAST](https://lormolf.github.io/publications/)), and graph-based visual prompting for multimodal reasoning ([Graph-of-Mark](https://lormolf.github.io/publications/)). I also contribute to surveys on [neuro-symbolic AI](https://arxiv.org/abs/2603.03177).",

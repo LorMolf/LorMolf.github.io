@@ -18,22 +18,22 @@ export function renderCV(){
   if(!root) return;
 
   const skills = Object.entries(cv.skills||{}).map(([k,v])=>
-    `<div class="k">${escapeHtml(k.toUpperCase())}</div><div>${escapeHtml(v)}</div>`).join("");
+    `<div class="k">${escapeHtml(k)}</div><div>${escapeHtml(v)}</div>`).join("");
 
   const service = (cv.service||[]).map(s=>`<li>${parseLinks(s)}</li>`).join("");
   const awards = (cv.awards||[]).map(s=>`<li>${parseLinks(s)}</li>`).join("");
   const talks = (cv.talks||[]).map(t=>`<li>${escapeHtml(t.title)} — ${escapeHtml(t.venue)}, ${escapeHtml(t.date||"")}</li>`).join("");
 
   root.innerHTML = `
-    <div class="eyebrow">CURRICULUM VITAE</div>
+    <div class="eyebrow">Curriculum vitae</div>
     <h1 class="page-title">CV</h1>
-    ${cv.pdfHref ? `<a class="btn cv-pdf" href="${escapeHtml(cv.pdfHref)}" target="_blank" rel="noopener">DOWNLOAD PDF ↓</a>` : `<p class="page-lede">PDF coming soon — fields marked [to edit] are placeholders.</p>`}
+    ${cv.pdfHref ? `<a class="btn cv-pdf" href="${escapeHtml(cv.pdfHref)}" target="_blank" rel="noopener">Download PDF ↓</a>` : `<p class="page-lede">PDF coming soon — fields marked [to edit] are placeholders.</p>`}
 
-    <div class="cv-block"><div class="cv-h">EDUCATION</div>${rows(cv.education)}</div>
-    <div class="cv-block"><div class="cv-h">EXPERIENCE</div>${rows(cv.experience)}</div>
-    ${talks?`<div class="cv-block"><div class="cv-h">TALKS & POSTERS</div><ul class="cv-list">${talks}</ul></div>`:""}
-    ${service?`<div class="cv-block"><div class="cv-h">SERVICE</div><ul class="cv-list">${service}</ul></div>`:""}
-    ${awards?`<div class="cv-block"><div class="cv-h">AWARDS</div><ul class="cv-list">${awards}</ul></div>`:""}
-    <div class="cv-block"><div class="cv-h">SKILLS & LANGUAGES</div><div class="cv-skills">${skills}</div></div>
-    <div class="cv-block"><div class="cv-h">INTERESTS</div><p style="margin:0;font-size:16px;color:var(--muted)">${escapeHtml(cv.interests||"")}</p></div>`;
+    <div class="cv-block"><div class="cv-h">Education</div>${rows(cv.education)}</div>
+    <div class="cv-block"><div class="cv-h">Experience</div>${rows(cv.experience)}</div>
+    ${talks?`<div class="cv-block"><div class="cv-h">Talks & posters</div><ul class="cv-list">${talks}</ul></div>`:""}
+    ${service?`<div class="cv-block"><div class="cv-h">Service</div><ul class="cv-list">${service}</ul></div>`:""}
+    ${awards?`<div class="cv-block"><div class="cv-h">Awards</div><ul class="cv-list">${awards}</ul></div>`:""}
+    <div class="cv-block"><div class="cv-h">Skills & languages</div><div class="cv-skills">${skills}</div></div>
+    <div class="cv-block"><div class="cv-h">Interests</div><p style="margin:0;font-size:16px;color:var(--muted)">${escapeHtml(cv.interests||"")}</p></div>`;
 }

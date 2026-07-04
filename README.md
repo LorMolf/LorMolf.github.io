@@ -1,8 +1,7 @@
 # lormolf.github.io
 
-Personal site of Lorenzo Molfetta — plain static (no build), modelled on the
-aryopg.github.io design with a lighter-beige palette and dark-green / dark-red
-accents.
+Personal site of Lorenzo Molfetta — plain static (no build), a warm LaTeX-inspired
+layout with a light beige palette and dark-green / dark-red accents.
 
 ## Structure
 - `index.html` — home (bio, research, news, selected pubs, contact)

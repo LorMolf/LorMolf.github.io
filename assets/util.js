@@ -1,3 +1,5 @@
+export const GLYPHS = ["§","¶","†","‡"];
+
 export function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
@@ -18,18 +20,18 @@ export function parseLinks(str){
 
 // bold occurrences of `name` within an author string
 export function boldAuthor(authors, name){
-  const e = escapeHtml(authors);
-  return e.replace(name, `<strong>${name}</strong>`);
+  return escapeHtml(authors).replace(name, `<strong>${name}</strong>`);
 }
 
-// geometric mark by index/type
-export function mark(kind){
-  if(kind === "circle") return `<span class="mk mk-circle"></span>`;
-  if(kind === "triangle") return `<span class="mk mk-tri"></span>`;
-  return `<span class="mk mk-square"></span>`;
-}
+// LaTeX-glyph mark cycling § ¶ † ‡
 export function markByIndex(i){
-  return mark(["square","circle","triangle"][i % 3]);
+  return `<span class="mk g${i%4}">${GLYPHS[i%4]}</span>`;
+}
+
+// small-caps typewriter publication type label
+export function typeLabel(type){
+  const t = type === "conference" ? "Conf" : type === "journal" ? "Journal" : "Preprint";
+  return `<span class="typelabel ${escapeHtml(type)}">${t}</span>`;
 }
 
 export function venueHtml(venue, venueLinks){
