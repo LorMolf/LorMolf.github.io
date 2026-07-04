@@ -195,6 +195,7 @@ img{max-width:100%;display:block}
 .paper-h{font-size:13px;font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;letter-spacing:.14em;color:var(--red);border-bottom:1px solid var(--line);padding-bottom:8px;margin:40px 0 16px}
 .paper-abs{font-size:17px;line-height:1.7;margin:0 0 8px;max-width:68ch}
 .paper-abs.muted{color:var(--muted);font-style:italic}
+.paper-prose{font-size:17px;line-height:1.7;margin:0 0 8px;max-width:68ch}
 .bibtex{position:relative;margin-top:6px}
 .bibtex pre{background:var(--line-soft);border:1px solid var(--line-soft);border-radius:4px;padding:18px;font-family:'Computer Modern Typewriter',monospace;font-size:12.5px;line-height:1.6;overflow-x:auto;color:var(--ink)}
 .copy-btn{position:absolute;top:10px;right:10px}
