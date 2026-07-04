@@ -34,11 +34,39 @@ export function typeLabel(type){
   return `<span class="typelabel ${escapeHtml(type)}">${t}</span>`;
 }
 
-// first / co-first author tag
+// first / co-first author tag (short, code-like)
 export function authorTag(role){
-  if(role === "first") return `<span class="authortag first">First author</span>`;
-  if(role === "cofirst") return `<span class="authortag cofirst">Co-first</span>`;
+  if(role === "first") return `<span class="authortag first">1st</span>`;
+  if(role === "cofirst") return `<span class="authortag cofirst">co-1st</span>`;
   return "";
+}
+
+// topic tag chip
+export function topicTag(t){
+  return `<span class="topictag">${escapeHtml(t)}</span>`;
+}
+
+// generate a BibTeX entry from a publication object
+export function bibtex(p){
+  const last = (p.authors.split(",")[0].trim().match(/[A-Za-z]+$/)||["Molfetta"])[0].toLowerCase();
+  const firstWord = (p.title.replace(/[^A-Za-z ]/g,"").trim().split(/\s+/)[0]||"paper").toLowerCase();
+  const key = last + p.year + firstWord;
+  const authors = p.authors.replace(/,\s*([^,]+)$/, " and $1");
+  const entryType = p.type === "journal" || p.type === "preprint" ? "article" : "inproceedings";
+  let s = `@${entryType}{${key},\n`;
+  s += `  title   = {${p.title}},\n`;
+  s += `  author  = {${authors}},\n`;
+  s += `  year    = {${p.year}},\n`;
+  if(p.type === "preprint"){
+    const aid = (p.links && p.links.arxiv || "").replace("https://arxiv.org/abs/","");
+    if(aid) s += `  eprint  = {${aid}},\n  archivePrefix = {arXiv},\n`;
+    s += `  journal = {arXiv preprint},\n`;
+  } else {
+    s += `  booktitle = {${p.venue}},\n`;
+  }
+  if(p.links && p.links.arxiv) s += `  url     = {${p.links.arxiv}},\n`;
+  s += `}`;
+  return s;
 }
 
 export function venueHtml(venue, venueLinks){

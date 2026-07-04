@@ -1,28 +1,29 @@
 export const cv = {
   pdfHref: null,
+  about: "I am a PhD student in Computer Science and Engineering at the University of Bologna, working on Natural Language Processing and Information Retrieval. My research centres on explainable generative question-answering systems, knowledge-enhanced and neuro-symbolic methods, and vision-language models, with emphasis on biomedical and legal domains. I am part of the [UniboNLP group](https://disi-unibo-nlp.github.io).",
   education: [
     {
       school: "University of Bologna",
       href: "https://www.unibo.it/en",
-      place: "Cesena, Italy",
-      dates: "2023 – Present",
-      degree: "PhD in Computer Science / Engineering",
-      notes: ["Member of the [UniboNLP group](https://disi-unibo-nlp.github.io) (DISI).", "Research: NLP, retrieval-augmented LLMs, graph-based reasoning."]
+      place: "Bologna / Cesena, Italy",
+      dates: "Nov 2023 – Present",
+      degree: "PhD in Computer Science and Engineering",
+      notes: ["Member of the [UniboNLP group](https://disi-unibo-nlp.github.io) (DISI)."]
     },
     {
       school: "University of Bologna",
       href: "https://www.unibo.it/en",
-      place: "Cesena, Italy",
-      dates: "2020 – 2023",
-      degree: "MSc in Computer Engineering",
+      place: "Bologna, Italy",
+      dates: "Sep 2021 – Oct 2023",
+      degree: "MSc in Artificial Intelligence (with honors)",
       notes: ["Thesis: Knowledge-enhanced Neural Models for Question Answering Based on Retrieval."]
     },
     {
-      school: "[Bachelor's institution — to edit]",
-      href: "#",
-      place: "[Place]",
-      dates: "[Year – Year]",
-      degree: "[BSc — to edit]",
+      school: "University of Bologna",
+      href: "https://www.unibo.it/en",
+      place: "Bologna, Italy",
+      dates: "Sep 2018 – Jul 2021",
+      degree: "BSc in Computer Engineering",
       notes: []
     }
   ],
@@ -44,21 +45,27 @@ export const cv = {
       notes: ["Research visit."]
     }
   ],
-  talks: [
-    { title: "[Talk / poster title — to edit]", venue: "[Venue]", date: "[Year]" }
+  teaching: [
+    { title: "Reasoning, Large Action Models and Agentic Systems", course: "Data Intensive Applications", program: "BSc Computer Science & Engineering", date: "Jun 2025" },
+    { title: "Large Language Models for Efficient and Parallel Conversational Systems", course: "Data Intensive Applications", program: "BSc Computer Science & Engineering", date: "Mar 2025" },
+    { title: "Large Action Models and Multi-Agent Intelligent Systems", course: "Text Mining and Data Mining", program: "MSc Artificial Intelligence", date: "Dec 2024" },
+    { title: "Graph Neural Networks with Applications to Relational Databases", course: "Text Mining and Data Mining", program: "MSc Artificial Intelligence", date: "Nov 2024" },
+    { title: "Long and Multi-Document Abstractive Summarization in Low-Resource Regimes", course: "Text Mining and Data Mining", program: "MSc Artificial Intelligence", date: "Oct 2024" },
+    { title: "Knowledge-Enhanced Conversational Systems", course: "Data Intensive Applications", program: "BSc Computer Science & Engineering", date: "Mar 2024" },
+    { title: "Knowledge-Enhanced Chatbots", course: "Text Mining and Data Mining", program: "MSc Artificial Intelligence", date: "Dec 2023" }
   ],
+  talks: [],
   service: [
     "[Reviewer / subreviewer for: … — to edit]"
   ],
-  awards: [
-    "[Scholarship / honour — to edit]"
-  ],
+  awards: [],
   skills: {
-    Research: "NLP, retrieval-augmented generation, tool-use, graph neural networks, neuro-symbolic AI",
-    Programming: "Python, PyTorch, Hugging Face, JavaScript",
-    Languages: "Italian (native), English"
+    Programming: "Python, C, Java, Bash, LaTeX",
+    Libraries: "PyTorch, Transformers, PyGeometric, TensorFlow, OpenCV",
+    Software: "Docker, LaTeX",
+    Languages: "Italian (native), English, French"
   },
-  interests: "Legal NLP, biomedical AI, chess, multilingual datasets.",
+  interests: "Explainable generative QA systems, knowledge-enhanced & neuro-symbolic methods, vision-language models — biomedical and legal domains.",
   theses: [
     { c:"Kankana Ghosh", t:"The Pixel Piper: Guiding Diffusion Models with Attention-Based Predicate Logic for Feature Consistent Text-to-Image Generation", l:"m", y:2025 },
     { c:"Matteo Belletti", t:"Train an Agent to Evaluate your Models: a Dataset for Metric Function Call Built through Autonomous Trial and Error", l:"m", y:2025 },
