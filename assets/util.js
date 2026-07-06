@@ -1,3 +1,5 @@
+import { bibTeX } from "/data/bibtex.js";
+
 export const GLYPHS = ["§","¶","∇","‡"];
 
 export function escapeHtml(s){
@@ -46,8 +48,10 @@ export function topicTag(t){
   return `<span class="topictag">${escapeHtml(t)}</span>`;
 }
 
-// generate a BibTeX entry from a publication object
+// return the official DBLP BibTeX for a publication if we have it; otherwise
+// fall back to an approximate entry generated from the publication metadata.
 export function bibtex(p){
+  if(bibTeX && bibTeX[p.id]) return bibTeX[p.id];
   const last = (p.authors.split(",")[0].trim().match(/[A-Za-z]+$/)||["Molfetta"])[0].toLowerCase();
   const firstWord = (p.title.replace(/[^A-Za-z ]/g,"").trim().split(/\s+/)[0]||"paper").toLowerCase();
   const key = last + p.year + firstWord;
