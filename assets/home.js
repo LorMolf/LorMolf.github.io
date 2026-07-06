@@ -37,7 +37,7 @@ export function renderHome(){
   const pubs = selected.map(p=>{
     const arxiv = p.links && p.links.arxiv;
     return `<div class="pub-item">
-      <div class="pub-top"><a class="pt" href="/publications/paper/?id=${escapeHtml(p.id)}">${escapeHtml(p.title)}</a>${typeLabel(p.type)}${authorTag(p.role)}</div>
+      <div class="pub-top"><a class="pt" href="/publications/${escapeHtml(p.id)}/">${escapeHtml(p.title)}</a>${typeLabel(p.type)}${authorTag(p.role)}</div>
       <div class="pm">${venueHtml(p.venue,venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}</div>
     </div>`;
   }).join("");

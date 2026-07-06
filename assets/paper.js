@@ -80,7 +80,7 @@ function runKatex(root){
 export function renderPaper(){
   const root = document.getElementById("content");
   if(!root) return;
-  const id = new URLSearchParams(location.search).get("id");
+  const id = (location.pathname.split("/").filter(Boolean).pop() || "");
   const p = publications.find(x => x.id === id);
 
   if(!p){

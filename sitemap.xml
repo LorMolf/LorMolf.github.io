@@ -3,4 +3,13 @@
   <url><loc>https://lormolf.github.io/</loc><priority>1.0</priority></url>
   <url><loc>https://lormolf.github.io/publications/</loc><priority>0.8</priority></url>
   <url><loc>https://lormolf.github.io/cv/</loc><priority>0.7</priority></url>
+  <url><loc>https://lormolf.github.io/publications/sycophants/</loc><priority>0.6</priority></url>
+  <url><loc>https://lormolf.github.io/publications/ports/</loc><priority>0.6</priority></url>
+  <url><loc>https://lormolf.github.io/publications/feast/</loc><priority>0.6</priority></url>
+  <url><loc>https://lormolf.github.io/publications/graph-of-mark/</loc><priority>0.6</priority></url>
+  <url><loc>https://lormolf.github.io/publications/comma/</loc><priority>0.6</priority></url>
+  <url><loc>https://lormolf.github.io/publications/nesy-survey/</loc><priority>0.6</priority></url>
+  <url><loc>https://lormolf.github.io/publications/mixture-of-masters/</loc><priority>0.6</priority></url>
+  <url><loc>https://lormolf.github.io/publications/retrieve-rank/</loc><priority>0.6</priority></url>
+  <url><loc>https://lormolf.github.io/publications/ke-qa/</loc><priority>0.6</priority></url>
 </urlset>
