@@ -12,6 +12,40 @@ export const venueLinks = {
 
 export const publications = [
   {
+    id: "spsd",
+    title: "Self-Play Search Distillation for Large Language Model Reasoning",
+    authors: "Lorenzo Molfetta, Wai-Chung Kwan, Giacomo Frisoni, Luca Ragazzi, Gianluca Moro, Pavlos Vougiouklis, Jeff Z. Pan, Pasquale Minervini",
+    venue: "Submitted to TACL", year: 2026, type: "submitted", selected: true, role: "first",
+    tags: ["LLM reasoning", "Self-play", "Knowledge distillation"],
+    tldr: "SPSD turns board-game search records into environment-grounded reasoning supervision, improving generalization to unseen games and mathematics without human annotations.",
+    abstract: "Improving reasoning abilities in Large Language Models (LLMs) requires high-quality data that exposes difficult decisions, competing alternatives, and their consequences. Data scarcity is driven by the low quality of synthetic data and the cost of human labeling. We introduce Self-Play Search Distillation (SPSD), a framework for generating superhuman synthetic data via self-play of MuZero-like networks trained on board games. SPSD uses executable environments to turn search into structured reasoning problems. At each state, the expert identifies a preferred decision, plausible alternatives, plausible opponent replies, and value estimates. By converting the self-play search records into superhuman chains-of-thought, we train LLMs with environment-grounded supervision. Although trained only on self-play search records, SPSD transfers to unseen mathematics. On Qwen3-4B-Base, it raises the mean over six mathematics benchmarks from 24.1 to 36.3 while increasing the held-out-game win rate from 15% to 45%. SPSD offers an annotation-efficient way to create high-quality synthetic data for improving LLM performance in reasoning tasks.",
+    sections: [
+      {
+        id: "method", title: "Method",
+        body: `**Self-Play Search Distillation (SPSD)** uses frozen, search-based board-game experts to generate reasoning supervision independently of the language model being trained. Executable environments provide exact rules, legal actions and replayable consequences.
+
+At each state, the search record contains a preferred decision, plausible alternatives, opponent replies and value estimates. These records are converted into structured chains of thought, so the language model learns not only which action to choose but how to compare alternatives and anticipate their consequences. The supervision comes from self-play search rather than human-written demonstrations.
+
+![SPSD method diagram: a tic-tac-toe search tree with selected actions and alternative branches, alongside replay-grounded next-move reasoning and a state question about immediate winning actions.](/assets/paper-img/spsd/figure-2-method.png "Figure 2: From self-play search to language supervision. A frozen search expert exports selected actions, root-level estimates, and replayable continuations. The simulator validates these records before the renderer constructs move-chain and state-question supervision for language-model post-training.")
+
+Source: submitted TACL manuscript, p. 5.`
+      },
+      {
+        id: "evidence", title: "Evidence",
+        body: `The submitted manuscript evaluates transfer beyond the self-play training data. On **Qwen3-4B-Base**, SPSD improves the mean score across **six mathematics benchmarks from 24.1 to 36.3** and the **held-out-game win rate from 15% to 45%**.
+
+The mathematics results test transfer to a domain absent from the board-game training records. The held-out-game evaluation tests whether the learned reasoning extends beyond the games used for supervision.
+
+> **Status.** Submitted to *Transactions of the Association for Computational Linguistics (TACL)* in September 2026. This manuscript is not yet accepted or published.
+
+![Three Qwen3-4B-Base training curves: game FIDE, move legality, and six-benchmark mathematics mean across training steps, comparing SFT, RuleBot-Distill, OPSD base, and OPSD with variants.](/assets/paper-img/spsd/figure-3-training-trajectories.png "Figure 3: Training trajectories. Evolution of reasoning abilities of Qwen3-4B-Base during training. SPSD’s advantage emerges from opposite dynamics: SFT peaks early and declines while OPSD keeps improving.")
+
+Source: submitted TACL manuscript, p. 8.`
+      }
+    ],
+    links: {}
+  },
+  {
     "id": "jab",
     "title": "Java academic benchmark: Exam-based evaluation of LLMs on object-oriented programming",
     "year": 2026,
@@ -30,12 +64,12 @@ export const publications = [
       {
         "id": "method",
         "title": "Method",
-        "body": "**Java Academic Benchmark (JAB)** tests object-oriented programming through **103 authentic university Java exams** and **506 expert-written JUnit tests**. Class-level evaluation exposes errors that short, function-level coding benchmarks can miss.\n\nExecution tests are complemented by **KODE**, a judgment framework covering clarity and maintainability, object design and encapsulation, reuse and modularity, and resource management and efficiency. The evaluation compares a single-attempt setting with an agentic setting in which models revise their code using compiler and test feedback."
+        "body": "**Java Academic Benchmark (JAB)** tests object-oriented programming through **103 authentic university Java exams** and **506 expert-written JUnit tests**. Class-level evaluation exposes errors that short, function-level coding benchmarks can miss.\n\nExecution tests are complemented by **KODE**, a judgment framework covering clarity and maintainability, object design and encapsulation, reuse and modularity, and resource management and efficiency. The evaluation compares a single-attempt setting with an agentic setting in which models revise their code using compiler and test feedback.\n\n![Original JAB overview: exam context and assignment, soft/hard evaluation, Compilation@K, Pass@K, and KODE.](/assets/paper-img/jab/overview.jpg \"**JAB evaluation pipeline.** Exam instructions, utility classes, interfaces, and mandatory/optional tests define the task. Generated implementations are assessed for compilation, test passing at soft and hard levels, and OOP adherence using KODE; resolution can be single-attempt or agentic.\")\n\nSource: Figure 1 of the [published article](https://doi.org/10.1016/j.jss.2026.113033)."
       },
       {
         "id": "evidence",
         "title": "Evidence",
-        "body": "The study evaluates **27 LLMs**. Under the reported evaluation protocol, larger closed models match or surpass bachelor-level OOP students, particularly when they can iteratively refine solutions using compiler and test feedback. Smaller open models lag behind.\n\nJAB separates executable correctness from adherence to OOP principles. Its class-level design supports fine-grained analysis of recurring programming misconceptions. Code, data and evaluation instructions are available in the [project repository](https://github.com/disi-unibo-nlp/jab).\n\n> **Scope.** The findings concern the Java exams and evaluation protocol studied, not a general claim of professional software-engineering competence."
+        "body": "The study evaluates **27 LLMs**. Under the reported evaluation protocol, larger closed models match or surpass bachelor-level OOP students, particularly when they can iteratively refine solutions using compiler and test feedback. Smaller open models lag behind.\n\nJAB separates executable correctness from adherence to OOP principles. Its class-level design supports fine-grained analysis of recurring programming misconceptions. Code, data and evaluation instructions are available in the [project repository](https://github.com/disi-unibo-nlp/jab).\n\n> **Scope.** The findings concern the Java exams and evaluation protocol studied, not a general claim of professional software-engineering competence.\n\n![Original JAB horizontal bar chart comparing S-Pass, H-Pass and compilation at one and ten samples across thirteen code models.](/assets/paper-img/jab/progressive-results.jpg \"**Progressive results across code models.** Solid bars report @1 performance; crosshatched extensions show improvements at @10. Blue denotes S-Pass (mandatory tests), orange H-Pass (mandatory and optional tests), and purple compilation. Values are percentages. This is the sampling comparison, not the separate agentic-refinement experiment.\")\n\nSource: Figure 4 of the [published article](https://doi.org/10.1016/j.jss.2026.113033)."
       }
     ],
     "links": {
@@ -43,32 +77,6 @@ export const publications = [
       "doi": "https://doi.org/10.1016/j.jss.2026.113033",
       "code": "https://github.com/disi-unibo-nlp/jab"
     }
-  },
-  {
-    id: "spsd",
-    title: "Self-Play Search Distillation for Large Language Model Reasoning",
-    authors: "Lorenzo Molfetta, Wai-Chung Kwan, Giacomo Frisoni, Luca Ragazzi, Gianluca Moro, Pavlos Vougiouklis, Jeff Z. Pan, Pasquale Minervini",
-    venue: "Submitted to TACL", year: 2026, type: "submitted", selected: true, role: "first",
-    tags: ["LLM reasoning", "Self-play", "Knowledge distillation"],
-    tldr: "SPSD turns board-game search records into environment-grounded reasoning supervision, improving generalization to unseen games and mathematics without human annotations.",
-    abstract: "Improving reasoning abilities in Large Language Models (LLMs) requires high-quality data that exposes difficult decisions, competing alternatives, and their consequences. Data scarcity is driven by the low quality of synthetic data and the cost of human labeling. We introduce Self-Play Search Distillation (SPSD), a framework for generating superhuman synthetic data via self-play of MuZero-like networks trained on board games. SPSD uses executable environments to turn search into structured reasoning problems. At each state, the expert identifies a preferred decision, plausible alternatives, plausible opponent replies, and value estimates. By converting the self-play search records into superhuman chains-of-thought, we train LLMs with environment-grounded supervision. Although trained only on self-play search records, SPSD transfers to unseen mathematics. On Qwen3-4B-Base, it raises the mean over six mathematics benchmarks from 24.1 to 36.3 while increasing the held-out-game win rate from 15% to 45%. SPSD offers an annotation-efficient way to create high-quality synthetic data for improving LLM performance in reasoning tasks.",
-    sections: [
-      {
-        id: "method", title: "Method",
-        body: `**Self-Play Search Distillation (SPSD)** uses frozen, search-based board-game experts to generate reasoning supervision independently of the language model being trained. Executable environments provide exact rules, legal actions and replayable consequences.
-
-At each state, the search record contains a preferred decision, plausible alternatives, opponent replies and value estimates. These records are converted into structured chains of thought, so the language model learns not only which action to choose but how to compare alternatives and anticipate their consequences. The supervision comes from self-play search rather than human-written demonstrations.`
-      },
-      {
-        id: "evidence", title: "Evidence",
-        body: `The submitted manuscript evaluates transfer beyond the self-play training data. On **Qwen3-4B-Base**, SPSD improves the mean score across **six mathematics benchmarks from 24.1 to 36.3** and the **held-out-game win rate from 15% to 45%**.
-
-The mathematics results test transfer to a domain absent from the board-game training records. The held-out-game evaluation tests whether the learned reasoning extends beyond the games used for supervision.
-
-> **Status.** Submitted to *Transactions of the Association for Computational Linguistics (TACL)* in September 2026. This manuscript is not yet accepted or published.`
-      }
-    ],
-    links: {}
   },
   {
     id: "sycophants",
@@ -104,7 +112,7 @@ No — **larger models are more sycophantic**. GPT-OSS 120B scores only **13.4%*
 
 Using GPT-OSS 20B as a representative mid-scale model, accuracy decays monotonically as the percentage of perturbed context rises from 20%→100%, but the slope is domain-dependent: **Legal-Link-EU drops 35.7% → 14.8%** while **MedQA decays far more gently, 65.2% → 50.5%**. The same retrieval mechanism that *repairs* the answer under grounding *restores the wrong option* when the context is misleading.
 
-![Accuracy with 95% CI vs. perturbed-context percentage on MedQA vs. Legal-Link-EU.](/assets/paper-img/sycophants/confidence_degradation.png "**Knowledge-confidence degradation** (GPT-OSS 20B, three runs, 95% CI). Legal accuracy decays far more steeply than medical as perturbation density increases — the visible signature of authority-sensitive sycophancy.")
+![Accuracy with 95% CI vs. perturbed-context percentage on MedQA vs. Legal-Link-EU.](/assets/paper-img/sycophants/confidence_degradation.png "**Knowledge-confidence degradation** (GPT-OSS 20B, three runs, 95% CI). Orange: MedQA; blue: Legal-Link-EU. The horizontal axis is the percentage of perturbed context. Legal accuracy decays more steeply than medical accuracy as perturbation density increases.")
 
 ### RQ4 — Is it a reasoning failure or a "helpfulness" prior?
 
@@ -133,7 +141,7 @@ A telling anomaly: under a **"Select Incorrect"** framing (invert the objective,
 
 ![PORTS overview: a frozen tool-calling LLM emits a perplexity-inspired preference signal that fine-tunes the retriever.](/assets/paper-img/ports/overview.png "**PORTS.** The frozen LLM emits a perplexity-inspired preference signal; the retriever is fine-tuned so that its selection probability for a tool correlates with that tool's downstream contribution to the LLM's answer. Only the retriever is updated.")
 
-![A worked tool: a fishing-rod retrieval tool whose docstring the retriever must score against a query.](/assets/paper-img/ports/fishing_rod.png "An example tool whose documentation string the retriever must rank against a user query — the kind of query/doc mismatch PORTS learns to resolve.")`
+`
       },
       {
         id: "evidence", title: "Evidence",
@@ -323,7 +331,7 @@ The consistent gains across VQA and REC — and the open release of code, prepro
         id: "method", title: "Method",
         body: `Legal NLP is starved of *authoritative* data — most resources are single-task, English-only, and written in layman's terms, useless for studying the technical, diachronic reasoning a constitutional court actually performs. **COMMA** (a **co**nstitutional-court **m**ulti-task and **m**ulti-lingual **a**rchive) fills this gap with **14K verdicts from the Constitutional Court of the Italian Republic (CCIR)**, a civil-law, non-common-law system whose rulings adjudicate fundamental rights and principles. To our knowledge it is the **first multi-task, multilingual benchmark that does not follow a common-law system**: because CCIR verdicts are code-based and do not originate under binding precedent, NLP models must reason on top of *explicit rules*, grasping their intended scope, exceptions, and ambiguities. The corpus is deliberately hard on four axes — it is **technical** (constitutional-law jargon, not plain language), **diachronic** (spanning decades, so the same legal concept drifts as doctrine evolves), **long** (well beyond the comfort zone of standard summarizers), and **multilingual** (rulings, constitutional parameters, and task targets are released in **4 languages**: Italian, English, Spanish, and French via semi-automatic translation).
 
-![The COMMA writing pipeline and document structure for a CCIR ruling.](/assets/paper-img/comma/comma_input_output.png "**The COMMA pipeline.** Each CCIR ruling is decomposed into structured fields — epigraph, parties, legal parameters, maxim body and title — which feed seven tasks across four families. Italic text and dashed lines mark optional procedures and fields.")
+![COMMA input and output examples for summarization, text generation, constitutional-article retrieval and classification.](/assets/paper-img/comma/comma_input_output.png "**COMMA task examples.** Example inputs and outputs illustrate summarization at multiple granularities, text generation, constitutional-article retrieval and classification.")
 
 COMMA frames **seven tasks in four families** that are each meaningful to legal professionals: **abstractive summarization** at multiple granularities (ruling → narrative, ruling → bullet-point keyphrases, and maxim-text → keyphrase titles), **text generation** (produce the decision given the epigraph, facts, and gold constitutional articles), **information retrieval** (fetch the constitutional articles that bear on a case — at "comma" precision), and **document classification** (ruling type: order vs. judgment, plus a 10-class judgment-type variant).
 
@@ -336,8 +344,6 @@ COMMA frames **seven tasks in four families** that are each meaningful to legal 
 ### RQ1 — Does long-context reading pay off?
 
 Yes, and it is the single clearest signal. **Long-context (LSG) models outperform vanilla ones on every generative task**, because reading and comprehending a *full* ruling is what drives performance. On ruling → narrative summarization, ROUGE-1 ($\\mathcal{R}$) rises by **+14% to +28%** and BertScore (BeS) by **+68% to +96%** when the model can ingest the entire input; on ruling → bullet-point, the gains are **+8–10%** $\\mathcal{R}$ and **+13–15%** BeS. Condensed inputs help too — maxim-text → bullet-point outperforms ruling → bullet-point, confirming that compressing the source simplifies the summarization task.
-
-![ROUGE-1 across training-set sizes and languages for the ruling→body summarization task.](/assets/paper-img/comma/comma_rouge1_body.png "**ROUGE-1 vs. training-set size** for ruling → body summarization across IT/EN/ES/FR. Performance climbs with data, but every model plateaus well below human quality — the long, jargon-heavy targets are the bottleneck.")
 
 ### RQ2 — Can models actually write long, faithful maxims?
 
@@ -464,8 +470,6 @@ MoM improves over the seed by **+15.0 FIDEScore** — *more* than the gain of th
 
 Yes, in the geometry of their representations. Weight distances from the seed grow monotonically with depth, but the real separation is in **activations**: on an expert's *own* master's games, hidden states diverge sharply from sibling experts (ratios peak in layers 10–14), while on *other* masters' games they stay close.
 
-![Behavioral stylometry: activation displacement, NLL advantage, and routing specialization across game phases.](/assets/paper-img/mixture-of-masters/behavioral_stylometry.png "**Behavioral stylometry.** Each expert assigns lower NLL to its *own* master across every game phase — and the advantage is largest in the opening, where repertoires are most personal, but persists into middlegame and endgame. This rules out memorized openings: the specialization is strategic.")
-
 Every expert's NLL advantage is positive across opening, middlegame, *and* endgame — ruling out the confound that experts merely memorize early-game sequences. Each expert's own master is the **top-1 most-likely player in 9 of 10 cases**.
 
 ### RQ5 — Is the routing interpretable?
@@ -499,7 +503,9 @@ The router doesn't collapse onto one expert. It maintains **sharp top-$k$ concen
 2. **Retrieve** the passages most relevant to the *query context*.
 3. **Generate** a summary via **token-probability marginalization** over the retrieved evidence — instead of decoding from a single concatenated-and-truncated input.
 
-The pipeline preserves the full evidence pool and lets the model attend to what the context actually demands. We also introduce **FAQSUMC19**, a dataset of multiple supporting papers answering Covid-19 questions, built precisely for CA-MDS evaluation where a context-driven choice among sources is required.`
+The pipeline preserves the full evidence pool and lets the model attend to what the context actually demands. We also introduce **FAQSUMC19**, a dataset of multiple supporting papers answering Covid-19 questions, built precisely for CA-MDS evaluation where a context-driven choice among sources is required.
+
+![RAMSES bi-encoder retrieval and BART probability-marginalization architecture, including the end-to-end loss and decoding detail.](/assets/paper-img/retrieve-rank/ramses-method.png "**RAMSES architecture.** Separate BioBERT encoders represent the biomedical context and studies. Relevance scores select the top-k documents; BART generates the summary by marginalizing token probabilities weighted by those scores. Reproduced from Figure 2 of the authors’ SISAP manuscript.")`
       },
       {
         id: "evidence", title: "Evidence",
@@ -513,7 +519,30 @@ Yes. RAMSES achieves **notably higher ROUGE** than SOTA methods — the gain com
 
 On **MS2** (systematic-review generation), RAMSES posts a new SOTA. Crucially, **human evaluation** rates its summaries as **more informative** than those of prior leading approaches — the ROUGE gain reflects a genuine qualitative improvement, not metric-gaming.
 
-> **Scope.** RAMSES targets biomedical CA-MDS where documents are long but individually well-structured; domains with dense cross-document contradictions or heavily multi-modal evidence are left to future work.`
+> **Scope.** RAMSES targets biomedical CA-MDS where documents are long but individually well-structured; domains with dense cross-document contradictions or heavily multi-modal evidence are left to future work.
+
+### MS2
+
+| Model | ROUGE-1 F1 | ROUGE-2 F1 | ROUGE-L F1 | R (aggregate) |
+|---|---:|---:|---:|---:|
+| LED-GAQ | 26.89 | 8.91 | 20.32 | 18.60 |
+| BART-FID | 27.56 | 9.49 | 20.80 | 19.18 |
+| DAMEN | 28.95 | 9.72 | 21.83 | 20.04 |
+| PRIMERA | 30.07 | 9.85 | 22.16 | 20.55 |
+| **RAMSES** | **31.83** | **10.44** | **22.19** | **21.32** |
+
+### FAQSUMC19
+
+| Model | ROUGE-1 F1 | ROUGE-2 F1 | ROUGE-L F1 | R (aggregate) |
+|---|---:|---:|---:|---:|
+| LED-GAQ | 25.55 | 4.42 | 13.77 | 14.47 |
+| BART-FID | 20.26 | 5.59 | 14.84 | 13.51 |
+| DAMEN | 23.81 | 3.50 | 13.03 | 13.35 |
+| PRIMERA | 25.04 | 3.64 | 13.00 | 13.79 |
+| **RAMSES** | **30.18** | **7.31** | **15.67** | **17.56** |
+
+Figure 2 and Table 3 (manuscript pp. 3 and 8) are reproduced from the authors’ SISAP 2023 manuscript, titled *Retrieve-and-Marginalize End-to-End Summarization of Biomedical Studies*. The [published chapter](https://doi.org/10.1007/978-3-031-46994-7_6) is titled *Retrieve-and-Rank End-to-End Summarization of Biomedical Studies*. The reported values above are from that author manuscript, not independently checked against the publisher PDF.
+`
       }
     ],
     links: {"read": "https://link.springer.com/chapter/10.1007/978-3-031-46994-7_6", "doi": "https://doi.org/10.1007/978-3-031-46994-7_6"}
@@ -531,7 +560,7 @@ On **MS2** (systematic-review generation), RAMSES posts a new SOTA. Crucially, *
       {
         "id": "method",
         "title": "Method",
-        "body": "This MSc thesis studies explainability in language models, with a focus on retrieving and integrating knowledge for question answering. It reviews neuro-symbolic and sub-symbolic reasoning approaches and their different routes to interpretability.\n\nFor biomedical QA, it proposes a **context-augmentation strategy** that reranks retrieved passages inside the inference network without changing the retriever parameters. Structured knowledge is integrated into answer generation to make better use of external sources."
+        "body": "This MSc thesis studies explainability in language models, with a focus on retrieving and integrating knowledge for question answering. It reviews neuro-symbolic and sub-symbolic reasoning approaches and their different routes to interpretability.\n\nFor biomedical QA, it proposes a **context-augmentation strategy** that reranks retrieved passages inside the inference network without changing the retriever parameters. Structured knowledge is integrated into answer generation to make better use of external sources.\n\n![PubMed KG-FiD architecture showing frozen retrieval, graph-based passage reranking and a T5 encoder-decoder.](/assets/paper-img/ke-qa/pubmed-kg-fid.png \"**PubMed KG-FiD architecture.** Frozen retrieval selects PubMed abstracts; a GAT reranks the passages before T5 encoding, and a ReFactor module performs further reranking inside the encoder. Source: Figure 3.2 of the author’s MSc thesis, p. 65 (PDF p. 89).\")"
       },
       {
         "id": "scope",

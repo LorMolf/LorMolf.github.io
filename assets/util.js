@@ -30,9 +30,9 @@ export function markByIndex(i){
   return `<span class="mk c${i%3}">${GLYPHS[i%4]}</span>`;
 }
 
-// small-caps typewriter publication type label
+// Shared publication-type tag across lists and paper pages.
 export function typeLabel(type){
-  const t = { conference: "Conf", journal: "Journal", preprint: "Preprint", submitted: "Submitted", thesis: "Thesis" }[type] || type;
+  const t = { conference: "Conference", journal: "Journal", preprint: "Preprint", submitted: "Submitted", thesis: "Thesis" }[type] || type;
   return `<span class="typelabel ${escapeHtml(type)}">${t}</span>`;
 }
 

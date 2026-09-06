@@ -12,7 +12,7 @@ export function renderHome(){
     <div class="status">
       ${st.map((s,i)=>`
         <div class="status-item s${s.c}">
-          <span class="prompt">$</span>
+          <span class="prompt">${i===0?'NEXT':'NOW'}</span>
           <span class="out">${escapeHtml(s.text)}${i===st.length-1?'<span class="cur"></span>':''}</span>
         </div>`).join("")}
     </div>` : "";
@@ -50,7 +50,6 @@ export function renderHome(){
       <div class="bio">${bio}</div>
       <div class="photo-frame">
         <div class="fr"><img src="${escapeHtml(site.photo)}" alt="${escapeHtml(site.name)}"></div>
-        <div class="photo-cap">[ B/W portrait ]</div>
       </div>
     </div>
     <div class="research">

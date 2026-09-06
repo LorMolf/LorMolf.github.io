@@ -13,24 +13,25 @@ export const site = {
   homepage: "https://www.unibo.it/sitoweb/lorenzo.molfetta",
   photo: "/photo.jpg",
   status: [
-    { c: 0, text: "visiting researcher at the University of Edinburgh until the end of July." },
-    { c: 1, text: "at San Diego for ACL '26." }
+    { c: 0, text: "finishing my PhD at the end of October." },
+    { c: 1, text: "at home in Puglia." }
   ],
   bio: [
     "I'm a PhD student in Computer Science and Engineering at the [University of Bologna](https://www.unibo.it/en), working on Natural Language Processing and Information Retrieval, and a member of the [UniboNLP group](https://disi-unibo-nlp.github.io).",
-    "My research centres on explainable generative question-answering systems, knowledge-enhanced and neuro-symbolic methods, and vision-language models — with emphasis on biomedical and legal domains.",
-    "I'm broadly interested in making language models more reliable, grounded and interpretable through retrieval, tool-use and structured (graph) representations."
+    "My research centres on retrieval-augmented question answering, language-model reasoning and vision-language models, with applications in biomedical and legal domains.",
+    "I'm broadly interested in making language models more reliable, grounded and interpretable through retrieval, tool-use and structured (graph) representations.",
+    "During my PhD, I completed a six-month research visit at the [University of Edinburgh](https://www.ed.ac.uk), from 30 January to 30 July 2026, working with Pasquale Minervini on synthetic data generation and language-model reasoning."
   ],
   research: {
     lead: "I study how retrieval, tool-use and graph structure can make language models more grounded and reliable.",
     current: [
-      { title: "Retrieval & Tool-Use in LLMs", blurb: "Learning to select the right tool / evidence with preference-optimised retrievers (PORTS) and retrieval-augmented classification (FEAST)." },
-      { title: "Legal Language Models", blurb: "Dataset construction (COMMA) and robustness of LLMs to juridical authority and evolving legal standards (Sycophants in the Courtroom)." },
-      { title: "Graph-based Reasoning & Neuro-symbolic AI", blurb: "Graph-of-mark visual prompting for multimodal spatial reasoning, and task-directed neuro-symbolic methods for explainability." }
+      { title: "Retrieval & Tool-Use in LLMs", blurb: "Learning to retrieve useful evidence and select tools that help language models solve a task." },
+      { title: "Legal Language Models", blurb: "Building legal datasets and studying how language models handle authority, temporal validity and changing legal standards." },
+      { title: "Language-Model & Multimodal Reasoning", blurb: "Learning from search and self-play, and using graph structure to improve spatial reasoning in vision-language models." }
     ],
     more: [
-      { title: "Sparse & Specialised Language Models", blurb: "Mixture-of-experts chess language models with player routing (Mixture of Masters)." },
-      { title: "Biomedical NLP", blurb: "Retrieve-and-rank end-to-end summarisation of biomedical studies." }
+      { title: "Sparse & Specialised Language Models", blurb: "Mixture-of-experts models that route between specialised behaviours while keeping computation sparse." },
+      { title: "Biomedical NLP", blurb: "Retrieval-augmented models for biomedical question answering and evidence summarisation." }
     ]
   },
   links: [

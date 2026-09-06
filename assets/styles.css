@@ -1,7 +1,11 @@
 /* ===== Lorenzo Molfetta — design tokens ===== */
+@font-face{font-family:'Archivo Black';font-style:normal;font-weight:400;font-display:swap;src:url('/assets/fonts/archivo-black.ttf') format('truetype')}
+@font-face{font-family:'Caveat';font-style:normal;font-weight:600;font-display:swap;src:url('/assets/fonts/caveat-600.ttf') format('truetype')}
 *{box-sizing:border-box}
 :root{
-  --paper:#e8e6d3;             /* light warm background */
+  --paper:#f6f0df;             /* warm risograph paper */
+  --cobalt:#2148c4; --coral:#d45438;
+  --display:'Archivo Black',sans-serif; --hand:'Caveat',cursive;
   --ink:#1a1611;
   --muted:#6f685c;
   --line:#1e4d33;              /* dark green structural borders */
@@ -15,6 +19,7 @@
   --paper:#15120d; --ink:#efeadf; --muted:#9a9282;
   --line:#4a8a65; --line-soft:#352f26;
   --green:#6fae88; --red:#c95a4a; --gold:#f1b338;
+  --cobalt:#a5b4ff; --coral:#ed9378;
 }
 
 html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
@@ -241,6 +246,7 @@ img{max-width:100%;display:block}
 /* ===== tables inside markdown (GFM) ===== */
 .paper-table-wrap{overflow-x:auto;max-width:100%;margin:24px 0 28px}
 .paper-body table{border-collapse:collapse;width:100%;font-size:14.5px;font-family:'Computer Modern Serif',serif}
+.paper-body th,.paper-body td{white-space:nowrap;overflow-wrap:normal}
 .paper-body table thead{background:var(--line-soft)}
 .paper-body table th,.paper-body table td{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);padding:8px 12px;text-align:center}
 .paper-body table th{font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;font-size:12.5px;letter-spacing:.04em;border-bottom:2px solid var(--line);white-space:nowrap}
@@ -412,3 +418,29 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offs
   .theme-toggle:hover,.btn:hover,.chip:hover,.plink:hover,
   .theme-toggle:active,.btn:active,.chip:active,.plink:active{transform:none}
 }
+
+/* Ink Weather-inspired print details; keep article prose quiet. */
+.nav-name{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.15;text-shadow:2px 2px 0 var(--wash-red),-1px -1px 0 var(--wash-green)}
+.nav-name::after{background:var(--wash-gold);height:10px;bottom:-9px}
+.page-title{font-family:var(--display);font-weight:400;font-size:36px;letter-spacing:-.02em}
+.section-head .lbl,.paper-h,.cv-h{font-family:var(--display);font-weight:400;font-variant:normal;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.section-head .lbl{background:var(--wash-gold);box-shadow:3px 3px 0 var(--coral)}
+.status-item{display:grid;grid-template-columns:58px minmax(0,1fr);gap:16px;align-items:center;padding:13px 18px}
+.status-item .prompt{font-family:var(--display);font-size:11px;letter-spacing:.06em;border-right:1px dashed currentColor;padding:9px 10px 9px 0}
+.status-item .out{font-family:var(--hand);font-weight:600;font-size:28px;line-height:1.25;color:var(--ink)}
+.status-item.s0{background:var(--wash-gold);box-shadow:4px 4px 0 var(--coral)}
+.status-item.s1{background:var(--wash-green);box-shadow:4px 4px 0 var(--cobalt)}
+.nav-foot::after{content:"";display:block;margin-top:20px;width:76px;height:13px;background:linear-gradient(90deg,var(--coral) 0 22%,transparent 22% 26%,var(--cobalt) 26% 48%,transparent 48% 52%,var(--gold) 52% 74%,transparent 74% 78%,var(--green) 78%);border-block:1px solid var(--line-soft)}
+.btn:not(.copy-btn),.plink{position:relative;padding-inline:20px}
+.btn:not(.copy-btn)::before,.btn:not(.copy-btn)::after,.plink::before,.plink::after{content:"";position:absolute;top:50%;width:9px;height:9px;border:1px solid var(--ink);border-radius:50%;background:var(--paper);transform:translateY(-50%);pointer-events:none}
+.btn:not(.copy-btn)::before,.plink::before{left:-6px}
+.btn:not(.copy-btn)::after,.plink::after{right:-6px}
+.year-head{color:var(--cobalt);font-family:var(--display);font-weight:400;font-size:17px;letter-spacing:.05em}
+.paper-back a{color:var(--cobalt)}
+.typelabel{display:inline-block;font-family:var(--display);font-weight:400;font-variant:normal;font-size:10px;line-height:1.5;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;padding:3px 8px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:rotate(-2deg);vertical-align:middle;margin:2px 4px 4px 0}
+.typelabel.conference{background:#2148c4;color:#fff;border-color:var(--ink)}
+.typelabel.journal{background:#ff795b;color:#181510;border-color:var(--ink);transform:rotate(2deg)}
+.typelabel.preprint{background:#ffc72c;color:#181510;border-color:var(--ink)}
+.typelabel.submitted{background:#7fd6ae;color:#181510;border-color:var(--ink)}
+.typelabel.thesis{background:#efe7cf;color:#181510;border-color:var(--ink)}
+@media(max-width:540px){.status-item{grid-template-columns:44px minmax(0,1fr);gap:12px;padding:12px}.status-item .out{font-size:25px}.nav-name{font-size:28px}.page-title{font-size:30px}}

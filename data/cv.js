@@ -1,6 +1,6 @@
 export const cv = {
   pdfHref: null,
-  about: "I am a PhD student in Computer Science and Engineering at the University of Bologna, working on Natural Language Processing and Information Retrieval. My research centres on explainable generative question-answering systems, knowledge-enhanced and neuro-symbolic methods, and vision-language models, with emphasis on biomedical and legal domains. I am part of the [UniboNLP group](https://disi-unibo-nlp.github.io).",
+  about: "I am a PhD student in Computer Science and Engineering at the University of Bologna, working on Natural Language Processing and Information Retrieval. My research centres on retrieval-augmented question answering, language-model reasoning and vision-language models, with applications in biomedical and legal domains. I am part of the [UniboNLP group](https://disi-unibo-nlp.github.io).",
   education: [
     {
       school: "University of Bologna",
@@ -40,9 +40,9 @@ export const cv = {
       org: "University of Edinburgh",
       href: "https://www.ed.ac.uk",
       place: "Edinburgh, UK",
-      dates: "2026",
-      role: "Visiting Researcher",
-      notes: ["Research visit."]
+      dates: "30 Jan – 30 Jul 2026",
+      role: "Visiting PhD Researcher (6 months)",
+      notes: ["Worked with Pasquale Minervini on synthetic data generation and language-model reasoning."]
     }
   ],
   teaching: [
@@ -65,7 +65,7 @@ export const cv = {
     Software: "Docker, LaTeX",
     Languages: "Italian (native), English, French"
   },
-  interests: "Explainable generative QA systems, knowledge-enhanced & neuro-symbolic methods, vision-language models — biomedical and legal domains.",
+  interests: "Retrieval-augmented question answering, language-model reasoning and vision-language models, with applications in biomedical and legal domains.",
   theses: [
     { c:"Kankana Ghosh", t:"The Pixel Piper: Guiding Diffusion Models with Attention-Based Predicate Logic for Feature Consistent Text-to-Image Generation", l:"m", y:2025 },
     { c:"Matteo Belletti", t:"Train an Agent to Evaluate your Models: a Dataset for Metric Function Call Built through Autonomous Trial and Error", l:"m", y:2025 },

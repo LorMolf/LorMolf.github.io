@@ -24,7 +24,11 @@ function enhanceMarkdown(root){
     img.removeAttribute("title");
     if(isAlone){ p.replaceWith(fig); }
     else { img.parentNode.insertBefore(fig, img); }
-    fig.appendChild(img);
+    const link = document.createElement("a");
+    link.href = img.src;
+    link.setAttribute("aria-label", `Open full-resolution figure: ${img.alt}`);
+    link.appendChild(img);
+    fig.appendChild(link);
     const cap = img.getAttribute("data-caption") || img.getAttribute("alt") || "";
     if(cap && cap !== "narrow"){
       const fc = document.createElement("figcaption");
