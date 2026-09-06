@@ -1,6 +1,23 @@
 // Official BibTeX entries (DBLP) for each paper.
 // For papers not yet on DBLP, a faithful entry is provided and flagged in `note`.
 export const bibTeX = {
+  'jab': `@article{COCCHIERI2026113033,
+  title = {Java academic benchmark: Exam-based evaluation of LLMs on object-oriented programming},
+  author = {Alessio Cocchieri and Luca Ragazzi and Gianluca Aguzzi and Giacomo Frisoni and Lorenzo Molfetta and Gianluca Moro and Mirko Viroli},
+  journal = {Journal of Systems and Software},
+  pages = {113033},
+  year = {2026},
+  doi = {10.1016/j.jss.2026.113033},
+  url = {https://www.sciencedirect.com/science/article/pii/S0164121226002669}
+}`,
+  'spsd': `@unpublished{molfetta2026spsd,
+  author       = {Lorenzo Molfetta and Wai-Chung Kwan and Giacomo Frisoni and
+                  Luca Ragazzi and Gianluca Moro and Pavlos Vougiouklis and
+                  Jeff Z. Pan and Pasquale Minervini},
+  title        = {Self-Play Search Distillation for Large Language Model Reasoning},
+  year         = {2026},
+  note         = {Submitted to Transactions of the Association for Computational Linguistics; not yet accepted or published}
+}`,
   'sycophants': `@inproceedings{DBLP:conf/acl/MolfettaCRBPM26,
   author       = {Lorenzo Molfetta and
                   Alessio Cocchieri and
@@ -107,7 +124,7 @@ export const bibTeX = {
                   Gianluca Moro and
                   Paolo Italiani and
                   Lorenzo Molfetta and
-                  Valentina Folin},
+                  Veronika Folin},
   title        = {{COMMA:} {A} Multi-task and Multi-lingual Dataset of Constitutional
                   Verdicts},
   journal      = {Artificial Intelligence and Law},
@@ -178,6 +195,7 @@ export const bibTeX = {
                   on Retrieval},
   school       = {Alma Mater Studiorum - Universit{\\\`{a}} di Bologna},
   year         = {2023},
+  url          = {https://amslaurea.unibo.it/id/eprint/30058/},
   note         = {MSc thesis; not indexed by DBLP}
 }`,
 };

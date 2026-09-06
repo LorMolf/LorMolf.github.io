@@ -5,7 +5,9 @@ const FILTERS = [
   { id: "all", label: "All" },
   { id: "conference", label: "Conference" },
   { id: "journal", label: "Journal" },
-  { id: "preprint", label: "Preprint" }
+  { id: "preprint", label: "Preprint" },
+  { id: "submitted", label: "Submitted" },
+  { id: "thesis", label: "Thesis" }
 ];
 
 const state = { filter: "all" };
@@ -27,6 +29,7 @@ export function renderPubs(){
     body += `<div class="pub-item">
       <div class="pub-top"><a class="pt" href="/publications/${escapeHtml(p.id)}/">${escapeHtml(p.title)}</a>${typeLabel(p.type)}${authorTag(p.role)}</div>
       <div class="pa">${boldAuthor(p.authors, me)}</div>
+      <p class="pub-description">${escapeHtml(p.tldr || "")}</p>
       <div class="pm">${venueHtml(p.venue, venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}${code?` <a href="${escapeHtml(code)}" target="_blank" rel="noopener">code ↗</a>`:""}</div>
     </div>`;
   }
@@ -36,7 +39,7 @@ export function renderPubs(){
   root.innerHTML = `
     <div class="eyebrow">Publications</div>
     <h1 class="page-title">Publications</h1>
-    <p class="page-lede">Full list, newest first. <strong>${escapeHtml(me)}</strong> is highlighted in author lists. I am <strong>first or co-first</strong> author on every paper — <span class="authortag first">1st</span> first author, <span class="authortag cofirst">co-1st</span> co-first.</p>
+    <p class="page-lede">Full list, newest first. <strong>${escapeHtml(me)}</strong> is highlighted in author lists. Author labels: <span class="authortag first">1st</span> first author, <span class="authortag cofirst">co-1st</span> co-first. Submitted manuscripts and theses are marked separately.</p>
     <div class="filters">${chips}</div>
     <div class="pub-list">${body || "<p>No entries.</p>"}</div>`;
 

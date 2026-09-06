@@ -60,6 +60,17 @@ function configureMarked(){
   if(m.setOptions){
     m.setOptions({ gfm:true, breaks:false, headerIds:true, mangle:false });
   }
+  // Keep Markdown from interpreting TeX subscripts as emphasis before KaTeX runs.
+  m.use({ extensions: [{
+    name: "mathSource",
+    level: "inline",
+    start(src){ return src.search(/\$|\\\(|\\\[/); },
+    tokenizer(src){
+      const match = /^(\$\$[\s\S]+?\$\$|\$[^\n$]+?\$|\\\([\s\S]+?\\\)|\\\[[\s\S]+?\\\])/.exec(src);
+      if(match) return { type: "mathSource", raw: match[0] };
+    },
+    renderer(token){ return `<span class="math-source">${escapeHtml(token.raw)}</span>`; }
+  }] });
 }
 
 function runKatex(root){
@@ -97,7 +108,7 @@ export function renderPaper(){
   const read = p.links && p.links.read;
 
   const sections = Array.isArray(p.sections) ? p.sections : [];
-  const anchorLinks = sections
+  const anchorLinks = [...sections, { id: "abstract", title: "Abstract" }, { id: "citation", title: "Citation" }]
     .map(s=>`<a href="#${escapeHtml(s.id)}">${escapeHtml(s.title)}</a>`)
     .join("");
 
@@ -115,7 +126,7 @@ export function renderPaper(){
       ${code?`<a class="plink" href="${escapeHtml(code)}" target="_blank" rel="noopener">code ↗</a>`:""}
       ${doi?`<a class="plink" href="${escapeHtml(doi)}" target="_blank" rel="noopener">DOI ↗</a>`:""}
     </div>
-    ${sections.length?`<nav class="paper-anchors">${anchorLinks}</nav>`:""}
+    <nav class="paper-anchors" aria-label="On this page">${anchorLinks}</nav>
 
     ${sections.map(s=>`
       <h2 class="paper-h" id="${escapeHtml(s.id)}">${escapeHtml(s.title)}</h2>
@@ -124,6 +135,7 @@ export function renderPaper(){
 
     <h2 class="paper-h" id="abstract">Abstract</h2>
     <p class="paper-abs">${p.abstract ? escapeHtml(p.abstract) : '<span class="muted">Official abstract to be added.</span>'}</p>
+    ${p.abstractSource ? `<p class="paper-source"><a href="${escapeHtml(p.abstractSource)}" target="_blank" rel="noopener">Abstract source ↗</a></p>` : ""}
 
     <h2 class="paper-h" id="citation">Citation</h2>
     <div class="bibtex">

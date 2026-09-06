@@ -38,6 +38,7 @@ export function renderHome(){
     const arxiv = p.links && p.links.arxiv;
     return `<div class="pub-item">
       <div class="pub-top"><a class="pt" href="/publications/${escapeHtml(p.id)}/">${escapeHtml(p.title)}</a>${typeLabel(p.type)}${authorTag(p.role)}</div>
+      <p class="pub-description">${escapeHtml(p.tldr || "")}</p>
       <div class="pm">${venueHtml(p.venue,venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}</div>
     </div>`;
   }).join("");

@@ -8,7 +8,7 @@ const root = resolve(__dirname, "..");
 const ORIGIN = "https://lormolf.github.io";
 
 const escapeHtml = (s) =>
-  String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 const shell = (p) => `<!DOCTYPE html>
 <html lang="en">
@@ -16,6 +16,7 @@ const shell = (p) => `<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(p.title)} — Lorenzo Molfetta</title>
+<meta name="description" content="${escapeHtml(p.tldr || p.abstract || p.title)}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="${ORIGIN}/publications/${encodeURIComponent(p.id)}/">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts.css">

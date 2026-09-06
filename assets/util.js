@@ -32,7 +32,7 @@ export function markByIndex(i){
 
 // small-caps typewriter publication type label
 export function typeLabel(type){
-  const t = type === "conference" ? "Conf" : type === "journal" ? "Journal" : "Preprint";
+  const t = { conference: "Conf", journal: "Journal", preprint: "Preprint", submitted: "Submitted", thesis: "Thesis" }[type] || type;
   return `<span class="typelabel ${escapeHtml(type)}">${t}</span>`;
 }
 

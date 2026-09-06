@@ -12,17 +12,77 @@ export const venueLinks = {
 
 export const publications = [
   {
-    id: "sycophants",
-    title: "Sycophants in the Courtroom: Are LLMs Fragile to Juridical Authority and Evolving Legal Standards?",
-    authors: "Lorenzo Molfetta, Alessio Cocchieri, Luca Ragazzi, Ilaria Bartolini, Mirko Patella, Gianluca Moro",
-    venue: "ACL", year: 2026, type: "conference", selected: true, role: "first",
-    tags: ["Legal NLP", "LLM robustness", "Evaluation"],
-    tldr: "We probe whether LLMs bend their answers to juridical authority and shifting legal standards, and how fragile they are to such pressure in legal QA.",
-    abstract: "In medicine, claims persist insofar as they withstand empirical verification against a stable biological reality; in law, by contrast, truth is contingent, defined by jurisdiction, temporal validity, and the hierarchy of authoritative sources. The recent success of Large Language Models (LLMs) on medical licensing examinations has encouraged an expectation of comparable legal competence. We introduce a comparative diagnostic framework that evaluates legal reasoning against medical baselines along four axes spanning knowledge recall, grounding, confidence, and robustness to format changes. Evaluating models on a benchmark that explicitly encodes temporal validity and normative relationships, we uncover a sharp domain asymmetry: while medical models reliably benefit from verified sources, legal LLMs struggle to assess when retrieved citations are useful or misleading, exhibiting overconfidence in perturbed contexts and sensitivity to superficial formatting cues. Increased model scale amplifies this tendency. These findings show that current LLMs treat law as unstructured text rather than binding precedent.",
+    "id": "jab",
+    "title": "Java academic benchmark: Exam-based evaluation of LLMs on object-oriented programming",
+    "year": 2026,
+    "venue": "Journal of Systems and Software",
+    "type": "journal",
+    "authors": "Alessio Cocchieri, Luca Ragazzi, Gianluca Aguzzi, Giacomo Frisoni, Lorenzo Molfetta, Gianluca Moro, Mirko Viroli",
+    "tags": [
+      "Code generation",
+      "Object-oriented programming",
+      "Evaluation"
+    ],
+    "tldr": "JAB evaluates object-oriented programming with 103 real Java exams, 506 JUnit tests and KODE design-quality judgments, comparing one-shot and feedback-driven LLM solutions.",
+    "abstract": "Current code generation benchmarks largely overlook object-oriented programming (OOP) skills, leaving open whether large language models (LLMs) can effectively apply OOP principles to structured programming tasks. The dominance and permissiveness of Python in most benchmarks further obscure model weaknesses in core OOP principles. We introduce the Java Academic Benchmark (JAB), based on 103 authentic Java exams collected over a decade at a major university, together with 506 expert-written JUnit tests, to rigorously evaluate advanced Java programming competence with a strong focus on OOP. To complement execution-based scoring, we propose KODE, an LLM-as-a-Judge framework that assesses OOP adherence across four pedagogical dimensions. We evaluate 27 LLMs under two resolution strategies: single-attempt (one-shot) and agentic (iterative refinement with compiler and test feedback). Results reveal that, under our evaluation protocol, larger closed models match or surpass bachelor-level OOP students–especially under agentic resolution–while smaller open models lag behind. JAB’s class-level design enables fine-grained error analysis, exposing recurring misconceptions. Editor’s note: Open Science material was validated by the Journal of Systems and Software Open Science Board.",
+    "abstractSource": "https://raw.githubusercontent.com/disi-unibo-nlp/jab/main/README.md",
+    "sections": [
+      {
+        "id": "method",
+        "title": "Method",
+        "body": "**Java Academic Benchmark (JAB)** tests object-oriented programming through **103 authentic university Java exams** and **506 expert-written JUnit tests**. Class-level evaluation exposes errors that short, function-level coding benchmarks can miss.\n\nExecution tests are complemented by **KODE**, a judgment framework covering clarity and maintainability, object design and encapsulation, reuse and modularity, and resource management and efficiency. The evaluation compares a single-attempt setting with an agentic setting in which models revise their code using compiler and test feedback."
+      },
+      {
+        "id": "evidence",
+        "title": "Evidence",
+        "body": "The study evaluates **27 LLMs**. Under the reported evaluation protocol, larger closed models match or surpass bachelor-level OOP students, particularly when they can iteratively refine solutions using compiler and test feedback. Smaller open models lag behind.\n\nJAB separates executable correctness from adherence to OOP principles. Its class-level design supports fine-grained analysis of recurring programming misconceptions. Code, data and evaluation instructions are available in the [project repository](https://github.com/disi-unibo-nlp/jab).\n\n> **Scope.** The findings concern the Java exams and evaluation protocol studied, not a general claim of professional software-engineering competence."
+      }
+    ],
+    "links": {
+      "read": "https://www.sciencedirect.com/science/article/pii/S0164121226002669",
+      "doi": "https://doi.org/10.1016/j.jss.2026.113033",
+      "code": "https://github.com/disi-unibo-nlp/jab"
+    }
+  },
+  {
+    id: "spsd",
+    title: "Self-Play Search Distillation for Large Language Model Reasoning",
+    authors: "Lorenzo Molfetta, Wai-Chung Kwan, Giacomo Frisoni, Luca Ragazzi, Gianluca Moro, Pavlos Vougiouklis, Jeff Z. Pan, Pasquale Minervini",
+    venue: "Submitted to TACL", year: 2026, type: "submitted", selected: true, role: "first",
+    tags: ["LLM reasoning", "Self-play", "Knowledge distillation"],
+    tldr: "SPSD turns board-game search records into environment-grounded reasoning supervision, improving generalization to unseen games and mathematics without human annotations.",
+    abstract: "Improving reasoning abilities in Large Language Models (LLMs) requires high-quality data that exposes difficult decisions, competing alternatives, and their consequences. Data scarcity is driven by the low quality of synthetic data and the cost of human labeling. We introduce Self-Play Search Distillation (SPSD), a framework for generating superhuman synthetic data via self-play of MuZero-like networks trained on board games. SPSD uses executable environments to turn search into structured reasoning problems. At each state, the expert identifies a preferred decision, plausible alternatives, plausible opponent replies, and value estimates. By converting the self-play search records into superhuman chains-of-thought, we train LLMs with environment-grounded supervision. Although trained only on self-play search records, SPSD transfers to unseen mathematics. On Qwen3-4B-Base, it raises the mean over six mathematics benchmarks from 24.1 to 36.3 while increasing the held-out-game win rate from 15% to 45%. SPSD offers an annotation-efficient way to create high-quality synthetic data for improving LLM performance in reasoning tasks.",
     sections: [
       {
         id: "method", title: "Method",
-        body: `Medicine has a stable ground truth — a claim survives if it matches biological reality. **Law does not.** Legal truth is contingent on jurisdiction, *temporal validity*, and a hierarchy of authoritative sources: a statute overrides a precedent, and a 2010 ruling may simply no longer apply in 2026. So why would we expect LLMs that ace medical licensing exams to be competent at law? To answer this we build a **comparative diagnostic framework** that evaluates legal reasoning *against* medical baselines along four orthogonal axes — **Knowledge Recall** (does the model know the rule?), **Knowledge Grounding** (does it lean on a retrieved citation only when that citation is actually authoritative here and now?), **Knowledge Confidence** (is its certainty calibrated, or does it swing under pressure?), and **Format Perturbation** (does changing the *surface* of a question change the answer?). The benchmark, **Legal-Link-EU**, is built from EUR-Lex document pairs and explicitly encodes **temporal validity** and the **hierarchy of normative relationships** — when an authority is applicable, valid, and non-contradictory — so we can tell whether a model is reasoning about *binding precedent* or just pattern-matching text. We probe instruction-tuned and reasoning models (Llama-3.1, Mistral-3, Qwen-3, Gemini-2.5-Flash, GPT-OSS 20B/120B) and derive four **sycophancy indices** — $\texttt{GII}$ (grounding gain), $\texttt{POI}$ (perturbation offset), $\texttt{CSI}$ (confidence stability), and $\texttt{AEI}$ (authority-evidence inversion) — that jointly expose how a model treats authoritative context.`
+        body: `**Self-Play Search Distillation (SPSD)** uses frozen, search-based board-game experts to generate reasoning supervision independently of the language model being trained. Executable environments provide exact rules, legal actions and replayable consequences.
+
+At each state, the search record contains a preferred decision, plausible alternatives, opponent replies and value estimates. These records are converted into structured chains of thought, so the language model learns not only which action to choose but how to compare alternatives and anticipate their consequences. The supervision comes from self-play search rather than human-written demonstrations.`
+      },
+      {
+        id: "evidence", title: "Evidence",
+        body: `The submitted manuscript evaluates transfer beyond the self-play training data. On **Qwen3-4B-Base**, SPSD improves the mean score across **six mathematics benchmarks from 24.1 to 36.3** and the **held-out-game win rate from 15% to 45%**.
+
+The mathematics results test transfer to a domain absent from the board-game training records. The held-out-game evaluation tests whether the learned reasoning extends beyond the games used for supervision.
+
+> **Status.** Submitted to *Transactions of the Association for Computational Linguistics (TACL)* in September 2026. This manuscript is not yet accepted or published.`
+      }
+    ],
+    links: {}
+  },
+  {
+    id: "sycophants",
+    title: "Sycophants in the Courtroom: Are LLMs Fragile to Juridical Authority and Evolving Legal Standards?",
+    authors: "Lorenzo Molfetta, Alessio Cocchieri, Luca Ragazzi, Ilaria Bartolini, Marco Patella, Gianluca Moro",
+    venue: "ACL", year: 2026, type: "conference", selected: true, role: "first",
+    tags: ["Legal NLP", "LLM robustness", "Evaluation"],
+    tldr: "We probe whether LLMs bend their answers to juridical authority and shifting legal standards, and how fragile they are to such pressure in legal QA.",
+    abstract: "In medicine, claims remain valid when supported by empirical evidence grounded in stable biological reality. In law, by contrast, truth is contingent, defined by jurisdiction, temporal validity, and the hierarchy of authoritative sources. The recent success of large language models (LLMs) on medical licensing examinations has encouraged an expectation of comparable legal competence. This analogy, however, obscures a critical distinction between domains. Unlike in medicine, legal performance often depends less on inference than on determining when external authority is applicable, valid, and non-contradictory. We introduce a comparative diagnostic framework evaluating legal reasoning against medical baselines along four axes (knowledge recall, grounding, confidence, and robustness), uncovering a sharp domain asymmetry when applied to a new benchmark that encodes temporal validity and normative relationships. While medical LLMs reliably benefit from verified sources, legal LLMs struggle to assess when retrieved citations are useful or misleading, exhibiting overconfidence in perturbed contexts and sensitivity to superficial formatting cues. Increased model scale amplifies this tendency, revealing that stronger instruction following can coincide with weaker resistance to authoritative perturbations. These findings show that LLMs treat law as unstructured text rather than binding precedent, while revealing a tendency to over-trust authoritative but false information when external references conflict with a model’s internal knowledge.",
+    abstractSource: "https://aclanthology.org/2026.acl-long.497/",
+    sections: [
+      {
+        id: "method", title: "Method",
+        body: `Medicine has a stable ground truth — a claim survives if it matches biological reality. **Law does not.** Legal truth is contingent on jurisdiction, *temporal validity*, and a hierarchy of authoritative sources: a statute overrides a precedent, and a 2010 ruling may simply no longer apply in 2026. So why would we expect LLMs that ace medical licensing exams to be competent at law? To answer this we build a **comparative diagnostic framework** that evaluates legal reasoning *against* medical baselines along four orthogonal axes — **Knowledge Recall** (does the model know the rule?), **Knowledge Grounding** (does it lean on a retrieved citation only when that citation is actually authoritative here and now?), **Knowledge Confidence** (is its certainty calibrated, or does it swing under pressure?), and **Format Perturbation** (does changing the *surface* of a question change the answer?). The benchmark, **Legal-Link-EU**, is built from EUR-Lex document pairs and explicitly encodes **temporal validity** and the **hierarchy of normative relationships** — when an authority is applicable, valid, and non-contradictory — so we can tell whether a model is reasoning about *binding precedent* or just pattern-matching text. We probe instruction-tuned and reasoning models (Llama-3.1, Mistral-3, Qwen-3, Gemini-2.5-Flash, GPT-OSS 20B/120B) and derive four **sycophancy indices** — $\\texttt{GII}$ (grounding gain), $\\texttt{POI}$ (perturbation offset), $\\texttt{CSI}$ (confidence stability), and $\\texttt{AEI}$ (authority-evidence inversion) — that jointly expose how a model treats authoritative context.`
       },
       {
         id: "evidence", title: "Evidence",
@@ -36,7 +96,7 @@ In medicine, verified sources barely move the needle because the knowledge is al
 
 ### RQ2 — Are larger models more robust to misleading authority?
 
-No — **larger models are more sycophantic**. GPT-OSS 120B scores only **13.4%** on Knowledge Confidence, *below* the much smaller Qwen-3 8B (**20.3%**), and its $\texttt{CSI}$ collapses from Llama-3.1's **46.9** to **8.66**. As parameter count grows, $\texttt{GII}$, $\texttt{CSI}$ and $\texttt{POI}$ all shrink in the legal domain: the model harvests bigger gains from valid grounding but offers *less* resistance when the same authoritative channel turns misleading.
+No — **larger models are more sycophantic**. GPT-OSS 120B scores only **13.4%** on Knowledge Confidence, *below* the much smaller Qwen-3 8B (**20.3%**), and its $\\texttt{CSI}$ collapses from Llama-3.1's **46.9** to **8.66**. As parameter count grows, $\\texttt{GII}$, $\\texttt{CSI}$ and $\\texttt{POI}$ all shrink in the legal domain: the model harvests bigger gains from valid grounding but offers *less* resistance when the same authoritative channel turns misleading.
 
 ![Sycophancy indices (GII, POI, CSI, AEI) across models, legal (solid) vs. medical (hatched).](/assets/paper-img/sycophants/sycophancy_indices.png "**Sycophancy indices** across models for legal (solid) and medical (hatched) domains. Resistance indices fall with scale in law — the defining signature of sycophancy.")
 
@@ -53,21 +113,23 @@ A telling anomaly: under a **"Select Incorrect"** framing (invert the objective,
 > **Scope.** The diagnostic covers recall, grounding, confidence, and format robustness along a benchmark that encodes temporal validity and normative hierarchy. We do not claim coverage of all legal competence (analogy across jurisdictions, multi-step rule chaining under conflict remain open); rather, we show that the authority-sensitivity failure mode is real, measurable, and amplifies with scale.`
       }
     ],
+    links: {"read": "https://aclanthology.org/2026.acl-long.497/", "doi": "https://doi.org/10.18653/v1/2026.acl-long.497", "pdf": "https://aclanthology.org/2026.acl-long.497.pdf"}
   },
   {
     id: "ports",
     title: "PORTS: Preference-Optimized Retrievers for Tool Selection with Large Language Models",
-    authors: "Lorenzo Molfetta, Giacomo Frisoni, Niccolò Monaldini, Gianluca Moro",
+    authors: "Lorenzo Molfetta, Giacomo Frisoni, Nicolò Monaldini, Gianluca Moro",
     venue: "EMNLP", year: 2025, type: "conference", selected: true, role: "first",
     tags: ["Tool use", "Retrieval", "LLMs"],
     tldr: "PORTS trains a retriever to pre-select the most useful tools for an LLM, using a preference signal derived from the LLM's own downstream performance.",
-    abstract: "Integrating external tools with Large Language Models (LLMs) has emerged as a promising paradigm for accomplishing complex tasks. Since LLMs still struggle to effectively manage large tool collections, researchers have begun exploring retrieval-based methods to pre-select the most relevant options, addressing input length and latency constraints. However, existing retrievers are often misaligned with tool-calling LLMs due to their separate training processes. This paper presents PORTS, a novel odds-ratio preference optimization method for training retrievers aimed at tool selection. Using a perplexity-inspired preference signal from a frozen LLM, our approach fine-tunes a retriever to find helpful tools by optimizing the correlation between selection probabilities and downstream performances while jointly enforcing a contrastive semantic loss between documentation strings. PORTS is evaluated on six datasets, two encoder models, and three LLMs with diverse prior knowledge.",
+    abstract: "Integrating external tools with Large Language Models (LLMs) has emerged as a promising paradigm for accomplishing complex tasks. Since LLMs still struggle to effectively manage large tool collections, researchers have begun exploring retrieval-based methods to pre-select the most relevant options, addressing input length and latency constraints. However, existing retrievers are often misaligned with tool-calling LLMs due to their separate training processes. This paper presents PORTS, a novel odds ratio preference optimization method for training retrievers aimed at tool selection. Using a perplexity-inspired preference signal from a frozen LLM, our approach fine-tunes a retriever to find helpful tools by optimizing the correlation between the selection probabilities and the downstream performances while jointly enforcing a contrastive semantic loss between documentation strings. The versatility of PORTS and its ability to significantly improve tool selection accuracy are demonstrated through extensive experiments on six datasets, two encoder models, and three LLMs with diverse prior knowledge. With low computational demands, our alignment process facilitates generalization to new queries and tools, proving valuable for practical applications with evolving toolsets.",
+    abstractSource: "https://aclanthology.org/2025.emnlp-main.507/",
     method: "PORTS aligns a retriever with a frozen tool-calling LLM through an odds-ratio preference optimization. Tool-documentation triplets (one positive, several negatives) are encoded independently and prompted separately to the frozen LLM. The retriever is fine-tuned so that its selection probabilities correlate with the LLM's answer likelihood — maximizing the ratio between the odds of selecting the right tool versus the wrong ones — while a contrastive semantic loss over documentation embeddings keeps representations meaningful. Only the retriever is updated, so alignment is cheap and the LLM stays frozen.",
     results: "Across six datasets, two encoders and three LLMs, PORTS lifts tool-selection accuracy substantially: average Recall@1-3 by up to +71.7 points and NDCG@1,3,5 by +70.2 over the RePlug baseline for seen tools; for unseen tools it still gains +61.2 Recall and +59.8 NDCG. The alignment is low-cost and generalizes to new queries and tools.",
     sections: [
       {
         id: "method", title: "Method",
-        body: `Tool-calling LLMs are gated by **input length and latency** — you cannot feed them a 10,000-tool catalog, so a retriever pre-selects a few relevant tools first. The problem is that retrievers are trained on *semantic similarity* between query and docstring, while the LLM only cares about *whether the tool actually helps it answer*. The two objectives are misaligned, and a tool that reads as topically similar can be useless downstream. **PORTS** closes this gap with an **odds-ratio preference optimization** built from the LLM's own signal: it takes tool-documentation triplets (one positive, several negatives), encodes each independently, prompts the frozen LLM separately with every candidate, and reads off an answer-likelihood — a *perplexity-inspired* preference signal for how much that tool helps. The retriever is then fine-tuned to maximize the ratio between the odds of selecting the right tool versus the wrong ones, $\mathcal{L}_{\text{PORTS}} = -\log \frac{\text{odds}(\text{right tool})}{\sum_{j}\text{odds}(\text{wrong tool}_j)}$, while a contrastive semantic loss over documentation embeddings keeps representations meaningful so preference alignment does not collapse the embedding space. Only the retriever updates — the LLM stays frozen — so **alignment is cheap** and one-off.
+        body: `Tool-calling LLMs are gated by **input length and latency** — you cannot feed them a 10,000-tool catalog, so a retriever pre-selects a few relevant tools first. The problem is that retrievers are trained on *semantic similarity* between query and docstring, while the LLM only cares about *whether the tool actually helps it answer*. The two objectives are misaligned, and a tool that reads as topically similar can be useless downstream. **PORTS** closes this gap with an **odds-ratio preference optimization** built from the LLM's own signal: it takes tool-documentation triplets (one positive, several negatives), encodes each independently, prompts the frozen LLM separately with every candidate, and reads off an answer-likelihood — a *perplexity-inspired* preference signal for how much that tool helps. The retriever is then fine-tuned to maximize the ratio between the odds of selecting the right tool versus the wrong ones, $\\mathcal{L}_{\\text{PORTS}} = -\\log \\frac{\\text{odds}(\\text{right tool})}{\\sum_{j}\\text{odds}(\\text{wrong tool}_j)}$, while a contrastive semantic loss over documentation embeddings keeps representations meaningful so preference alignment does not collapse the embedding space. Only the retriever updates — the LLM stays frozen — so **alignment is cheap** and one-off.
 
 ![PORTS overview: a frozen tool-calling LLM emits a perplexity-inspired preference signal that fine-tunes the retriever.](/assets/paper-img/ports/overview.png "**PORTS.** The frozen LLM emits a perplexity-inspired preference signal; the retriever is fine-tuned so that its selection probability for a tool correlates with that tool's downstream contribution to the LLM's answer. Only the retriever is updated.")
 
@@ -92,7 +154,7 @@ The gains hold across all three LLMs and both encoder backbones, so PORTS is not
 > **Scope.** PORTS assumes a frozen tool-calling LLM whose answer-likelihood can be read off as a preference signal, and a fixed tool catalog with textual documentation. Dynamic tool inventories and multi-step tool *chaining* — where the right tool depends on the previous call's output — remain open.`
       }
     ],
-    links: { code: "https://github.com/disi-unibo-nlp/ports", read: "https://aclanthology.org/2025.emnlp-main.507/" }
+    links: {"code": "https://github.com/disi-unibo-nlp/ports", "read": "https://aclanthology.org/2025.emnlp-main.507/", "doi": "https://doi.org/10.18653/v1/2025.emnlp-main.507", "pdf": "https://aclanthology.org/2025.emnlp-main.507.pdf", "arxiv": "https://arxiv.org/abs/2607.05441"}
   },
   {
     id: "feast",
@@ -101,7 +163,8 @@ The gains hold across all three LLMs and both encoder backbones, so PORTS is not
     venue: "ECAI", year: 2025, type: "conference", selected: true, role: "first",
     tags: ["Retrieval-augmented", "Food / health", "Classification"],
     tldr: "A retrieval-augmented classifier over the multi-hierarchical FoodEx2 food-coding taxonomy.",
-    abstract: "Hierarchical text classification and extreme multi-label classification face compounded challenges from complex label interdependencies, data sparsity, and extreme output dimensions. These are exemplified in the EFSA FoodEx2 system. We propose FEAST (Food Embedding And Semantic Taxonomy), a retrieval-augmented framework that decomposes FoodEx2 classification into a three-stage approach: (1) base term identification, (2) multi-label facet prediction, and (3) facet descriptor assignment. By leveraging the system's hierarchical structure to guide training and performing deep metric learning, FEAST learns discriminative embeddings that mitigate data sparsity and improve generalization on rare and fine-grained labels.",
+    abstract: "Hierarchical text classification (HTC) and extreme multi-label classification (XML) tasks face compounded challenges from complex label interdependencies, data sparsity, and extreme output dimensions. These challenges are exemplified in the European Food Safety Authority's FoodEx2 system-a standardized food classification framework essential for food consumption monitoring and contaminant exposure assessment across Europe. FoodEx2 coding transforms natural language food descriptions into a set of codes from multiple standardized hierarchies, but faces implementation barriers due to its complex structure. Given a food description (e.g., \"organic yogurt''), the system identifies its base term (\"yogurt''), all the applicable facet categories (e.g., \"production method''), and then, every relevant facet descriptors to each category (e.g., \"organic production''). While existing models perform adequately on well-balanced and semantically dense hierarchies, no work has been applied on the practical constraints imposed by the FoodEx2 system. The limited literature addressing such real-world scenarios further compounds these challenges. We propose FEAST (Food Embedding And Semantic Taxonomy), a novel retrieval-augmented framework that decomposes FoodEx2 classification into a three-stage approach: (1) base term identification, (2) multi-label facet prediction, and (3) facet descriptor assignment. By leveraging the system's hierarchical structure to guide training and performing deep metric learning, FEASTlearns discriminative embeddings that mitigate data sparsity and improve generalization on rare and fine-grained labels. Evaluated on the multilingual FoodEx2 benchmark, FEAST outperforms the prior European's CNN baseline F1 scores by 12-38 % on rare classes.",
+    abstractSource: "https://arxiv.org/abs/2603.03176",
     sections: [
       {
         id: "method", title: "Method",
@@ -155,7 +218,7 @@ On the multi-label facet task (Task II), a 142M-parameter DeBERTa-v3 bi-encoder 
 > **Scope.** FEAST targets the FoodEx2 hierarchy specifically; the decomposition (base term → facets → descriptors) is dictated by that system's structure. The taxonomy-aware mining recipe is general and transfers to any hierarchically-organized label space suffering from data sparsity.`
       }
     ],
-    links: { arxiv: "https://arxiv.org/abs/2603.03176", read: "https://ebooks.iospress.nl/doi/10.3233/FAIA251309" }
+    links: {"arxiv": "https://arxiv.org/abs/2603.03176", "read": "https://ebooks.iospress.nl/doi/10.3233/FAIA251309", "doi": "https://doi.org/10.3233/FAIA251309", "pdf": "https://arxiv.org/pdf/2603.03176"}
   },
   {
     id: "graph-of-mark",
@@ -164,7 +227,8 @@ On the multi-label facet task (Task II), a 142M-parameter DeBERTa-v3 bi-encoder 
     venue: "AAAI", year: 2026, type: "conference", selected: true, role: "cofirst",
     tags: ["Multimodal", "Spatial reasoning", "Visual prompting"],
     tldr: "Graph-based visual prompting that improves spatial reasoning in multimodal language models.",
-    abstract: "Training-free visual prompting techniques such as Set-of-Mark partition an image into object regions annotated with marks (boxes with numeric identifiers) before feeding the augmented image to a multimodal language model (MLM). However, they treat marked objects as isolated entities, failing to capture the relationships between them. We propose Graph-of-Mark (GoM), the first pixel-level visual prompting technique that overlays scene graphs onto the input image for spatial reasoning tasks. We evaluate GoM across 3 open-source MLMs and 4 datasets, conducting extensive ablations on drawn components and investigating the impact of auxiliary graph descriptions in the text prompt.",
+    abstract: "Recent advances in training-free visual prompting, such as Set-of-Mark, have emerged as a promising direction for enhancing the grounding capabilities of multimodal language models (MLMs). These techniques operate by partitioning the input image into object regions and annotating them with marks, predominantly boxes with numeric identifiers, before feeding the augmented image to the MLM. However, these approaches treat marked objects as isolated entities, failing to capture the relationships between them. On these premises, we propose Graph-of-Mark (GoM), the first pixel-level visual prompting technique that overlays scene graphs onto the input image for spatial reasoning tasks. We evaluate GoM across 3 open-source MLMs and 4 different datasets, conducting extensive ablations on drawn components and investigating the impact of auxiliary graph descriptions in the text prompt. Our results demonstrate that GoM consistently improves the zero-shot capability of MLMs in interpreting object positions and relative directions, improving base accuracy in visual question answering and localization up to 11 percentage points.",
+    abstractSource: "https://arxiv.org/abs/2603.06663",
     sections: [
       {
         id: "context", title: "Context",
@@ -241,16 +305,17 @@ The consistent gains across VQA and REC — and the open release of code, prepro
 > **Scope.** GoM is training-free and validated on open-source MLMs ≤11B. The relation ontology is **geometric** (directional / depth / proximity); semantic and physical relations — functional, action-based — are left to future work, along with scene hypergraphs, stereo depth, and temporal/video modeling.`
       }
     ],
-    links: { arxiv: "https://arxiv.org/abs/2603.06663", read: "https://ojs.aaai.org/index.php/AAAI/article/view/40329" }
+    links: {"arxiv": "https://arxiv.org/abs/2603.06663", "read": "https://ojs.aaai.org/index.php/AAAI/article/view/40329", "doi": "https://doi.org/10.1609/aaai.v40i36.40329", "pdf": "https://arxiv.org/pdf/2603.06663"}
   },
   {
     id: "comma",
     title: "COMMA: A Multi-task and Multi-lingual Dataset of Constitutional Verdicts",
-    authors: "Luca Ragazzi, Giacomo Frisoni, Gianluca Moro, Paolo Italiani, Lorenzo Molfetta, Valentina Folin",
+    authors: "Luca Ragazzi, Giacomo Frisoni, Gianluca Moro, Paolo Italiani, Lorenzo Molfetta, Veronika Folin",
     venue: "Artificial Intelligence and Law", year: 2026, type: "journal", selected: true, role: "cofirst",
     tags: ["Legal NLP", "Dataset", "Multilingual"],
     tldr: "A multi-task, multilingual dataset of constitutional-court verdicts for legal NLP.",
-    abstract: "Transformer-based language models have sparked a revolutionary change in Legal NLP, but the dearth of large-scale datasets from authoritative sources hampers progress; available resources are mostly single-task, English-only, and written in layman's terms. We introduce COMMA, a multi-task, multilingual archive of 14K verdicts from the Constitutional Court of the Italian Republic (a non-common-law system). Documents address fundamental principles and rights, involve technical jargon, are diachronic and long. COMMA spans 4 languages and 4 tasks: multi-granular abstractive summarization, decision generation, article retrieval, and ruling classification.",
+    abstract: "Transformer-based language models have sparked a revolutionary change in Legal NLP, endowing lawyers with unparalleled tools to effectively navigate, understand, and draft large volumes of text. However, the dearth of large-scale datasets from authoritative sources hampers further progress. The available resources are primarily single-task, English-only, and written in layman’s terms. To bridge this gap, we introduce Comma , a multi-task and multi-lingual archive of 14K verdicts drawn from the Constitutional Court of the Italian Republic, grounded in a non-common law system. Documents in Comma diverge from ordinary legal manuscripts as they address fundamental principles and rights, involve technical jargon, exhibit an articulated structure, are diachronic, have extended length, and demand more significant expertise and interpretation. By embracing 4 widespread languages, Comma tackles a panoply of necessity-driven tasks: multi-granular abstractive summarization, decision generation, article retrieval, and ruling classification. We systematically benchmark a catalog of language models in both few-shot and full settings, uncovering substantial headroom for improvement. We contribute to the new era of Legal NLP systems by openly releasing Comma and best-performing models (https://github.com/disi-unibo-nlp/comma).",
+    abstractSource: "https://api.crossref.org/works/10.1007/s10506-026-09520-x",
     method: "COMMA is a multi-task, multilingual archive of 14K verdicts from the Italian Constitutional Court (a non-common-law system). The documents address fundamental rights, use technical jargon, are diachronic and long. COMMA covers 4 languages and 4 tasks: multi-granular abstractive summarization, decision generation, article retrieval, and ruling classification.",
     results: "Benchmarking a catalog of language models in few-shot and full settings reveals substantial headroom for improvement across all four tasks. The dataset and best-performing models are released openly.",
     sections: [
@@ -270,7 +335,7 @@ COMMA frames **seven tasks in four families** that are each meaningful to legal 
 
 ### RQ1 — Does long-context reading pay off?
 
-Yes, and it is the single clearest signal. **Long-context (LSG) models outperform vanilla ones on every generative task**, because reading and comprehending a *full* ruling is what drives performance. On ruling → narrative summarization, ROUGE-1 ($\mathcal{R}$) rises by **+14% to +28%** and BertScore (BeS) by **+68% to +96%** when the model can ingest the entire input; on ruling → bullet-point, the gains are **+8–10%** $\mathcal{R}$ and **+13–15%** BeS. Condensed inputs help too — maxim-text → bullet-point outperforms ruling → bullet-point, confirming that compressing the source simplifies the summarization task.
+Yes, and it is the single clearest signal. **Long-context (LSG) models outperform vanilla ones on every generative task**, because reading and comprehending a *full* ruling is what drives performance. On ruling → narrative summarization, ROUGE-1 ($\\mathcal{R}$) rises by **+14% to +28%** and BertScore (BeS) by **+68% to +96%** when the model can ingest the entire input; on ruling → bullet-point, the gains are **+8–10%** $\\mathcal{R}$ and **+13–15%** BeS. Condensed inputs help too — maxim-text → bullet-point outperforms ruling → bullet-point, confirming that compressing the source simplifies the summarization task.
 
 ![ROUGE-1 across training-set sizes and languages for the ruling→body summarization task.](/assets/paper-img/comma/comma_rouge1_body.png "**ROUGE-1 vs. training-set size** for ruling → body summarization across IT/EN/ES/FR. Performance climbs with data, but every model plateaus well below human quality — the long, jargon-heavy targets are the bottleneck.")
 
@@ -289,7 +354,7 @@ A lot, on every task. Full fine-tuning beats few-shot prompting, as expected, bu
 > **Scope.** COMMA is drawn from a single (civil-law) constitutional court; cross-jurisdiction transfer and the diachronic-drift axis specifically are open. The seven tasks are a starting set — the corpus supports more (e.g., citation-graph and precedent-network prediction).`
       }
     ],
-    links: { read: "https://link.springer.com/article/10.1007/s10506-026-09520-x" }
+    links: {"read": "https://link.springer.com/article/10.1007/s10506-026-09520-x", "doi": "https://doi.org/10.1007/s10506-026-09520-x", "code": "https://github.com/disi-unibo-nlp/comma"}
   },
   {
     id: "nesy-survey",
@@ -298,7 +363,8 @@ A lot, on every task. Full fine-tuning beats few-shot prompting, as expected, bu
     venue: "IJCAI", year: 2025, type: "conference", selected: true, role: "cofirst",
     tags: ["Neuro-symbolic", "Survey", "Explainability"],
     tldr: "A task-directed survey of neuro-symbolic AI in the era of black-box models, covering explainability and reasoning.",
-    abstract: "The integration of symbolic computing with neural networks has intrigued researchers since the first theorizations of AI. The ability of Neuro-Symbolic (NeSy) methods to infer or exploit behavioral schema has been widely considered as a possible proxy for human-level intelligence. However, limited semantic generalizability and the difficulty of declining complex domains with pre-defined patterns hinder their practical implementation. The unprecedented results of connectionist systems since the 2017 AI breakthrough have raised questions about the competitiveness of NeSy solutions. This survey examines task-specific advancements in the NeSy domain to explore how incorporating symbolic systems can enhance explainability and reasoning capabilities.",
+    abstract: "The integration of symbolic computing with neural networks has intrigued researchers since the first theorizations of Artificial intelligence (AI). The ability of Neuro-Symbolic (NeSy) methods to infer or exploit behavioral schema has been widely considered as one of the possible proxies for human-level intelligence. However, the limited semantic generalizability and the challenges in declining complex domains with pre-defined patterns and rules hinder their practical implementation in real-world scenarios. The unprecedented results achieved by connectionist systems since the last AI breakthrough in 2017 have raised questions about the competitiveness of NeSy solutions, with particular emphasis on the Natural Language Processing and Computer Vision fields. This survey examines task-specific advancements in the NeSy domain to explore how incorporating symbolic systems can enhance explainability and reasoning capabilities. Our findings are meant to serve as a resource for researchers exploring explainable NeSy methodologies for real-life tasks and applications. Reproducibility details and in-depth comments on each surveyed research work are made available at https://github.com/disi-unibo-nlp/task-oriented-neuro-symbolic.git.",
+    abstractSource: "https://arxiv.org/abs/2603.03177",
     sections: [
       {
         id: "method", title: "Method",
@@ -344,7 +410,7 @@ Only benchmarks meeting a fairness criterion are labelled on the taxonomy above;
 > **Scope & outlook.** Image-based reasoning (post-NS-CL) appears near saturation; well-structured synthetic benchmarks reflecting real scenarios (e.g., CLEVR's effect on spatial reasoning) can still drive field-wide advances. The most promising frontiers are **trustworthy deployment via NLI-grounded constraints** — DFAs for shielding, reward shaping, and rule enforcement — in high-stakes domains (surgery, medical QA, autonomous driving, legal analysis), and design patterns like NeSyFOLD that mine rules from *neural features*, partial-interpretability bridges into black-box models.`
       }
     ],
-    links: { arxiv: "https://arxiv.org/abs/2603.03177", code: "https://github.com/disi-unibo-nlp/task-oriented-neuro-symbolic", read: "https://www.ijcai.org/proceedings/2025/1157" }
+    links: {"arxiv": "https://arxiv.org/abs/2603.03177", "code": "https://github.com/disi-unibo-nlp/task-oriented-neuro-symbolic", "read": "https://www.ijcai.org/proceedings/2025/1157", "doi": "https://doi.org/10.24963/ijcai.2025/1157", "pdf": "https://www.ijcai.org/proceedings/2025/1157.pdf"}
   },
   {
     id: "mixture-of-masters",
@@ -353,7 +419,8 @@ Only benchmarks meeting a fairness criterion are labelled on the taxonomy above;
     venue: "arXiv preprint", year: 2026, type: "preprint", role: "cofirst",
     tags: ["Mixture of experts", "Chess", "Language models"],
     tldr: "A sparse mixture-of-experts chess language model where each expert channels a grandmaster's style, routed per move.",
-    abstract: "Modern chess language models are dense transformers trained on millions of games, but they collapse into mode-averaged behavior where stylistic boundaries blur and rare but effective strategies are suppressed. We introduce Mixture-of-Masters (MoM), the first chess mixture-of-experts model with small GPT experts emulating world-class grandmasters. For each move, a post-hoc learnable gating network selects the most appropriate persona to channel depending on the game state, allowing MoM to switch style dynamically.",
+    abstract: "Modern chess language models are dense transformers trained on millions of games played by thousands of high-rated individuals. However, these monolithic networks tend to collapse into mode-averaged behavior, where stylistic boundaries are blurred, and rare but effective strategies are suppressed. To counteract homogenization, we introduce Mixture-of-Masters (MoM), the first chess mixture-of-experts model with small-sized GPT experts emulating world-class grandmasters. For each move, a post-hoc learnable gating network selects the most appropriate persona to channel depending on the game state, allowing MoM to switch its style dynamically, e.g., Tal's offensive vocation or Petrosian's defensive solidity. When evaluated against Stockfish on unseen standard games, MoM outperforms both dense individual expert networks and popular GPT baselines trained on aggregated data, while ensuring generation variety, control, and interpretability.",
+    abstractSource: "https://arxiv.org/abs/2602.04447",
     sections: [
       {
         id: "method", title: "Method",
@@ -408,7 +475,7 @@ The router doesn't collapse onto one expert. It maintains **sharp top-$k$ concen
 > **Scope.** MoM shows that persona-aligned experts, stitched with a lightweight router, beat both dense and randomly-partitioned ensembles at the same parameter budget. The framework is demonstrated on chess; whether the same persona-routing principle transfers to other sequential-decision domains (code, dialogue) is the open question.`
       }
     ],
-    links: { arxiv: "https://arxiv.org/abs/2602.04447" }
+    links: {"arxiv": "https://arxiv.org/abs/2602.04447", "pdf": "https://arxiv.org/pdf/2602.04447"}
   },
   {
     id: "retrieve-rank",
@@ -417,7 +484,8 @@ The router doesn't collapse onto one expert. It maintains **sharp top-$k$ concen
     venue: "SISAP", year: 2023, type: "conference", selected: true, role: "cofirst",
     tags: ["Summarization", "Biomedical", "Retrieval"],
     tldr: "RAMSES: an end-to-end retrieve-and-rank model for summarising multiple biomedical studies.",
-    abstract: "An arduous biomedical task involves condensing evidence from multiple interrelated studies given a context. We name this task context-aware multi-document summarization (CA-MDS); existing SOTA solutions truncate the input because of high memory demands, losing meaningful content. We propose RAMSES, which employs a retrieve-and-rank technique for end-to-end summarization: it indexes each document by its semantic features, retrieves the most relevant ones, and generates a summary via token-probability marginalization. We also introduce FAQSUMC19, a dataset of multiple supporting papers answering Covid-19 questions.",
+    abstract: "An arduous biomedical task involves condensing evidence derived from multiple interrelated studies, given a context as input, to generate reviews or provide answers autonomously. We named this task context-aware multi-document summarization (CA-MDS). Existing state-of-the-art (SOTA) solutions require truncation of the input due to the high memory demands, resulting in the loss of meaningful content. To address this issue effectively, we propose a novel approach called RAMSES, which employs a retrieve-and-rank technique for end-to-end summarization. The model acquires the ability to (i) index each document by modeling its semantic features, (ii) retrieve the most relevant ones, and (iii) generate a summary via token probability marginalization. To facilitate the evaluation, we introduce a new dataset, FAQSUMC19, which includes the synthesizing of multiple supporting papers to answer questions related to Covid-19. Our experimental findings demonstrate that RAMSES achieves notably superior ROUGE scores compared to state-of-the-art methodologies, including the establishment of a new SOTA for the generation of systematic literature reviews using MS2. Quality observation through human evaluation indicates that our model produces more informative responses than previous leading approaches.",
+    abstractSource: "https://cris.unibo.it/handle/11585/962117",
     method: "RAMSES tackles context-aware multi-document summarization (CA-MDS). It indexes each document by its semantic features, retrieves the most relevant ones, and generates a summary via token-probability marginalization — avoiding the input truncation that hurts SOTA models. We also introduce FAQSUMC19, a Covid-19 multi-paper QA dataset for evaluation.",
     results: "RAMSES achieves notably higher ROUGE than SOTA methods and sets a new SOTA for systematic-review generation on MS2; human evaluation rates its summaries as more informative than prior leading approaches.",
     sections: [
@@ -448,28 +516,29 @@ On **MS2** (systematic-review generation), RAMSES posts a new SOTA. Crucially, *
 > **Scope.** RAMSES targets biomedical CA-MDS where documents are long but individually well-structured; domains with dense cross-document contradictions or heavily multi-modal evidence are left to future work.`
       }
     ],
-    links: { read: "https://link.springer.com/chapter/10.1007/978-3-031-46994-7_6" }
+    links: {"read": "https://link.springer.com/chapter/10.1007/978-3-031-46994-7_6", "doi": "https://doi.org/10.1007/978-3-031-46994-7_6"}
   },
   {
     id: "ke-qa",
     title: "Knowledge-enhanced Neural Models for Question Answering Based on Retrieval",
     authors: "Lorenzo Molfetta",
-    venue: "MSc thesis", year: 2023, type: "preprint", role: "first",
+    venue: "MSc thesis", year: 2023, type: "thesis", role: "first",
     tags: ["Question answering", "Knowledge graphs", "Retrieval"],
-    tldr: "Knowledge-enhanced neural question answering based on retrieval (MSc thesis).",
+    tldr: "An MSc thesis on explainability and biomedical question answering through context augmentation, passage reranking and structured knowledge.",
+    abstract: "Explainability in AI models has emerged as a paramount concern in various domains, including natural language processing (NLP). Understanding and interpreting AI models' decision-making processes is crucial for ensuring their ethical and trustworthy deployment. This thesis addresses the pressing need to improve explainability in language models, explicitly focusing on knowledge retrieval and integration for question-answering tasks. It delves into the rich landscape of neuro-symbolic and sub-symbolic techniques in reasoning, highlighting their strengths in combining rule-based interpretability with data-driven learning. The study provides a comprehensive overview of research advances in explainable AI. Also, it proposes to adopt a context-augmentation strategy for tackling the question-answering task in the biomedical field. This approach aims at enhancing the performances of retrieval models without intervening directly on its core functioning, namely modifying its parameters, but rather carrying out a reranking of the retrieved passages internally to the inference network. The proposed strategy suggests leveraging external sources more efficiently by integrating structured knowledge into the answer generation. This thesis encourages the usage of systems fostering explainability by showing the theoretical foundations and results of knowledge-enhanced solutions in the question-answering field. By inspiring confidence in users, regulators, and stakeholders, we propel the deployment of AI technologies towards a more transparent and accountable future.",
+    abstractSource: "https://amslaurea.unibo.it/id/eprint/30058/",
     sections: [
       {
-        id: "method", title: "Method",
-        body: `Parametric language models answer from *weights* — facts are stored implicitly and cannot be traced or verified. This MSc thesis investigates **knowledge-enhanced neural question answering based on retrieval**: combine a parametric model with **retrieved, structured evidence** (knowledge-graph facts) so answers are grounded in something checkable.
-
-The design pairs a neural reader with a retriever over a knowledge graph: given a question, structured evidence is fetched and fused into the reader's context, steering the answer toward retrieved, citable facts rather than parametric recall alone.`
+        "id": "method",
+        "title": "Method",
+        "body": "This MSc thesis studies explainability in language models, with a focus on retrieving and integrating knowledge for question answering. It reviews neuro-symbolic and sub-symbolic reasoning approaches and their different routes to interpretability.\n\nFor biomedical QA, it proposes a **context-augmentation strategy** that reranks retrieved passages inside the inference network without changing the retriever parameters. Structured knowledge is integrated into answer generation to make better use of external sources."
       },
       {
-        id: "evidence", title: "Evidence",
-        body: `The thesis demonstrates that grounding neural QA with retrieved knowledge yields **more factual, traceable answers** than a purely parametric baseline — errors become attributable (a wrong retrieved fact vs. a wrong reader step), and domain/biomedical questions benefit most from explicit structured evidence.
-
-> **Scope.** This is MSc-level work establishing the value of retrieval-grounded QA; the open questions — handling conflicting evidence, scaling to web-sized graphs, multi-hop chaining — motivate the later line of research on this site.`
+        "id": "scope",
+        "title": "Scope",
+        "body": "The thesis connects the theoretical foundations of explainable AI with knowledge-enhanced question answering. The [University of Bologna repository](https://amslaurea.unibo.it/id/eprint/30058/) provides the official metadata and full abstract; the thesis full text is not publicly available there."
       }
-    ]
+    ],
+    links: {"read": "https://amslaurea.unibo.it/id/eprint/30058/"}
   }
 ];
