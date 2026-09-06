@@ -6,6 +6,7 @@
   --paper:#f6f0df;             /* warm risograph paper */
   --cobalt:#2148c4; --coral:#d45438;
   --display:'Archivo Black',sans-serif; --hand:'Caveat',cursive;
+  --band:#181510; --yellow:#ffc72c;
   --ink:#1a1611;
   --muted:#6f685c;
   --line:#1e4d33;              /* dark green structural borders */
@@ -423,9 +424,17 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offs
 .nav-name::after{background:var(--wash-gold);height:10px;bottom:-9px}
 .page-title{font-family:var(--display);font-weight:400;font-size:36px;letter-spacing:-.02em}
 .section-head .lbl,.paper-h,.cv-h{font-family:var(--display);font-weight:400;font-variant:normal;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
-.section-head .lbl{background:var(--wash-gold);box-shadow:3px 3px 0 var(--coral)}
+.section-head{background:var(--band);border:2px solid var(--band);padding:10px 12px;box-shadow:3px 3px 0 var(--coral)}
+.section-head .lbl{background:none;color:var(--yellow);border:0;box-shadow:none;transform:none;padding:0}
+.section-head .all,.section-head .mark{color:var(--yellow)}
+.paper-h,.cv-h{background:var(--band);color:var(--yellow);border-color:var(--band)}
+.bio strong,.research-item strong{font-weight:700;color:var(--ink)}
+.bio em{color:var(--cobalt)}
+.research-lead{font-weight:400}
+.research-lead strong{font-weight:700}
+.research-lead em{font-family:var(--hand);font-size:1.18em;font-weight:600;color:var(--cobalt)}
 .status-item{display:grid;grid-template-columns:58px minmax(0,1fr);gap:16px;align-items:center;padding:13px 18px}
-.status-item .prompt{font-family:'Computer Modern Typewriter',monospace;font-size:12px;letter-spacing:.06em;border-right:1px dashed currentColor;padding:9px 10px 9px 0}
+.status-item .prompt{font-family:var(--display);font-size:11px;letter-spacing:.06em;border-right:1px dashed currentColor;padding:9px 10px 9px 0}
 .status-item .out{font-family:'Computer Modern Typewriter',monospace;font-weight:400;font-size:15px;line-height:1.5;color:var(--ink)}
 .status-item.s0{background:var(--card);box-shadow:4px 4px 0 var(--coral)}
 .status-item.s1{background:var(--card);box-shadow:4px 4px 0 var(--cobalt)}

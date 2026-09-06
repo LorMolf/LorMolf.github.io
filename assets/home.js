@@ -23,7 +23,7 @@ export function renderHome(){
   const researchItems = items.map((r,i)=>`
     <div class="research-item">
       ${markByIndex(i)}
-      <div><div class="t">${escapeHtml(r.title)}</div><div class="b">${escapeHtml(r.blurb)}</div></div>
+      <div><div class="t">${escapeHtml(r.title)}</div><div class="b">${parseLinks(r.blurb)}</div></div>
     </div>`).join("");
 
   const newsItems = (news||[]).slice(0,5).map((n,i)=>`
@@ -53,7 +53,7 @@ export function renderHome(){
       </div>
     </div>
     <div class="research">
-      <div class="research-lead">${escapeHtml(site.research.lead)}</div>
+      <div class="research-lead">${parseLinks(site.research.lead)}</div>
       <div class="research-list">${researchItems}</div>
       ${site.research.more && site.research.more.length ? `<button class="btn" id="more-btn" style="margin-top:18px">${state.showMore?"− show less":"+ more topics"}</button>`:""}
     </div>

@@ -17,17 +17,17 @@ export const site = {
     { c: 1, text: "at home in Puglia." }
   ],
   bio: [
-    "I'm a PhD student in Computer Science and Engineering at the [University of Bologna](https://www.unibo.it/en), working on Natural Language Processing and Information Retrieval, and a member of the [UniboNLP group](https://disi-unibo-nlp.github.io).",
-    "My research centres on retrieval-augmented question answering, language-model reasoning and vision-language models, with applications in biomedical and legal domains.",
-    "I'm broadly interested in making language models more reliable, grounded and interpretable through retrieval, tool-use and structured (graph) representations.",
-    "During my PhD, I completed a six-month research visit at the [University of Edinburgh](https://www.ed.ac.uk), from 30 January to 30 July 2026, working with Pasquale Minervini on synthetic data generation and language-model reasoning."
+    "I'm a **PhD student** in Computer Science and Engineering at the [University of Bologna](https://www.unibo.it/en), working on **Natural Language Processing** and **Information Retrieval**, and a member of the [UniboNLP group](https://disi-unibo-nlp.github.io).",
+    "My research centres on **retrieval-augmented question answering**, **language-model reasoning** and **vision-language models**, with applications in biomedical and legal domains.",
+    "I'm broadly interested in making language models more *reliable, grounded and interpretable* through retrieval, tool-use and structured (graph) representations.",
+    "During my PhD, I completed a **six-month research visit** at the [University of Edinburgh](https://www.ed.ac.uk), from 30 January to 30 July 2026, working with Pasquale Minervini on synthetic data generation and language-model reasoning."
   ],
   research: {
-    lead: "I study how retrieval, tool-use and graph structure can make language models more grounded and reliable.",
+    lead: "I study how **retrieval**, **tool-use** and **graph structure** can make language models more *grounded and reliable*.",
     current: [
-      { title: "Retrieval & Tool-Use in LLMs", blurb: "Learning to retrieve useful evidence and select tools that help language models solve a task." },
-      { title: "Legal Language Models", blurb: "Building legal datasets and studying how language models handle authority, temporal validity and changing legal standards." },
-      { title: "Language-Model & Multimodal Reasoning", blurb: "Learning from search and self-play, and using graph structure to improve spatial reasoning in vision-language models." }
+      { title: "Retrieval & Tool-Use in LLMs", blurb: "Learning to **retrieve useful evidence** and **select tools** that help language models solve a task." },
+      { title: "Legal Language Models", blurb: "Building legal datasets and studying how language models handle **authority**, **temporal validity** and changing legal standards." },
+      { title: "Language-Model & Multimodal Reasoning", blurb: "Learning from **search and self-play**, and using **graph structure** to improve spatial reasoning in vision-language models." }
     ],
     more: [
       { title: "Sparse & Specialised Language Models", blurb: "Mixture-of-experts models that route between specialised behaviours while keeping computation sparse." },

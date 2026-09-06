@@ -50,6 +50,16 @@ with sync_playwright() as pw:
             assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/spsd/'
             assert page.locator('.status-item .out').all_text_contents() == ['finishing my PhD at the end of October.', 'at home in Puglia.']
             assert page.locator('.status-item .out').evaluate_all('(nodes) => nodes.every(e => getComputedStyle(e).fontFamily.includes("Computer Modern Typewriter"))')
+            assert page.locator('.status-item .prompt').evaluate_all('(nodes) => nodes.every(e => getComputedStyle(e).fontFamily.includes("Archivo Black"))')
+            assert page.locator('.bio strong').count() >= 4
+            assert page.locator('.research-lead em').evaluate('(e) => getComputedStyle(e).fontFamily.includes("Caveat")')
+            assert page.locator('.section-head').evaluate_all('(nodes) => nodes.every(e => getComputedStyle(e).backgroundColor === "rgb(24, 21, 16)")')
+            assert page.evaluate('''async () => {
+                const {parseLinks} = await import('/assets/util.js');
+                return parseLinks('**bold** *italic* <script>') === '<strong>bold</strong> <em>italic</em> &lt;script&gt;' &&
+                    parseLinks('[**label**](https://example.com/a_b)') === '<a href="https://example.com/a_b" target="_blank" rel="noopener"><strong>label</strong></a>' &&
+                    parseLinks('plain snake_case & text') === 'plain snake_case &amp; text';
+            }''')
             assert page.locator('.status .cur').evaluate('(e) => getComputedStyle(e).display === "inline-block" && getComputedStyle(e).animationName === "blink"')
             assert page.locator('.research-lead').evaluate('(e) => getComputedStyle(e).maxWidth === "none" && !e.querySelector("br")')
             image = page.locator('.photo-frame img')
@@ -84,8 +94,10 @@ with sync_playwright() as pw:
             for kind, key in [('figure', 'figures'), ('table', 'tables')]:
                 actual = page.locator(f'.source-visual[data-kind="{kind}"]').evaluate_all('(figs) => figs.map(f => f.dataset.label).filter(s => !s.toLowerCase().includes("continued"))')
                 assert len(actual) == len(set(actual)) and set(actual) == set(visual_data['expected'][key]), (route, key, 'Incomplete source coverage')
+            assert page.locator('.paper-visuals').get_attribute('open') is not None, 'Source gallery hidden on arrival'
             page.locator('.paper-visuals summary').click()
-            assert page.locator('.paper-visuals').get_attribute('open') is not None
+            assert page.locator('.paper-visuals').get_attribute('open') is None
+            page.locator('.paper-visuals summary').click()
             page.locator('.source-visual img').evaluate_all('(images) => images.forEach(i => i.loading = "eager")')
             page.wait_for_function('Array.from(document.images).every(i => i.complete && i.naturalWidth > 0)')
             if any('$' in s['body'] for s in p['sections']):

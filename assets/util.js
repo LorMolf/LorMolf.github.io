@@ -6,17 +6,23 @@ export function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
 
-// [text](url) -> inline links; returns HTML string
+// Escape text before applying the small, authored inline-emphasis syntax.
+function emphasis(text){
+  return escapeHtml(text).replace(/\*\*([^*]+)\*\*|\*([^*]+)\*/g, (_, bold, italic) =>
+    bold !== undefined ? `<strong>${bold}</strong>` : `<em>${italic}</em>`);
+}
+
+// [text](url), **bold**, *italic* -> safe inline HTML.
 export function parseLinks(str){
   const out = [];
   const re = /\[([^\]]+)\]\(([^)]+)\)/g;
   let last = 0, m;
   while((m = re.exec(str))){
-    if(m.index > last) out.push(escapeHtml(str.slice(last, m.index)));
-    out.push(`<a href="${escapeHtml(m[2])}" target="_blank" rel="noopener">${escapeHtml(m[1])}</a>`);
+    if(m.index > last) out.push(emphasis(str.slice(last, m.index)));
+    out.push(`<a href="${escapeHtml(m[2])}" target="_blank" rel="noopener">${emphasis(m[1])}</a>`);
     last = m.index + m[0].length;
   }
-  if(last < str.length) out.push(escapeHtml(str.slice(last)));
+  if(last < str.length) out.push(emphasis(str.slice(last)));
   return out.join("");
 }
 

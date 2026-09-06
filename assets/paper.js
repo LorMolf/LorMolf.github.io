@@ -149,7 +149,7 @@ export function renderPaper(){
 
     <h2 class="paper-h" id="visuals">All figures and tables</h2>
     <p class="paper-source">${escapeHtml(visuals.source.note)} ${visuals.source.url ? `<a href="${escapeHtml(visuals.source.url)}" target="_blank" rel="noopener">Source ↗</a>` : ""} Page numbers below refer to PDF pages. Open an image for full resolution.</p>
-    <details class="paper-visuals">
+    <details class="paper-visuals" open>
       <summary>${visuals.expected.figures.length} figures · ${visuals.expected.tables.length} tables, including appendices where present</summary>
       <div class="paper-body">
         ${visuals.items.map(v => `
