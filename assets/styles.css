@@ -235,8 +235,7 @@ img{max-width:100%;display:block}
 .paper-body figure figcaption strong{color:var(--ink);font-family:'Computer Modern Serif',serif;font-size:13.5px}
 .paper-body figure > a{display:block;border:0;background:none}
 .paper-body figure > a:hover{background:none}
-.paper-visuals summary{padding:12px;border:2px solid var(--ink);background:var(--card);font-family:'Computer Modern Typewriter',monospace;font-size:14px;cursor:pointer}
-.paper-visuals summary:focus-visible{outline:3px solid var(--green);outline-offset:5px}
+
 
 /* sub-figure grid */
 .paper-subfig{display:grid;gap:14px;margin:24px 0 28px}
@@ -344,7 +343,9 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offs
 .section-head .lbl{padding:6px 12px;background:var(--wash-gold);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--red);transform:rotate(-1.5deg)}
 .section-head .mark{font-size:24px}
 .news-list{border:2px solid var(--ink);background:var(--card);padding:3px 16px;box-shadow:4px 4px 0 var(--green)}
-.news-item{border-bottom:1px dashed var(--line-soft)}.news-item:last-child{border-bottom:0}
+.news-item{border-bottom:1px dashed var(--line-soft);flex-wrap:wrap}
+.news-item > :last-child{flex:1 1 220px}
+.news-item .typelabel{flex:none}.news-item:last-child{border-bottom:0}
 .pub-list{gap:18px}.pub-item{box-shadow:5px 5px 0 var(--green)}.pub-item:nth-child(3n+2){box-shadow:5px 5px 0 var(--red)}.pub-item:nth-child(3n){box-shadow:5px 5px 0 var(--gold)}
 .theme-toggle,.btn{background:var(--wash-gold)}
 .contact{border-top:2px dashed var(--green)}

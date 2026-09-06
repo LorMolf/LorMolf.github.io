@@ -13,39 +13,8 @@ function whenReady(){
   });
 }
 
-// post-process rendered markdown: standalone images w/ title -> <figure><figcaption>,
-// tables -> wrapped in scroll container, narrow images flagged
-function enhanceMarkdown(root){
-  // figures: <p><img ...></p> or lone <img> with a title attribute
-  root.querySelectorAll("img").forEach(img=>{
-    if(img.closest("figure")) return;
-    const setSize = () => {
-      img.width = img.naturalWidth;
-      img.height = img.naturalHeight;
-      img.style.maxWidth = `min(100%, ${Math.min(img.naturalWidth, 640)}px)`;
-    };
-    if(img.complete) setSize();
-    else img.addEventListener("load", setSize, { once: true });
-    const p = img.parentElement;
-    const isAlone = p && p.tagName === "P" && p.childNodes.length === 1;
-    const fig = document.createElement("figure");
-    if(/narrow/i.test(img.alt)) img.classList.add("narrow");
-    img.removeAttribute("title");
-    if(isAlone){ p.replaceWith(fig); }
-    else { img.parentNode.insertBefore(fig, img); }
-    const link = document.createElement("a");
-    link.href = img.src;
-    link.setAttribute("aria-label", `Open full-resolution figure: ${img.alt}`);
-    link.appendChild(img);
-    fig.appendChild(link);
-    const cap = img.getAttribute("data-caption") || img.getAttribute("alt") || "";
-    if(cap && cap !== "narrow"){
-      const fc = document.createElement("figcaption");
-      fc.innerHTML = window.marked && window.marked.parseInline ? window.marked.parseInline(cap) : cap;
-      fig.appendChild(fc);
-    }
-  });
-  // tables: wrap for horizontal scroll
+// Keep native Markdown tables readable on narrow screens.
+function wrapMarkdownTables(root){
   root.querySelectorAll("table").forEach(t=>{
     if(t.parentElement.classList.contains("paper-table-wrap")) return;
     const wrap = document.createElement("div");
@@ -53,21 +22,9 @@ function enhanceMarkdown(root){
     t.parentNode.insertBefore(wrap, t);
     wrap.appendChild(t);
   });
-  // mark cells containing ** ** or <strong> as best? leave as-is; authors can add a class.
 }
 
-// Custom handling: we author captions via the title attribute of ![](), which marked
-// turns into title="...". We move it to data-caption before stripping above.
-function rescueImageTitles(html){
-  // marked keeps the title verbatim; we capture it into data-caption.
-  return html.replace(/<img([^>]*?)title="([^"]*)"([^>]*)>/gi, (m, a, title, b)=>{
-    return `<img${a} data-caption="${title.replace(/"/g,"&quot;")}"${b}>`;
-  });
-}
-
-// marked image rendering: we want a <figure> friendly output. We use the default <img>
-// and post-process. But marked wraps lone images in <p>; that's fine (handled above).
-function configureMarked(){
+function configureMarked(visuals){
   if(!window.marked) return;
   const m = window.marked;
   if(m.setOptions){
@@ -75,6 +32,24 @@ function configureMarked(){
   }
   // Keep Markdown from interpreting TeX subscripts as emphasis before KaTeX runs.
   m.use({ extensions: [{
+    name: "sourceVisual",
+    level: "block",
+    start(src){ return src.indexOf("{{visual:"); },
+    tokenizer(src){
+      const match = /^\{\{visual:([^}\n]+)\}\}(?:\n|$)/.exec(src);
+      if(match) return {type:"sourceVisual", raw:match[0], label:match[1]};
+    },
+    renderer(token){
+      const v = visuals.items.find(v => v.label === token.label);
+      if(!v) throw new Error(`Unknown source visual: ${token.label}`);
+      return `<figure class="source-visual" data-label="${escapeHtml(v.label)}" data-kind="${v.kind}">
+        <a href="${escapeHtml(v.src)}" aria-label="Open full-resolution ${escapeHtml(v.label)}">
+          <img src="${escapeHtml(v.src)}" alt="${escapeHtml(v.caption)}" width="${v.width}" height="${v.height}" loading="lazy" style="max-width:min(100%,${v.displayWidth}px)">
+        </a>
+        <figcaption><strong>${escapeHtml(v.label)}</strong> · PDF ${v.pages?.length > 1 ? `pp. ${escapeHtml(v.pages.join(", "))}` : `p. ${v.page}`}<br>${escapeHtml(v.caption)}${v.sourceNote ? ` ${escapeHtml(v.sourceNote)}` : ""}${v.sourceUrl ? ` <a href="${escapeHtml(v.sourceUrl)}" target="_blank" rel="noopener">Supplement source ↗</a>` : ""}</figcaption>
+      </figure>`;
+    }
+  }, {
     name: "mathSource",
     level: "inline",
     start(src){ return src.search(/\$|\\\(|\\\[/); },
@@ -122,7 +97,7 @@ export function renderPaper(){
 
   const sections = Array.isArray(p.sections) ? p.sections : [];
   const visuals = paperVisuals[p.id];
-  const anchorLinks = [...sections, { id: "visuals", title: "All figures & tables" }, { id: "abstract", title: "Abstract" }, { id: "citation", title: "Citation" }]
+  const anchorLinks = [...sections, { id: "abstract", title: "Abstract" }, { id: "citation", title: "Citation" }]
     .map(s=>`<a href="#${escapeHtml(s.id)}">${escapeHtml(s.title)}</a>`)
     .join("");
 
@@ -141,26 +116,12 @@ export function renderPaper(){
       ${doi?`<a class="plink" href="${escapeHtml(doi)}" target="_blank" rel="noopener">DOI ↗</a>`:""}
     </div>
     <nav class="paper-anchors" aria-label="On this page">${anchorLinks}</nav>
+    <p class="paper-source">${escapeHtml(visuals.source.note)} ${visuals.source.url ? `<a href="${escapeHtml(visuals.source.url)}" target="_blank" rel="noopener">Source ↗</a>` : ""}</p>
 
     ${sections.map(s=>`
       <h2 class="paper-h" id="${escapeHtml(s.id)}">${escapeHtml(s.title)}</h2>
       <div class="paper-body" data-section="${escapeHtml(s.id)}"></div>
     `).join("")}
-
-    <h2 class="paper-h" id="visuals">All figures and tables</h2>
-    <p class="paper-source">${escapeHtml(visuals.source.note)} ${visuals.source.url ? `<a href="${escapeHtml(visuals.source.url)}" target="_blank" rel="noopener">Source ↗</a>` : ""} Page numbers below refer to PDF pages. Open an image for full resolution.</p>
-    <details class="paper-visuals" open>
-      <summary>${visuals.expected.figures.length} figures · ${visuals.expected.tables.length} tables, including appendices where present</summary>
-      <div class="paper-body">
-        ${visuals.items.map(v => `
-          <figure class="source-visual" data-label="${escapeHtml(v.label)}" data-kind="${v.kind}">
-            <a href="${escapeHtml(v.src)}" aria-label="Open full-resolution ${escapeHtml(v.label)}">
-              <img src="${escapeHtml(v.src)}" alt="${escapeHtml(v.caption)}" width="${v.width}" height="${v.height}" loading="lazy" style="max-width:min(100%,${v.displayWidth}px)">
-            </a>
-            <figcaption><strong>${escapeHtml(v.label)}</strong> · PDF ${v.pages?.length > 1 ? `pp. ${escapeHtml(v.pages.join(", "))}` : `p. ${v.page}`}<br>${escapeHtml(v.caption)}${v.sourceNote ? ` ${escapeHtml(v.sourceNote)}` : ""}${v.sourceUrl ? ` <a href="${escapeHtml(v.sourceUrl)}" target="_blank" rel="noopener">Supplement source ↗</a>` : ""}</figcaption>
-          </figure>`).join("")}
-      </div>
-    </details>
 
     <h2 class="paper-h" id="abstract">Abstract</h2>
     <p class="paper-abs">${p.abstract ? escapeHtml(p.abstract) : '<span class="muted">Official abstract to be added.</span>'}</p>
@@ -183,12 +144,15 @@ export function renderPaper(){
 
   // render markdown bodies once `marked` is available, then run KaTeX
   whenReady().then(()=>{
-    configureMarked();
+    configureMarked(visuals);
     sections.forEach(s=>{
       const host = root.querySelector(`[data-section="${CSS.escape(s.id)}"]`);
-      if(host){ host.innerHTML = rescueImageTitles(window.marked.parse(s.body||"")); }
+      if(host){ host.innerHTML = window.marked.parse(s.body||""); }
     });
-    enhanceMarkdown(root);
+    // Preserve old incoming #visuals links without a separate gallery section.
+    const firstVisual = root.querySelector(".source-visual");
+    if(firstVisual) firstVisual.id = "visuals";
+    wrapMarkdownTables(root);
     runKatex(root);
   });
 }

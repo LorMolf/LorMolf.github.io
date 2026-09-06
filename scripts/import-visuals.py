@@ -57,19 +57,19 @@ for pid in ids:
     if pid == 'spsd':
         note = 'Submitted TACL manuscript. The full submission PDF is not distributed here.'
     elif pid == 'jab':
-        note = 'Figures and tables from the March 2026 author manuscript, plus the separately identified public supplementary rubrics. The manuscript differs from the final journal paper; publisher-version completeness has not been verified.'
+        note = 'Discussion and numbered visuals use the March 2026 author manuscript, which differs from the final journal paper. Publisher-version completeness has not been verified.'
     elif pid == 'retrieve-rank':
         note = 'Figures and tables from the author manuscript, titled Retrieve-and-Marginalize End-to-End Summarization of Biomedical Studies. The published chapter is titled Retrieve-and-Rank; equivalence to the publisher PDF has not been verified.'
     else:
         # Only deliberately public provenance, never extraction notes or filesystem paths.
-        note = {'comma': 'Final published journal version, including appendices.',
-                'sycophants': 'Final ACL Anthology proceedings version, including appendices.',
-                'ports': 'Final ACL Anthology proceedings version, including appendices.',
-                'feast': 'arXiv version, including appendices.',
-                'graph-of-mark': 'arXiv version, including appendices.',
-                'nesy-survey': 'Source version identified in the link below, including appendices.',
-                'mixture-of-masters': 'arXiv version, including appendices.',
-                'ke-qa': 'MSc thesis, including all chapters and background figures.'}[pid]
+        note = {'comma': 'Final published journal version.',
+                'sycophants': 'Final ACL Anthology proceedings version.',
+                'ports': 'Final ACL Anthology proceedings version.',
+                'feast': 'arXiv source version.',
+                'graph-of-mark': 'arXiv source version.',
+                'nesy-survey': 'Source version identified in the link below.',
+                'mixture-of-masters': 'arXiv source version.',
+                'ke-qa': 'MSc thesis. Background material is distinguished from the thesis contributions in the discussion.'}[pid]
     url = doc['source'].get('url')
     assert url is None or url.startswith('https://'), (pid, 'Invalid source URL')
     result[pid] = {'source': {'url': url, 'note': note}, 'expected': doc['expected'], 'items': clean}

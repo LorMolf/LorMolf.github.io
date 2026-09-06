@@ -125,7 +125,7 @@ export const paperVisuals = {
   "jab": {
     "source": {
       "url": "https://doi.org/10.1016/j.jss.2026.113033",
-      "note": "Figures and tables from the March 2026 author manuscript, plus the separately identified public supplementary rubrics. The manuscript differs from the final journal paper; publisher-version completeness has not been verified."
+      "note": "Discussion and numbered visuals use the March 2026 author manuscript, which differs from the final journal paper. Publisher-version completeness has not been verified."
     },
     "expected": {
       "figures": [
@@ -471,7 +471,7 @@ export const paperVisuals = {
   "sycophants": {
     "source": {
       "url": "https://aclanthology.org/2026.acl-long.497.pdf",
-      "note": "Final ACL Anthology proceedings version, including appendices."
+      "note": "Final ACL Anthology proceedings version."
     },
     "expected": {
       "figures": [
@@ -833,7 +833,7 @@ export const paperVisuals = {
   "ports": {
     "source": {
       "url": "https://aclanthology.org/2025.emnlp-main.507.pdf",
-      "note": "Final ACL Anthology proceedings version, including appendices."
+      "note": "Final ACL Anthology proceedings version."
     },
     "expected": {
       "figures": [
@@ -1111,7 +1111,7 @@ export const paperVisuals = {
   "feast": {
     "source": {
       "url": "https://arxiv.org/pdf/2603.03176",
-      "note": "arXiv version, including appendices."
+      "note": "arXiv source version."
     },
     "expected": {
       "figures": [
@@ -1245,7 +1245,7 @@ export const paperVisuals = {
   "graph-of-mark": {
     "source": {
       "url": "https://arxiv.org/pdf/2603.06663",
-      "note": "arXiv version, including appendices."
+      "note": "arXiv source version."
     },
     "expected": {
       "figures": [
@@ -1379,7 +1379,7 @@ export const paperVisuals = {
   "comma": {
     "source": {
       "url": "https://link.springer.com/content/pdf/10.1007/s10506-026-09520-x.pdf",
-      "note": "Final published journal version, including appendices."
+      "note": "Final published journal version."
     },
     "expected": {
       "figures": [
@@ -1777,7 +1777,7 @@ export const paperVisuals = {
   "nesy-survey": {
     "source": {
       "url": "https://arxiv.org/pdf/2603.03177",
-      "note": "Source version identified in the link below, including appendices."
+      "note": "Source version identified in the link below."
     },
     "expected": {
       "figures": [
@@ -1839,7 +1839,7 @@ export const paperVisuals = {
   "mixture-of-masters": {
     "source": {
       "url": "https://arxiv.org/pdf/2602.04447",
-      "note": "arXiv version, including appendices."
+      "note": "arXiv source version."
     },
     "expected": {
       "figures": [
@@ -2407,7 +2407,7 @@ export const paperVisuals = {
   "ke-qa": {
     "source": {
       "url": "https://amslaurea.unibo.it/id/eprint/30058/",
-      "note": "MSc thesis, including all chapters and background figures."
+      "note": "MSc thesis. Background material is distinguished from the thesis contributions in the discussion."
     },
     "expected": {
       "figures": [

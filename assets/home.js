@@ -28,7 +28,7 @@ export function renderHome(){
 
   const newsItems = (news||[]).slice(0,5).map((n,i)=>`
     <div class="news-item">
-      ${markByIndex(i)}
+      ${typeLabel(publications.find(p=>p.id===n.publicationId).type)}
       <span class="news-date">${escapeHtml(n.date)}</span>
       <span>${parseLinks(n.text)} ${n.href?`<a href="${escapeHtml(n.href)}" target="_blank" rel="noopener">↗</a>`:""}</span>
     </div>`).join("");
@@ -58,7 +58,7 @@ export function renderHome(){
       ${site.research.more && site.research.more.length ? `<button class="btn" id="more-btn" style="margin-top:18px">${state.showMore?"− show less":"+ more topics"}</button>`:""}
     </div>
     <div class="section">
-      <div class="section-head"><span class="lbl">News</span><span class="mark">§</span></div>
+      <div class="section-head"><span class="lbl">News</span></div>
       <div class="news-list">${newsItems}</div>
     </div>
     <div class="section">

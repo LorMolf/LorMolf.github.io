@@ -23,6 +23,8 @@ with sync_playwright() as pw:
     page.on('pageerror', lambda e: report['errors'].append(str(e)))
     page.goto(base)
     pubs = page.evaluate("async () => (await import('/data/publications.js')).publications")
+    cv = page.evaluate("async () => (await import('/data/cv.js')).cv")
+    assert len({t['c'] for t in cv['theses']}) == len(cv['theses']), 'Duplicate supervised theses'
     catalog = page.evaluate("async () => (await import('/data/paper-visuals.js')).paperVisuals")
     assert set(catalog) == {p['id'] for p in pubs}, 'Missing paper inventory'
     assert len({p['id'] for p in pubs}) == len(pubs), 'Duplicate publication IDs'
@@ -46,6 +48,8 @@ with sync_playwright() as pw:
         assert page.locator('.authortag').count() == 0, (route, 'Author-role badges remain')
         assert page.locator('.nav-foot').evaluate('(e) => getComputedStyle(e, "::after").content') in ['none', 'normal'], 'Decorative swatches remain'
         if route == '/':
+            assert page.locator('.news-list .mk, .section-head .mark').count() == 0
+            assert page.locator('.news-item .typelabel').count() == page.locator('.news-item').count()
             assert page.locator('.pub-item').count() == sum(bool(p.get('selected')) for p in pubs)
             assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/spsd/'
             assert page.locator('.status-item .out').all_text_contents() == ['finishing my PhD at the end of October.', 'at home in Puglia.']
@@ -74,6 +78,14 @@ with sync_playwright() as pw:
             assert not any(term in topics for term in ['neuro-symbolic', 'nesy', 'ports', 'feast', 'comma', 'spsd', 'graph-of-mark', 'mixture of masters', 'sycophants'])
             page.locator('#more-btn').click()
             assert page.locator('.research-item').count() == 3
+        elif route == '/cv/':
+            assert page.locator('.thesis').count() == len(cv['theses'])
+            for thesis in cv['theses']:
+                row = page.locator('.thesis').filter(has_text=thesis['c'])
+                assert row.count() == 1 and thesis['t'] in row.inner_text()
+                if thesis.get('h'): assert row.locator('a').get_attribute('href') == thesis['h']
+            assert 'Service' not in page.locator('.cv-h').all_text_contents()
+            assert 'Reviewer / subreviewer' not in page.locator('#content').inner_text()
         elif route == '/publications/':
             assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/spsd/'
             for kind in ['conference', 'journal', 'preprint', 'submitted', 'thesis', 'all']:
@@ -91,13 +103,20 @@ with sync_playwright() as pw:
             assert page.locator('.paper-body figure, .paper-body table').count() > 0, (route, 'Missing substantive visuals')
             assert page.locator('.paper-body figure').evaluate_all('(figs) => figs.every(f => f.querySelector("figcaption")?.textContent.trim() && f.querySelector("a[href] > img"))'), (route, 'Missing figure caption or full-resolution link')
             visual_data = catalog[p['id']]
-            for kind, key in [('figure', 'figures'), ('table', 'tables')]:
-                actual = page.locator(f'.source-visual[data-kind="{kind}"]').evaluate_all('(figs) => figs.map(f => f.dataset.label).filter(s => !s.toLowerCase().includes("continued"))')
-                assert len(actual) == len(set(actual)) and set(actual) == set(visual_data['expected'][key]), (route, key, 'Incomplete source coverage')
-            assert page.locator('.paper-visuals').get_attribute('open') is not None, 'Source gallery hidden on arrival'
-            page.locator('.paper-visuals summary').click()
-            assert page.locator('.paper-visuals').get_attribute('open') is None
-            page.locator('.paper-visuals summary').click()
+            selection = p['visualSelection']['main'] + p['visualSelection']['appendix']
+            actual = page.locator('.source-visual').evaluate_all('(figs) => figs.map(f => f.dataset.label)')
+            assert len(actual) == len(set(actual)) and set(actual) == set(selection), (route, 'Narrative visual coverage')
+            assert set(selection) <= {v['label'] for v in visual_data['items']}
+            assert page.locator('#content details, #content summary, .paper-visuals').count() == 0
+            assert '{{visual:' not in page.locator('#content').inner_text()
+            assert page.locator('.paper-body img').count() == len(selection), (route, 'Duplicate legacy visual')
+            assert page.locator('.source-visual').evaluate_all(r"""figs => figs.every(f => {
+                const section = f.closest('[data-section]');
+                if(!section) return false;
+                const siblings = [...section.children], at = siblings.indexOf(f);
+                const prose = e => e.matches('p,ul,ol,blockquote') && e.textContent.trim().split(/\s+/).length >= 12;
+                return siblings.slice(0, at).some(prose) && siblings.slice(at+1).some(prose);
+            })"""), (route, 'Visual lacks surrounding narrative')
             page.locator('.source-visual img').evaluate_all('(images) => images.forEach(i => i.loading = "eager")')
             page.wait_for_function('Array.from(document.images).every(i => i.complete && i.naturalWidth > 0)')
             if any('$' in s['body'] for s in p['sections']):

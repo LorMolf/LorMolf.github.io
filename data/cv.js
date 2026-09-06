@@ -55,9 +55,6 @@ export const cv = {
     { title: "Knowledge-Enhanced Chatbots", course: "Text Mining and Data Mining", program: "MSc Artificial Intelligence", date: "Dec 2023" }
   ],
   talks: [],
-  service: [
-    "[Reviewer / subreviewer for: … — to edit]"
-  ],
   awards: [],
   skills: {
     Programming: "Python, C, Java, Bash, LaTeX",
@@ -67,6 +64,17 @@ export const cv = {
   },
   interests: "Retrieval-augmented question answering, language-model reasoning and vision-language models, with applications in biomedical and legal domains.",
   theses: [
+    {"c": "Alessandro Becci", "t": "Enhancing Entity Representations through Soft Prompt Tuning: An Efficient Approach to Biomedical Named Entity Recognition", "l": "m", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/38134/"},
+    {"c": "Andrea Bianchi", "t": "Chess-Reachy: Autonomous Robotic Chess Gameplay through Large Language Models and Model Context Protocol", "l": "m", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/38154/"},
+    {"c": "Ehsan Ramezani", "t": "State-Grounded GUI Agents for Long-Horizon Tasks in Web Environments", "l": "m", "y": 2026},
+    {"c": "Elena Fucci", "t": "OrienterAI: An Efficient Hybrid RAG Chatbot for Orienting Citizens Toward the Emilia-Romagna Educational Offer", "l": "b", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/39346/"},
+    {"c": "Federico Marchi", "t": "Unsupervised Optimization of Accuracy and Interpretability in Multimodal Models for Medical Disease Diagnosis", "l": "m", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/38765/"},
+    {"c": "Javokhir Isomurodov", "t": "Automated Classification of Multilingual User Feedback in Fitness Applications Through Hybrid Retrieval and Large Language Models", "l": "m", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/38229/"},
+    {"c": "Laura Lucchiari", "t": "Multimodal Retrieval-Enhanced Large Language Models for Pictogram Interaction in Augmentative and Alternative Communication", "l": "m", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/37857/"},
+    {"c": "Luca Mercuriali", "t": "RadRelBench: A Benchmark for Deep Learning on Multimodal Relational Databases of Chest Radiographs", "l": "m", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/38755/"},
+    {"c": "Mattia Buzzoni", "t": "Graph-of-Mark: Graph-Based Visual Prompting for Enhanced Spatial Reasoning in Multimodal Language Models", "l": "m", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/37855/"},
+    {"c": "Riccardo Balzani", "t": "Evaluating Visual Grounding in Multimodal Large Language Models for Medical Question Answering", "l": "b", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/38128/"},
+    {"c": "Simone Mazzacano", "t": "Latent-GEPA: Accelerating Prompt Optimization via Embedding Inversion and Latent Semantic Guidance in Large Language Models", "l": "b", "y": 2026, "h": "https://amslaurea.unibo.it/id/eprint/39344/"},
     { c:"Kankana Ghosh", t:"The Pixel Piper: Guiding Diffusion Models with Attention-Based Predicate Logic for Feature Consistent Text-to-Image Generation", l:"m", y:2025 },
     { c:"Matteo Belletti", t:"Train an Agent to Evaluate your Models: a Dataset for Metric Function Call Built through Autonomous Trial and Error", l:"m", y:2025 },
     { c:"Umberto Carlucci", t:"From-Scratch Development of a Domain-Adaptive Mixture of Expert Language Model for Biomedical Named Entity Recognition", l:"m", y:2025 },

@@ -20,7 +20,6 @@ export function renderCV(){
   const skills = Object.entries(cv.skills||{}).map(([k,v])=>
     `<div class="k">${escapeHtml(k)}</div><div>${escapeHtml(v)}</div>`).join("");
 
-  const service = (cv.service||[]).map(s=>`<li>${parseLinks(s)}</li>`).join("");
   const awards = (cv.awards||[]).map(s=>`<li>${parseLinks(s)}</li>`).join("");
   const talks = (cv.talks||[]).map(t=>`<li>${escapeHtml(t.title)} — ${escapeHtml(t.venue)}, ${escapeHtml(t.date||"")}</li>`).join("");
 
@@ -44,7 +43,7 @@ export function renderCV(){
   root.innerHTML = `
     <div class="eyebrow">Curriculum vitae</div>
     <h1 class="page-title">CV</h1>
-    ${cv.pdfHref ? `<a class="btn cv-pdf" href="${escapeHtml(cv.pdfHref)}" target="_blank" rel="noopener">Download PDF ↓</a>` : `<p class="page-lede">PDF coming soon — fields marked [to edit] are placeholders.</p>`}
+    ${cv.pdfHref ? `<a class="btn cv-pdf" href="${escapeHtml(cv.pdfHref)}" target="_blank" rel="noopener">Download PDF ↓</a>` : ""}
 
     ${cv.about?`<div class="cv-block"><div class="cv-h">About</div><p style="margin:0;font-size:17px;line-height:1.7">${parseLinks(cv.about)}</p></div>`:""}
 
@@ -52,7 +51,6 @@ export function renderCV(){
     <div class="cv-block"><div class="cv-h">Experience</div>${rows(cv.experience)}</div>
     ${(cv.teaching&&cv.teaching.length)?`<div class="cv-block"><div class="cv-h">Teaching</div><ul class="cv-list">${cv.teaching.map(t=>`<li><strong>${escapeHtml(t.title)}</strong> — ${escapeHtml(t.course)}, ${escapeHtml(t.program)} <span style="color:var(--muted)">(${escapeHtml(t.date)})</span></li>`).join("")}</ul></div>`:""}
     ${talks?`<div class="cv-block"><div class="cv-h">Talks & posters</div><ul class="cv-list">${talks}</ul></div>`:""}
-    ${service?`<div class="cv-block"><div class="cv-h">Service</div><ul class="cv-list">${service}</ul></div>`:""}
     ${awards?`<div class="cv-block"><div class="cv-h">Awards</div><ul class="cv-list">${awards}</ul></div>`:""}
     ${thesesBlock(cv.theses)}
     <div class="cv-block"><div class="cv-h">Skills & languages</div><div class="cv-skills">${skills}</div></div>
