@@ -46,7 +46,7 @@ export function renderCV(){
     <h1 class="page-title">CV</h1>
     ${cv.pdfHref ? `<a class="btn cv-pdf" href="${escapeHtml(cv.pdfHref)}" target="_blank" rel="noopener">Download PDF ↓</a>` : `<p class="page-lede">PDF coming soon — fields marked [to edit] are placeholders.</p>`}
 
-    ${cv.about?`<div class="cv-block"><div class="cv-h">About</div><p style="margin:0;font-size:17px;line-height:1.7;max-width:64ch">${parseLinks(cv.about)}</p></div>`:""}
+    ${cv.about?`<div class="cv-block"><div class="cv-h">About</div><p style="margin:0;font-size:17px;line-height:1.7">${parseLinks(cv.about)}</p></div>`:""}
 
     <div class="cv-block"><div class="cv-h">Education</div>${rows(cv.education)}</div>
     <div class="cv-block"><div class="cv-h">Experience</div>${rows(cv.experience)}</div>

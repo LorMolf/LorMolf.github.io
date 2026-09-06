@@ -36,12 +36,6 @@ export function typeLabel(type){
   return `<span class="typelabel ${escapeHtml(type)}">${t}</span>`;
 }
 
-// first / co-first author tag (short, code-like)
-export function authorTag(role){
-  if(role === "first") return `<span class="authortag first">1st</span>`;
-  if(role === "cofirst") return `<span class="authortag cofirst">co-1st</span>`;
-  return "";
-}
 
 // topic tag chip
 export function topicTag(t){

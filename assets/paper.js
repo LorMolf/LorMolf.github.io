@@ -1,5 +1,6 @@
 import { publications, me, venueLinks } from "/data/publications.js";
-import { escapeHtml, boldAuthor, typeLabel, authorTag, topicTag, venueHtml, bibtex } from "/assets/util.js";
+import { paperVisuals } from "/data/paper-visuals.js";
+import { escapeHtml, boldAuthor, typeLabel, topicTag, venueHtml, bibtex } from "/assets/util.js";
 
 // wait for the deferred vendor scripts (KaTeX + marked) to be ready
 function whenReady(){
@@ -17,6 +18,14 @@ function whenReady(){
 function enhanceMarkdown(root){
   // figures: <p><img ...></p> or lone <img> with a title attribute
   root.querySelectorAll("img").forEach(img=>{
+    if(img.closest("figure")) return;
+    const setSize = () => {
+      img.width = img.naturalWidth;
+      img.height = img.naturalHeight;
+      img.style.maxWidth = `min(100%, ${Math.min(img.naturalWidth, 640)}px)`;
+    };
+    if(img.complete) setSize();
+    else img.addEventListener("load", setSize, { once: true });
     const p = img.parentElement;
     const isAlone = p && p.tagName === "P" && p.childNodes.length === 1;
     const fig = document.createElement("figure");
@@ -112,7 +121,8 @@ export function renderPaper(){
   const read = p.links && p.links.read;
 
   const sections = Array.isArray(p.sections) ? p.sections : [];
-  const anchorLinks = [...sections, { id: "abstract", title: "Abstract" }, { id: "citation", title: "Citation" }]
+  const visuals = paperVisuals[p.id];
+  const anchorLinks = [...sections, { id: "visuals", title: "All figures & tables" }, { id: "abstract", title: "Abstract" }, { id: "citation", title: "Citation" }]
     .map(s=>`<a href="#${escapeHtml(s.id)}">${escapeHtml(s.title)}</a>`)
     .join("");
 
@@ -122,7 +132,7 @@ export function renderPaper(){
     <h1 class="paper-title">${escapeHtml(p.title)}</h1>
     <p class="paper-sub">${escapeHtml(p.tldr || "")}</p>
     <div class="paper-authors">${boldAuthor(p.authors, me)}</div>
-    <div class="paper-meta">${typeLabel(p.type)} ${authorTag(p.role)} <span class="paper-venue">${venueHtml(p.venue, venueLinks)} · ${p.year}</span></div>
+    <div class="paper-meta">${typeLabel(p.type)} <span class="paper-venue">${venueHtml(p.venue, venueLinks)} · ${p.year}</span></div>
     <div class="paper-links">
       ${read?`<a class="plink" href="${escapeHtml(read)}" target="_blank" rel="noopener">paper ↗</a>`:""}
       ${arxiv?`<a class="plink" href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}
@@ -136,6 +146,21 @@ export function renderPaper(){
       <h2 class="paper-h" id="${escapeHtml(s.id)}">${escapeHtml(s.title)}</h2>
       <div class="paper-body" data-section="${escapeHtml(s.id)}"></div>
     `).join("")}
+
+    <h2 class="paper-h" id="visuals">All figures and tables</h2>
+    <p class="paper-source">${escapeHtml(visuals.source.note)} ${visuals.source.url ? `<a href="${escapeHtml(visuals.source.url)}" target="_blank" rel="noopener">Source ↗</a>` : ""} Page numbers below refer to PDF pages. Open an image for full resolution.</p>
+    <details class="paper-visuals">
+      <summary>${visuals.expected.figures.length} figures · ${visuals.expected.tables.length} tables, including appendices where present</summary>
+      <div class="paper-body">
+        ${visuals.items.map(v => `
+          <figure class="source-visual" data-label="${escapeHtml(v.label)}" data-kind="${v.kind}">
+            <a href="${escapeHtml(v.src)}" aria-label="Open full-resolution ${escapeHtml(v.label)}">
+              <img src="${escapeHtml(v.src)}" alt="${escapeHtml(v.caption)}" width="${v.width}" height="${v.height}" loading="lazy" style="max-width:min(100%,${v.displayWidth}px)">
+            </a>
+            <figcaption><strong>${escapeHtml(v.label)}</strong> · PDF ${v.pages?.length > 1 ? `pp. ${escapeHtml(v.pages.join(", "))}` : `p. ${v.page}`}<br>${escapeHtml(v.caption)}${v.sourceNote ? ` ${escapeHtml(v.sourceNote)}` : ""}${v.sourceUrl ? ` <a href="${escapeHtml(v.sourceUrl)}" target="_blank" rel="noopener">Supplement source ↗</a>` : ""}</figcaption>
+          </figure>`).join("")}
+      </div>
+    </details>
 
     <h2 class="paper-h" id="abstract">Abstract</h2>
     <p class="paper-abs">${p.abstract ? escapeHtml(p.abstract) : '<span class="muted">Official abstract to be added.</span>'}</p>

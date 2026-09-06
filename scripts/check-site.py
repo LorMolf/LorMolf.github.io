@@ -23,6 +23,8 @@ with sync_playwright() as pw:
     page.on('pageerror', lambda e: report['errors'].append(str(e)))
     page.goto(base)
     pubs = page.evaluate("async () => (await import('/data/publications.js')).publications")
+    catalog = page.evaluate("async () => (await import('/data/paper-visuals.js')).paperVisuals")
+    assert set(catalog) == {p['id'] for p in pubs}, 'Missing paper inventory'
     assert len({p['id'] for p in pubs}) == len(pubs), 'Duplicate publication IDs'
     assert all(p.get('tldr') and p.get('abstract') and p.get('sections') for p in pubs), 'Missing descriptions'
     assert all(s.get('body', '').strip() for p in pubs for s in p['sections']), 'Empty article sections'
@@ -41,10 +43,15 @@ with sync_playwright() as pw:
         assert page.locator('.nav-links a > svg[aria-hidden="true"]').count() == 5
         assert page.locator('#theme-toggle').get_attribute('aria-label')
         assert page.locator('.nav-items .active').count() == 1
+        assert page.locator('.authortag').count() == 0, (route, 'Author-role badges remain')
+        assert page.locator('.nav-foot').evaluate('(e) => getComputedStyle(e, "::after").content') in ['none', 'normal'], 'Decorative swatches remain'
         if route == '/':
             assert page.locator('.pub-item').count() == sum(bool(p.get('selected')) for p in pubs)
             assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/spsd/'
             assert page.locator('.status-item .out').all_text_contents() == ['finishing my PhD at the end of October.', 'at home in Puglia.']
+            assert page.locator('.status-item .out').evaluate_all('(nodes) => nodes.every(e => getComputedStyle(e).fontFamily.includes("Computer Modern Typewriter"))')
+            assert page.locator('.status .cur').evaluate('(e) => getComputedStyle(e).display === "inline-block" && getComputedStyle(e).animationName === "blink"')
+            assert page.locator('.research-lead').evaluate('(e) => getComputedStyle(e).maxWidth === "none" && !e.querySelector("br")')
             image = page.locator('.photo-frame img')
             assert image.evaluate('(i) => i.complete && i.naturalWidth === 700')
             assert image.evaluate('(i) => getComputedStyle(i).filter') == 'grayscale(1)'
@@ -73,6 +80,14 @@ with sync_playwright() as pw:
             assert page.locator('.katex-error').count() == 0, (route, 'KaTeX error')
             assert page.locator('.paper-body figure, .paper-body table').count() > 0, (route, 'Missing substantive visuals')
             assert page.locator('.paper-body figure').evaluate_all('(figs) => figs.every(f => f.querySelector("figcaption")?.textContent.trim() && f.querySelector("a[href] > img"))'), (route, 'Missing figure caption or full-resolution link')
+            visual_data = catalog[p['id']]
+            for kind, key in [('figure', 'figures'), ('table', 'tables')]:
+                actual = page.locator(f'.source-visual[data-kind="{kind}"]').evaluate_all('(figs) => figs.map(f => f.dataset.label).filter(s => !s.toLowerCase().includes("continued"))')
+                assert len(actual) == len(set(actual)) and set(actual) == set(visual_data['expected'][key]), (route, key, 'Incomplete source coverage')
+            page.locator('.paper-visuals summary').click()
+            assert page.locator('.paper-visuals').get_attribute('open') is not None
+            page.locator('.source-visual img').evaluate_all('(images) => images.forEach(i => i.loading = "eager")')
+            page.wait_for_function('Array.from(document.images).every(i => i.complete && i.naturalWidth > 0)')
             if any('$' in s['body'] for s in p['sections']):
                 assert page.locator('.katex').count() > 0, (route, 'Math not rendered')
                 assert page.locator('.math-source').evaluate_all('(nodes) => nodes.every(n => n.querySelector(".katex"))'), (route, 'Unrendered equation')
@@ -91,6 +106,13 @@ with sync_playwright() as pw:
                 page.evaluate('(t) => {document.documentElement.dataset.theme=t;window.scrollTo(0,0)}', theme)
                 assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (route, width, theme, 'Horizontal overflow')
                 assert page.locator('.paper-body td').evaluate_all('(cells) => cells.every(c => getComputedStyle(c).whiteSpace === "nowrap")'), (route, width, theme, 'Table values may split across lines')
+                assert page.locator('.paper-body figure img').evaluate_all('''(images) => images.every(i => {
+                    const r = i.getBoundingClientRect();
+                    return r.width <= Math.min(i.naturalWidth, 640) + 2 && r.height <= 480 + 2 &&
+                        Math.abs((r.width - 2) / (r.height - 2) - i.naturalWidth / i.naturalHeight) < .05;
+                })'''), (route, width, theme, 'Oversized or distorted figure')
+                if theme == 'light':
+                    assert page.locator('.status-item, .research-item, .pub-item, .news-list, .paper-body figure').evaluate_all('(cards) => cards.every(e => getComputedStyle(e).backgroundColor === "rgb(255, 255, 255)")'), (route, width, 'Cards are not white')
                 if width > 860:
                     assert page.locator('#nav').bounding_box()['x'] > page.locator('#content').bounding_box()['x']
                 checks.append({'width': width, 'theme': theme})
@@ -103,6 +125,8 @@ with sync_playwright() as pw:
         assert page.locator('html').get_attribute('data-theme') == 'light'
         page.emulate_media(reduced_motion='reduce')
         assert page.locator('#theme-toggle').evaluate('(b) => getComputedStyle(b).transitionDuration') == '0s'
+        if route == '/':
+            assert page.locator('.status .cur').evaluate('(e) => getComputedStyle(e).animationName') == 'none'
         page.emulate_media(reduced_motion='no-preference')
         report['pages'].append({'route': route, 'viewports': checks, 'passed': True})
         (out / 'verification.json').write_text(json.dumps(report, indent=2))

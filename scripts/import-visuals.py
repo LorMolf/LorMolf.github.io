@@ -1,0 +1,78 @@
+"""Import audited PDF crops: uv run --with pillow python scripts/import-visuals.py MANIFEST_DIR.
+Source PDFs, local paths and extraction work files stay outside the published site.
+"""
+import argparse
+import json
+import re
+import subprocess
+from pathlib import Path
+from PIL import Image
+
+# Reviewed PDF line-break hyphenation, not an identifier-normalization heuristic.
+JOINED_WORDS = set('Accuracy CommonsenseQA Format Implicit Language OpenbookQA Original Psychiatry Reasoning Stockfish Values colored considered concerning corresponds departure deviation displacement employing evaluation hypothesis instance inference information knowledge obtains output parameters period perturbed percentage performances perturbation prediction random requirements retrieval recognizable reliability remaining represents standard stratified structural structure sufficient temporal'.split())
+
+def caption_text(text):
+    text = re.sub(r'(\w+)-\s*\n\s*(\w+)', lambda m: m[1] + ('' if m[1] + m[2] in JOINED_WORDS else '-') + m[2], text)
+    return ' '.join(text.split())
+
+assert caption_text('For-\nmat') == 'Format'
+assert caption_text('LINK-\nEU and bug-\nfree') == 'LINK-EU and bug-free'
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('manifests', type=Path)
+args = parser.parse_args()
+root = Path(__file__).resolve().parents[1]
+ids = json.loads(subprocess.check_output(['node', '--input-type=module', '-e',
+    'import {publications} from "./data/publications.js"; console.log(JSON.stringify(publications.map(p=>p.id)))'], cwd=root))
+result = {}
+for pid in ids:
+    doc = json.loads((args.manifests / f'{pid}.json').read_text())
+    assert doc['id'] == pid and doc['complete'] and not doc['missing'], (pid, 'Incomplete audit')
+    items = doc['items']
+    labels = [i['label'] for i in items]
+    assert len(labels) == len(set(labels)), (pid, 'Duplicate label')
+    for kind, key in [('figure', 'figures'), ('table', 'tables')]:
+        expected = doc['expected'][key]
+        found = [i['label'] for i in items if i['kind'] == kind and 'continued' not in i['label'].lower()]
+        assert len(expected) == len(set(expected)) and set(found) == set(expected), (pid, key, expected, found)
+    clean = []
+    for item in items:
+        assert item['kind'] in ['figure', 'table'] and item['caption'].strip(), (pid, item)
+        assert not re.search('[\x00-\x08\x0b-\x1f\x7f]', item['caption']), (pid, item['label'], 'Caption control characters')
+        src = item['src']
+        assert src.startswith(f'/assets/paper-img/{pid}/complete/') and '..' not in src
+        with Image.open(root / src.lstrip('/')) as image:
+            assert image.size == (item['width'], item['height']), (pid, item['label'], 'Dimensions')
+            image.verify()
+        assert 0 < item['displayWidth'] <= 640 and item['page'] >= 1
+        entry = {k: item[k] for k in ['kind', 'label', 'caption', 'page', 'src', 'width', 'height', 'displayWidth', 'captionIncluded']}
+        entry['caption'] = caption_text(entry['caption'])
+        for key in ['pages', 'sourceUrl', 'sourceNote']:
+            if key in item:
+                entry[key] = item[key]
+        if entry.get('sourceUrl'):
+            assert entry['sourceUrl'].startswith('https://')
+        clean.append(entry)
+    note = doc['source']['note']
+    if pid == 'spsd':
+        note = 'Submitted TACL manuscript. The full submission PDF is not distributed here.'
+    elif pid == 'jab':
+        note = 'Figures and tables from the March 2026 author manuscript, plus the separately identified public supplementary rubrics. The manuscript differs from the final journal paper; publisher-version completeness has not been verified.'
+    elif pid == 'retrieve-rank':
+        note = 'Figures and tables from the author manuscript, titled Retrieve-and-Marginalize End-to-End Summarization of Biomedical Studies. The published chapter is titled Retrieve-and-Rank; equivalence to the publisher PDF has not been verified.'
+    else:
+        # Only deliberately public provenance, never extraction notes or filesystem paths.
+        note = {'comma': 'Final published journal version, including appendices.',
+                'sycophants': 'Final ACL Anthology proceedings version, including appendices.',
+                'ports': 'Final ACL Anthology proceedings version, including appendices.',
+                'feast': 'arXiv version, including appendices.',
+                'graph-of-mark': 'arXiv version, including appendices.',
+                'nesy-survey': 'Source version identified in the link below, including appendices.',
+                'mixture-of-masters': 'arXiv version, including appendices.',
+                'ke-qa': 'MSc thesis, including all chapters and background figures.'}[pid]
+    url = doc['source'].get('url')
+    assert url is None or url.startswith('https://'), (pid, 'Invalid source URL')
+    result[pid] = {'source': {'url': url, 'note': note}, 'expected': doc['expected'], 'items': clean}
+assert len(result) == len(ids) == 11
+(root / 'data/paper-visuals.js').write_text('// Audited source figures and tables. Generated by scripts/import-visuals.py.\nexport const paperVisuals = ' + json.dumps(result, ensure_ascii=False, indent=2) + ';\n')
+print(json.dumps({pid: {**{kind: len(d['expected'][kind]) for kind in ['figures', 'tables']}, 'assets': len(d['items'])} for pid, d in result.items()}, indent=2))

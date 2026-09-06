@@ -1,7 +1,7 @@
 import { site } from "/data/site.js";
 import { news } from "/data/news.js";
 import { publications, me, venueLinks } from "/data/publications.js";
-import { escapeHtml, parseLinks, boldAuthor, markByIndex, typeLabel, authorTag, venueHtml } from "/assets/util.js";
+import { escapeHtml, parseLinks, markByIndex, typeLabel, venueHtml } from "/assets/util.js";
 
 export function renderHome(){
   const root = document.getElementById("content");
@@ -13,7 +13,7 @@ export function renderHome(){
       ${st.map((s,i)=>`
         <div class="status-item s${s.c}">
           <span class="prompt">${i===0?'NEXT':'NOW'}</span>
-          <span class="out">${escapeHtml(s.text)}${i===st.length-1?'<span class="cur"></span>':''}</span>
+          <span class="out">${escapeHtml(s.text)}${i===st.length-1?'<span class="cur" aria-hidden="true"></span>':''}</span>
         </div>`).join("")}
     </div>` : "";
 
@@ -37,7 +37,7 @@ export function renderHome(){
   const pubs = selected.map(p=>{
     const arxiv = p.links && p.links.arxiv;
     return `<div class="pub-item">
-      <div class="pub-top"><a class="pt" href="/publications/${escapeHtml(p.id)}/">${escapeHtml(p.title)}</a>${typeLabel(p.type)}${authorTag(p.role)}</div>
+      <div class="pub-top"><a class="pt" href="/publications/${escapeHtml(p.id)}/">${escapeHtml(p.title)}</a>${typeLabel(p.type)}</div>
       <p class="pub-description">${escapeHtml(p.tldr || "")}</p>
       <div class="pm">${venueHtml(p.venue,venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}</div>
     </div>`;
