@@ -40,11 +40,16 @@ With the local server running on port 8766:
 ```
 node scripts/gen-pages.mjs
 uv run --with playwright python scripts/check-site.py
+python scripts/check-spsd-numbers.py
 git diff --check
 ```
 The browser check covers every page at five widths in both themes, paper
 descriptions, math, images, sidebar icons, filters, citation copying and links.
 Use `--base https://lormolf.github.io/` to repeat it after deployment.
+
+`check-spsd-numbers.py` re-derives every figure quoted on the SPSD page from the
+manuscript itself (Table 1, the Figure 3 CSV, and the abstract) and fails on any
+drift. It needs the Overleaf clone and skips where that is absent.
 
 Note: if you rename a paper's `id`, the script writes the new directory but does
 not delete the old one — remove it by hand.
