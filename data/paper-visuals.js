@@ -14,10 +14,7 @@ export const paperVisuals = {
       ],
       "tables": [
         "Table 1",
-        "Table 2",
-        "Table 3",
-        "Table 4",
-        "Table 5"
+        "Table 2"
       ]
     },
     "items": [
@@ -28,7 +25,7 @@ export const paperVisuals = {
         "page": 3,
         "src": "/assets/paper-img/spsd/complete/figure-1.png",
         "width": 1380,
-        "height": 489,
+        "height": 500,
         "displayWidth": 613,
         "captionIncluded": false
       },
@@ -36,10 +33,10 @@ export const paperVisuals = {
         "kind": "figure",
         "label": "Figure 2",
         "caption": "Figure 2: From self-play search to language supervision. A frozen search expert exports selected actions, root-level estimates, and replayable continuations. The simulator validates these records before the renderer constructs move-chain and state-question supervision for language-model post-training.",
-        "page": 5,
+        "page": 6,
         "src": "/assets/paper-img/spsd/complete/figure-2.png",
-        "width": 1380,
-        "height": 495,
+        "width": 1379,
+        "height": 512,
         "displayWidth": 613,
         "captionIncluded": false
       },
@@ -50,7 +47,7 @@ export const paperVisuals = {
         "page": 8,
         "src": "/assets/paper-img/spsd/complete/table-1.png",
         "width": 1380,
-        "height": 564,
+        "height": 576,
         "displayWidth": 613,
         "captionIncluded": false
       },
@@ -60,20 +57,20 @@ export const paperVisuals = {
         "caption": "Figure 3: Training trajectories. Evolution of reasoning abilities of Qwen3-4B-Base during training. SPSD’s advantage emerges from opposite dynamics: SFT peaks early and declines while OPSD keeps improving.",
         "page": 8,
         "src": "/assets/paper-img/spsd/complete/figure-3.png",
-        "width": 1173,
-        "height": 417,
-        "displayWidth": 521,
+        "width": 1385,
+        "height": 437,
+        "displayWidth": 616,
         "captionIncluded": false
       },
       {
         "kind": "figure",
         "label": "Figure 4",
-        "caption": "Figure 4: MCTS structure and reasoning sharpness. Surfaces relate episode wins to mean selected-action value Q50 and oracle@50 under a fresh 50-simulation MuZero search.",
+        "caption": "Figure 4: MCTS structure and reasoning sharpness. Surfaces relate episode wins to mean selected- action value Q50 and oracle@50 under a fresh 50-simulation MuZero search.",
         "page": 9,
         "src": "/assets/paper-img/spsd/complete/figure-4.png",
-        "width": 1365,
-        "height": 294,
-        "displayWidth": 607,
+        "width": 1385,
+        "height": 300,
+        "displayWidth": 616,
         "captionIncluded": false
       },
       {
@@ -82,42 +79,9 @@ export const paperVisuals = {
         "caption": "Table 2: Executable criteria for supervision rows. Each reference output is checked against a restored state or replayed successor. Move-choice rows additionally require legal replay of every narrated branch and terminal evidence for every outcome claim.",
         "page": 17,
         "src": "/assets/paper-img/spsd/complete/table-2.png",
-        "width": 1383,
-        "height": 312,
-        "displayWidth": 615,
-        "captionIncluded": false
-      },
-      {
-        "kind": "table",
-        "label": "Table 3",
-        "caption": "Table 3: Checkpoint-backed expert-data configuration. Search, state-sampling, renderer, and allocation settings for the 17,100-row SPSD corpus: 13,680 move rows and 3,420 state rows, with 570 rows for each of the six state tasks. In game order Connect4, Domineering, Simplified Othello, and Tic-Tac-Chess, the row quotas are 5,500/5,500/5,500/600.",
-        "page": 17,
-        "src": "/assets/paper-img/spsd/complete/table-3.png",
-        "width": 1380,
-        "height": 456,
-        "displayWidth": 613,
-        "captionIncluded": false
-      },
-      {
-        "kind": "table",
-        "label": "Table 4",
-        "caption": "Table 4: Post-training, decoding, and compute configuration. Selected reasoning-chain SFT and OPSD hyperparameters, fixed game and mathematics decoding contracts, and hardware allocation.",
-        "page": 18,
-        "src": "/assets/paper-img/spsd/complete/table-4.png",
-        "width": 1386,
-        "height": 744,
-        "displayWidth": 616,
-        "captionIncluded": false
-      },
-      {
-        "kind": "table",
-        "label": "Table 5",
-        "caption": "Table 5: Controlled rule axes. Each row lists the local rule factors varied within one family. Every admitted variant preserves the parent observation shape, board topology, action-space size, tensor shape, and legal-handle space.",
-        "page": 18,
-        "src": "/assets/paper-img/spsd/complete/table-5.png",
-        "width": 678,
-        "height": 369,
-        "displayWidth": 301,
+        "width": 1382,
+        "height": 314,
+        "displayWidth": 614,
         "captionIncluded": false
       }
     ]

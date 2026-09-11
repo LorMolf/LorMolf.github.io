@@ -246,6 +246,16 @@ img{max-width:100%;display:block}
 
 /* ===== tables inside markdown (GFM) ===== */
 .paper-table-wrap{overflow-x:auto;max-width:100%;margin:24px 0 28px}
+
+/* Live canvas plots sit on top of the source PNG. The image keeps its layout
+   box (and correct aspect ratio) so it can still be measured and linked. */
+.paper-body figure.has-live-plot > a{position:relative;display:block;margin-bottom:var(--live-extra,0px)}
+.paper-body figure.has-live-plot > a img{visibility:hidden}
+.paper-body figure.has-live-plot .live-plot{position:absolute;left:50%;top:0;transform:translateX(-50%);max-width:100%;pointer-events:none}
+@media(prefers-reduced-motion:reduce){
+  .paper-body figure.has-live-plot > a img{visibility:visible}
+  .paper-body figure.has-live-plot .live-plot{display:none}
+}
 .paper-body table{border-collapse:collapse;width:100%;font-size:14.5px;font-family:'Computer Modern Serif',serif}
 .paper-body th,.paper-body td{white-space:nowrap;overflow-wrap:normal}
 .paper-body table thead{background:var(--line-soft)}

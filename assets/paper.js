@@ -154,5 +154,8 @@ export function renderPaper(){
     if(firstVisual) firstVisual.id = "visuals";
     wrapMarkdownTables(root);
     runKatex(root);
+    import("/assets/live-plots.js")
+      .then(m => m.mountLivePlots(root))
+      .catch(() => { /* static figures remain */ });
   });
 }
