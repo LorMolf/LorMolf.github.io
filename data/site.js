@@ -14,7 +14,7 @@ export const site = {
   photo: "/photo.jpg",
   status: [
     { c: 0, text: "finishing my PhD at the end of October." },
-    { c: 1, text: "at home in Puglia." }
+    { c: 1, text: "back in Bologna." }
   ],
   bio: [
     "I'm a **PhD student** in Computer Science and Engineering at the [University of Bologna](https://www.unibo.it/en), working on **Natural Language Processing** and **Information Retrieval**, and a member of the [UniboNLP group](https://disi-unibo-nlp.github.io).",

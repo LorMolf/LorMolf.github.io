@@ -52,7 +52,7 @@ with sync_playwright() as pw:
             assert page.locator('.news-item .typelabel').count() == page.locator('.news-item').count()
             assert page.locator('.pub-item').count() == sum(bool(p.get('selected')) for p in pubs)
             assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/spsd/'
-            assert page.locator('.status-item .out').all_text_contents() == ['finishing my PhD at the end of October.', 'at home in Puglia.']
+            assert page.locator('.status-item .out').all_text_contents() == ['finishing my PhD at the end of October.', 'back in Bologna.']
             assert page.locator('.status-item .out').evaluate_all('(nodes) => nodes.every(e => getComputedStyle(e).fontFamily.includes("Computer Modern Typewriter"))')
             assert page.locator('.status-item .prompt').evaluate_all('(nodes) => nodes.every(e => getComputedStyle(e).fontFamily.includes("Archivo Black"))')
             assert page.locator('.bio strong').count() >= 4

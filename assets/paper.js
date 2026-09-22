@@ -32,6 +32,40 @@ function configureMarked(visuals){
   }
   // Keep Markdown from interpreting TeX subscripts as emphasis before KaTeX runs.
   m.use({ extensions: [{
+    // Callout block:  :::claim Title\n body \n:::   (kinds: claim, note, warn)
+    // Gives the narrative structure beyond flat paragraphs.
+    name: "calloutBlock",
+    level: "block",
+    start(src){ return src.indexOf("\n:::"); },
+    tokenizer(src){
+      const match = /^:::(claim|note|warn|key)(?:[ \t]+([^\n]*))?\n([\s\S]*?)\n:::(?:\n|$)/.exec(src);
+      if(match) return {
+        type:"calloutBlock", raw:match[0], kind:match[1],
+        title:(match[2]||"").trim(), tokens:this.lexer.blockTokens(match[3])
+      };
+    },
+    renderer(token){
+      const head = token.title
+        ? `<p class="callout-h">${escapeHtml(token.title)}</p>` : "";
+      return `<aside class="callout callout-${token.kind}">${head}${this.parser.parse(token.tokens)}</aside>`;
+    }
+  },{
+    // Inline accent: [c:red]text[/c]. Colours come from the site palette and
+    // Figure 2, so prose highlights match the diagrams they describe.
+    name: "accentSpan",
+    level: "inline",
+    start(src){ return src.indexOf("[c:"); },
+    tokenizer(src){
+      const match = /^\[c:(red|blue|green|gold|pink|cyan)\]([\s\S]+?)\[\/c\]/.exec(src);
+      if(match) return {
+        type:"accentSpan", raw:match[0], tone:match[1],
+        tokens:this.lexer.inlineTokens(match[2])
+      };
+    },
+    renderer(token){
+      return `<span class="accent accent-${token.tone}">${this.parser.parseInline(token.tokens)}</span>`;
+    }
+  },{
     name: "sourceVisual",
     level: "block",
     start(src){ return src.indexOf("{{visual:"); },
@@ -48,6 +82,19 @@ function configureMarked(visuals){
         </a>
         <figcaption><strong>${escapeHtml(v.label)}</strong> · PDF ${v.pages?.length > 1 ? `pp. ${escapeHtml(v.pages.join(", "))}` : `p. ${v.page}`}<br>${escapeHtml(v.caption)}${v.sourceNote ? ` ${escapeHtml(v.sourceNote)}` : ""}${v.sourceUrl ? ` <a href="${escapeHtml(v.sourceUrl)}" target="_blank" rel="noopener">Supplement source ↗</a>` : ""}</figcaption>
       </figure>`;
+    }
+  }, {
+    // Interactive corpus explorer. Renders only a mount point: no <img> and no
+    // <figure>, so the figure invariants the site check enforces are untouched.
+    name: "sourceExplorer",
+    level: "block",
+    start(src){ return src.indexOf("{{explorer:"); },
+    tokenizer(src){
+      const match = /^\{\{explorer:([a-z0-9-]+)\}\}(?:\n|$)/.exec(src);
+      if(match) return {type:"sourceExplorer", raw:match[0], name:match[1]};
+    },
+    renderer(token){
+      return `<div class="paper-interactive" data-spsd-explorer="${escapeHtml(token.name)}"></div>`;
     }
   }, {
     name: "mathSource",
@@ -97,7 +144,8 @@ export function renderPaper(){
 
   const sections = Array.isArray(p.sections) ? p.sections : [];
   const visuals = paperVisuals[p.id];
-  const anchorLinks = [...sections, { id: "abstract", title: "Abstract" }, { id: "citation", title: "Citation" }]
+  // Anchor order follows document order: abstract now leads the page.
+  const anchorLinks = [{ id: "abstract", title: "Abstract" }, ...sections, { id: "citation", title: "Citation" }]
     .map(s=>`<a href="#${escapeHtml(s.id)}">${escapeHtml(s.title)}</a>`)
     .join("");
 
@@ -118,14 +166,14 @@ export function renderPaper(){
     <nav class="paper-anchors" aria-label="On this page">${anchorLinks}</nav>
     <p class="paper-source">${escapeHtml(visuals.source.note)} ${visuals.source.url ? `<a href="${escapeHtml(visuals.source.url)}" target="_blank" rel="noopener">Source ↗</a>` : ""}</p>
 
+    <h2 class="paper-h" id="abstract">Abstract</h2>
+    <p class="paper-abs"${p.abstractRich ? ' data-abs-rich' : ''}>${p.abstract ? escapeHtml(p.abstract) : '<span class="muted">Official abstract to be added.</span>'}</p>
+    ${p.abstractSource ? `<p class="paper-source"><a href="${escapeHtml(p.abstractSource)}" target="_blank" rel="noopener">Abstract source ↗</a></p>` : ""}
+
     ${sections.map(s=>`
       <h2 class="paper-h" id="${escapeHtml(s.id)}">${escapeHtml(s.title)}</h2>
       <div class="paper-body" data-section="${escapeHtml(s.id)}"></div>
     `).join("")}
-
-    <h2 class="paper-h" id="abstract">Abstract</h2>
-    <p class="paper-abs">${p.abstract ? escapeHtml(p.abstract) : '<span class="muted">Official abstract to be added.</span>'}</p>
-    ${p.abstractSource ? `<p class="paper-source"><a href="${escapeHtml(p.abstractSource)}" target="_blank" rel="noopener">Abstract source ↗</a></p>` : ""}
 
     <h2 class="paper-h" id="citation">Citation</h2>
     <div class="bibtex">
@@ -149,6 +197,9 @@ export function renderPaper(){
       const host = root.querySelector(`[data-section="${CSS.escape(s.id)}"]`);
       if(host){ host.innerHTML = window.marked.parse(s.body||""); }
     });
+    // The abstract carries inline emphasis only; parseInline keeps it one <p>.
+    const abs = root.querySelector(".paper-abs[data-abs-rich]");
+    if(abs && p.abstractRich){ abs.innerHTML = window.marked.parseInline(p.abstractRich); }
     // Preserve old incoming #visuals links without a separate gallery section.
     const firstVisual = root.querySelector(".source-visual");
     if(firstVisual) firstVisual.id = "visuals";
@@ -157,5 +208,10 @@ export function renderPaper(){
     import("/assets/live-plots.js")
       .then(m => m.mountLivePlots(root))
       .catch(() => { /* static figures remain */ });
+    if(root.querySelector("[data-spsd-explorer]")){
+      import("/assets/spsd-explorer.js")
+        .then(m => m.mountSpsdExplorer(root))
+        .catch(() => { /* prose remains without the explorer */ });
+    }
   });
 }

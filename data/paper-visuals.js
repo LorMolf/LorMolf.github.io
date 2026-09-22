@@ -3,7 +3,7 @@ export const paperVisuals = {
   "spsd": {
     "source": {
       "url": null,
-      "note": "Submitted TACL manuscript. The full submission PDF is not distributed here."
+      "note": "Submitted TACL manuscript."
     },
     "expected": {
       "figures": [

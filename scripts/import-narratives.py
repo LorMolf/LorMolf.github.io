@@ -39,6 +39,14 @@ for paper in data['publications']:
         assert body.count('{{visual:') == len(tokens), (pid, 'Malformed visual reference')
         found.extend(tokens)
     assert len(found) == len(set(found)) and set(found) == set(included), (pid, 'Narrative coverage mismatch')
+    # An optional marked-up abstract may add emphasis but never change a word:
+    # stripping the markup must reproduce the manuscript abstract exactly.
+    rich = doc.get('abstractRich')
+    if rich:
+        bare = re.sub(r'\[c:[a-z]+\]|\[/c\]', '', rich).replace('**', '').replace('*', '')
+        assert bare == paper['abstract'], (pid, 'abstractRich is not the abstract verbatim')
+        assert not re.search(r'<|\{\{', rich), (pid, 'abstractRich may only carry inline emphasis')
+        paper['abstractRich'] = rich
     paper['sections'] = sections
     paper['visualSelection'] = {'main': main, 'appendix': appendix}
     report.append({'id': pid, 'main': len(main), 'appendix': len(appendix), 'omitted': len(omitted), 'sections': len(sections)})
