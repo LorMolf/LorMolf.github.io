@@ -5,9 +5,9 @@ export const publications = [
     "id": "spsd",
     "title": "Self-Play Search Distillation for Large Language Model Reasoning",
     "authors": "Lorenzo Molfetta, Wai-Chung Kwan, Giacomo Frisoni, Luca Ragazzi, Gianluca Moro, Pavlos Vougiouklis, Jeff Z. Pan, Pasquale Minervini",
-    "venue": "Submitted to TACL",
+    "venue": "arXiv preprint",
     "year": 2026,
-    "type": "submitted",
+    "type": "preprint",
     "selected": true,
     "role": "first",
     "tags": [

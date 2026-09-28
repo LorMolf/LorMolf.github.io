@@ -55,7 +55,7 @@ for pid in ids:
         clean.append(entry)
     note = doc['source']['note']
     if pid == 'spsd':
-        note = 'Submitted TACL manuscript.'
+        note = 'Author manuscript (arXiv version).'
     elif pid == 'jab':
         note = 'Discussion and numbered visuals use the March 2026 author manuscript, which differs from the final journal paper. Publisher-version completeness has not been verified.'
     elif pid == 'retrieve-rank':

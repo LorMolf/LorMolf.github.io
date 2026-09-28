@@ -3,7 +3,7 @@ export const paperVisuals = {
   "spsd": {
     "source": {
       "url": null,
-      "note": "Submitted TACL manuscript."
+      "note": "Author manuscript (arXiv version)."
     },
     "expected": {
       "figures": [

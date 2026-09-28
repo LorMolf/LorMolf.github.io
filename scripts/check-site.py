@@ -32,7 +32,7 @@ with sync_playwright() as pw:
     assert all(s.get('body', '').strip() for p in pubs for s in p['sections']), 'Empty article sections'
     assert all(not any(c in s['body'] for c in '\t\r\b\f') for p in pubs for s in p['sections']), 'Corrupted LaTeX string escaping'
     spsd = next(p for p in pubs if p['id'] == 'spsd')
-    assert spsd['type'] == 'submitted' and spsd['venue'] == 'Submitted to TACL'
+    assert spsd['type'] == 'preprint' and spsd['venue'] == 'arXiv preprint'
     assert len(spsd['authors'].split(', ')) == 8 and spsd.get('links') == {'arxiv': 'https://arxiv.org/abs/2609.30936'}, 'SPSD links only the public arXiv version'
     routes = ['/', '/publications/', '/cv/'] + [f"/publications/{p['id']}/" for p in pubs]
     internal = set(routes)

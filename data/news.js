@@ -1,7 +1,7 @@
 export const news = [
   { date: "2026",
     publicationId: "spsd",
-    text: "SPSD: Self-Play Search Distillation for Large Language Model Reasoning submitted to TACL." },
+    text: "SPSD: Self-Play Search Distillation for Large Language Model Reasoning released on arXiv." },
   { date: "2026",
     publicationId: "sycophants",
     text: "\"Sycophants in the Courtroom: Are LLMs Fragile to Juridical Authority and Evolving Legal Standards?\" accepted to ACL." },

@@ -73,7 +73,7 @@ export function bibtex(p){
   return s;
 }
 
-// The venue links to the paper's own published version; unpublished work ("Submitted to TACL") stays plain text.
+// The venue links to the paper's own published version; unpublished work stays plain text.
 export function venueHtml(p){
   const url = p.links?.read || p.links?.doi;
   return url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(p.venue)}</a>` : escapeHtml(p.venue);
