@@ -1,15 +1,5 @@
 export const me = "Lorenzo Molfetta";
 
-export const venueLinks = {
-  "ACL": "https://2026.aclweb.org/",
-  "AAAI": "https://aaai.org/aaai-conference/",
-  "EMNLP": "https://2025.emnlp.org/",
-  "ECAI": "https://ecai2025.org/",
-  "IJCAI": "https://www.ijcai.org/",
-  "SISAP": "https://sisap.org/",
-  "Artificial Intelligence and Law": "https://www.springer.com/journal/10506"
-};
-
 export const publications = [
   {
     "id": "spsd",

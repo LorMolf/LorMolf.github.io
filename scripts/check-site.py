@@ -126,6 +126,9 @@ with sync_playwright() as pw:
                 assert page.locator(anchor.get_attribute('href')).count() == 1
             page.locator('#copy-bib').click()
             assert page.evaluate('navigator.clipboard.readText()') == page.locator('#bib').inner_text()
+            venue_links = page.locator('.paper-venue a').evaluate_all('(a) => a.map(x => x.getAttribute("href"))')
+            paper_url = (p.get('links') or {}).get('read') or (p.get('links') or {}).get('doi')
+            assert venue_links == ([paper_url] if paper_url else []), (route, 'Venue must link to this paper, or nowhere', venue_links)
             if p['id'] == 'spsd':
                 assert page.locator('#bib').inner_text().startswith('@misc{molfetta2026selfplaysearchdistillationlarge,')
                 assert 'eprint={2609.30936}' in page.locator('#bib').inner_text()

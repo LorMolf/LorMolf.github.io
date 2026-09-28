@@ -1,6 +1,6 @@
 import { site } from "/data/site.js";
 import { news } from "/data/news.js";
-import { publications, me, venueLinks } from "/data/publications.js";
+import { publications, me } from "/data/publications.js";
 import { escapeHtml, parseLinks, markByIndex, typeLabel, venueHtml } from "/assets/util.js";
 
 export function renderHome(){
@@ -30,7 +30,7 @@ export function renderHome(){
     <div class="news-item">
       ${typeLabel(publications.find(p=>p.id===n.publicationId).type)}
       <span class="news-date">${escapeHtml(n.date)}</span>
-      <span>${parseLinks(n.text)} ${n.href?`<a href="${escapeHtml(n.href)}" target="_blank" rel="noopener">↗</a>`:""}</span>
+      <span>${parseLinks(n.text)} <a href="/publications/${escapeHtml(n.publicationId)}/">↗</a></span>
     </div>`).join("");
 
   const selected = publications.filter(p=>p.selected).sort((a,b)=>b.year-a.year);
@@ -39,7 +39,7 @@ export function renderHome(){
     return `<div class="pub-item">
       <div class="pub-top"><a class="pt" href="/publications/${escapeHtml(p.id)}/">${escapeHtml(p.title)}</a>${typeLabel(p.type)}</div>
       <p class="pub-description">${escapeHtml(p.tldr || "")}</p>
-      <div class="pm">${venueHtml(p.venue,venueLinks)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}</div>
+      <div class="pm">${venueHtml(p)} · ${p.year}${arxiv?` <a href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}</div>
     </div>`;
   }).join("");
 

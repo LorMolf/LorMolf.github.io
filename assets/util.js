@@ -73,8 +73,8 @@ export function bibtex(p){
   return s;
 }
 
-export function venueHtml(venue, venueLinks){
-  const key = Object.keys(venueLinks).find(k => venue.includes(k));
-  if(key) return `<a href="${venueLinks[key]}" target="_blank" rel="noopener">${escapeHtml(venue)}</a>`;
-  return escapeHtml(venue);
+// The venue links to the paper's own published version; unpublished work ("Submitted to TACL") stays plain text.
+export function venueHtml(p){
+  const url = p.links?.read || p.links?.doi;
+  return url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(p.venue)}</a>` : escapeHtml(p.venue);
 }

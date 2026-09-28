@@ -1,4 +1,4 @@
-import { publications, me, venueLinks } from "/data/publications.js";
+import { publications, me } from "/data/publications.js";
 import { paperVisuals } from "/data/paper-visuals.js";
 import { escapeHtml, boldAuthor, typeLabel, topicTag, venueHtml, bibtex } from "/assets/util.js";
 
@@ -155,7 +155,7 @@ export function renderPaper(){
     <h1 class="paper-title">${escapeHtml(p.title)}</h1>
     <p class="paper-sub">${escapeHtml(p.tldr || "")}</p>
     <div class="paper-authors">${boldAuthor(p.authors, me)}</div>
-    <div class="paper-meta">${typeLabel(p.type)} <span class="paper-venue">${venueHtml(p.venue, venueLinks)} · ${p.year}</span></div>
+    <div class="paper-meta">${typeLabel(p.type)} <span class="paper-venue">${venueHtml(p)} · ${p.year}</span></div>
     <div class="paper-links">
       ${read?`<a class="plink" href="${escapeHtml(read)}" target="_blank" rel="noopener">paper ↗</a>`:""}
       ${arxiv?`<a class="plink" href="${escapeHtml(arxiv)}" target="_blank" rel="noopener">arXiv ↗</a>`:""}

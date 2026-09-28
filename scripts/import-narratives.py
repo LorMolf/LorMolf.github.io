@@ -53,6 +53,6 @@ for paper in data['publications']:
 assert len(report) == 11
 # Preserve all exported metadata values; only sections and selection are changed.
 output = '\n\n'.join('export const ' + key + ' = ' + json.dumps(data[key], ensure_ascii=False, indent=2) + ';'
-    for key in ['me', 'venueLinks', 'publications']) + '\n'
+    for key in ['me', 'publications']) + '\n'
 (root / 'data/publications.js').write_text(output)
 print(json.dumps(report, indent=2))
