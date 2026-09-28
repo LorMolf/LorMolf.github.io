@@ -10,13 +10,14 @@ export const bibTeX = {
   doi = {10.1016/j.jss.2026.113033},
   url = {https://www.sciencedirect.com/science/article/pii/S0164121226002669}
 }`,
-  'spsd': `@unpublished{molfetta2026spsd,
-  author       = {Lorenzo Molfetta and Wai-Chung Kwan and Giacomo Frisoni and
-                  Luca Ragazzi and Gianluca Moro and Pavlos Vougiouklis and
-                  Jeff Z. Pan and Pasquale Minervini},
-  title        = {Self-Play Search Distillation for Large Language Model Reasoning},
-  year         = {2026},
-  note         = {Submitted to Transactions of the Association for Computational Linguistics; not yet accepted or published}
+  'spsd': `@misc{molfetta2026selfplaysearchdistillationlarge,
+      title={Self-Play Search Distillation for Large Language Model Reasoning}, 
+      author={Lorenzo Molfetta and Wai-Chung Kwan and Giacomo Frisoni and Luca Ragazzi and Gianluca Moro and Pavlos Vougiouklis and Jeff Z. Pan and Pasquale Minervini},
+      year={2026},
+      eprint={2609.30936},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2609.30936}, 
 }`,
   'sycophants': `@inproceedings{DBLP:conf/acl/MolfettaCRBPM26,
   author       = {Lorenzo Molfetta and

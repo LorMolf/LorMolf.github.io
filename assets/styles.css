@@ -191,6 +191,9 @@ img{max-width:100%;display:block}
 .paper-meta{font-family:'Computer Modern Typewriter',monospace;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
 .paper-venue{color:var(--muted)}
 .paper-links{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
+.paper-video{margin:0 0 36px}
+.paper-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#f6f1e7;border:2px solid var(--line)}
+.paper-video figcaption{font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;font-size:13px;color:var(--muted);margin-top:8px}
 .plink{font-family:'Computer Modern Typewriter',monospace;font-variant:small-caps;font-size:13px;color:var(--paper)!important;background:var(--ink);padding:7px 14px;border-radius:4px;border:none}
 .plink:hover{background:var(--green);color:var(--paper)!important;border:none}
 .paper-figure{margin:0 0 36px;border:1px solid var(--line-soft);padding:14px;background:var(--paper)}

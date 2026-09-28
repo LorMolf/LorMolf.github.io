@@ -59,7 +59,14 @@ export const publications = [
         "body": "A last question is whether the trained model actually **reasons the way the expert searched**. We re-read each episode's trace to recover the move it commits to, restore the position, and query the frozen expert with a fresh 50-simulation search.\n\n- [c:cyan]**Q50**[/c] is the expert's value for the committed move.\n- [c:pink]**oracle@50**[/c] is how often that move matches the one search prefers.\n\n{{visual:Figure 4}}\n\nWins concentrate where both signals are high, and the systems reach that region differently. Gemini 3.1 Pro sustains a high estimated win rate at *intermediate* agreement when its chosen actions carry high search value, so successful play there can [c:blue]diverge from the expert's preference[/c]. For GPT-5.5 and the SPSD model, high-valued choices are associated with wins most strongly when agreement is high as well, while Opus 5 shows a lower estimated win rate even when both coordinates are favorable.\n\n:::key Reasoning sharpness\nFor the SPSD student, winning and choosing the search-preferred action [c:green]**move together**[/c]: selecting valuable actions *and* following the expert where its preference carries information.\n\nThe coupling is tighter than in Gemini 3.1 Pro, which points at the **comparative supervision itself**, since each training example exhibits the alternatives a move was weighed against and not the move alone.\n:::\n\nThe search runs once, during corpus construction. At inference the model sees only the rules and the board, [c:red]no values and no traces[/c], which makes expert strength, simulation budget, and environment diversity **adjustable inputs to the data** rather than costs paid at deployment."
       }
     ],
-    "links": {},
+    "links": {
+      "arxiv": "https://arxiv.org/abs/2609.30936"
+    },
+    "video": {
+      "src": "/assets/video/spsd-explainer.mp4",
+      "poster": "/assets/video/spsd-explainer.jpg",
+      "title": "SPSD in two minutes"
+    },
     "visualSelection": {
       "main": [
         "Figure 1",

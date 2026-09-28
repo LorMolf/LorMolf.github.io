@@ -33,7 +33,7 @@ with sync_playwright() as pw:
     assert all(not any(c in s['body'] for c in '\t\r\b\f') for p in pubs for s in p['sections']), 'Corrupted LaTeX string escaping'
     spsd = next(p for p in pubs if p['id'] == 'spsd')
     assert spsd['type'] == 'submitted' and spsd['venue'] == 'Submitted to TACL'
-    assert len(spsd['authors'].split(', ')) == 8 and not spsd.get('links'), 'Do not link private submission files'
+    assert len(spsd['authors'].split(', ')) == 8 and spsd.get('links') == {'arxiv': 'https://arxiv.org/abs/2609.30936'}, 'SPSD links only the public arXiv version'
     routes = ['/', '/publications/', '/cv/'] + [f"/publications/{p['id']}/" for p in pubs]
     internal = set(routes)
     for route in routes:
@@ -127,7 +127,16 @@ with sync_playwright() as pw:
             page.locator('#copy-bib').click()
             assert page.evaluate('navigator.clipboard.readText()') == page.locator('#bib').inner_text()
             if p['id'] == 'spsd':
-                assert page.locator('#bib').inner_text().startswith('@unpublished{')
+                assert page.locator('#bib').inner_text().startswith('@misc{molfetta2026selfplaysearchdistillationlarge,')
+                assert 'eprint={2609.30936}' in page.locator('#bib').inner_text()
+                assert page.locator('.paper-links a.plink', has_text='arXiv').get_attribute('href') == 'https://arxiv.org/abs/2609.30936'
+                video = page.locator('.paper-video video')
+                assert video.count() == 1 and page.evaluate('''() => {
+                    const v = document.querySelector('.paper-video'), a = document.querySelector('.paper-anchors');
+                    return v.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING;
+                }'''), 'Explainer video must sit above the section nav'
+                video.evaluate('(v) => v.readyState >= 1 || new Promise(r => v.addEventListener("loadedmetadata", r, {once: true}))')
+                assert 120 < video.evaluate('(v) => v.duration') < 135, 'Explainer video did not load'
         assert page.locator('img').evaluate_all('(images) => images.every(i => i.complete && i.naturalWidth > 0)'), (route, 'Broken image')
         internal.update(page.locator('a[href^="/"]').evaluate_all('(links) => links.map(a => new URL(a.href).pathname)'))
         checks = []

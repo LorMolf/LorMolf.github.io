@@ -163,6 +163,12 @@ export function renderPaper(){
       ${code?`<a class="plink" href="${escapeHtml(code)}" target="_blank" rel="noopener">code ↗</a>`:""}
       ${doi?`<a class="plink" href="${escapeHtml(doi)}" target="_blank" rel="noopener">DOI ↗</a>`:""}
     </div>
+    ${p.video ? `<figure class="paper-video">
+      <video controls preload="metadata" playsinline poster="${escapeHtml(p.video.poster)}" aria-label="${escapeHtml(p.video.title)}">
+        <source src="${escapeHtml(p.video.src)}" type="video/mp4">
+      </video>
+      <figcaption>${escapeHtml(p.video.title)}</figcaption>
+    </figure>` : ""}
     <nav class="paper-anchors" aria-label="On this page">${anchorLinks}</nav>
     <p class="paper-source">${escapeHtml(visuals.source.note)} ${visuals.source.url ? `<a href="${escapeHtml(visuals.source.url)}" target="_blank" rel="noopener">Source ↗</a>` : ""}</p>
 
