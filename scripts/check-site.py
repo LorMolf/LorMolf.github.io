@@ -40,7 +40,7 @@ with sync_playwright() as pw:
     assert gtt['type'] == 'conference' and gtt['selected'] and gtt['year'] == 2026
     assert all(word in gtt['venue'].lower() for word in ['log', 'accepted', 'oral'])
     assert gtt['links'] == {'arxiv': 'https://arxiv.org/abs/2610.25993', 'pdf': 'https://arxiv.org/pdf/2610.25993v1', 'code': 'https://github.com/cagianoaless/tab_repres_gen'}
-    assert gtt['visualSelection'] == {'main': ['Figure 1', 'Figure 2', 'Figure 3', 'Figure 4'], 'appendix': ['Table 18', 'Figure 8']}
+    assert gtt['visualSelection'] == {'main': ['Figure 1', 'Figure 2', 'Figure 3', 'Figure 4'], 'appendix': ['Figure 8']}
     assert catalog['graph-to-table']['expected'] == {'figures': [f'Figure {i}' for i in range(1, 13)], 'tables': [f'Table {i}' for i in range(1, 21)]}
     gtt_pages = {v['label']: v['page'] for v in catalog['graph-to-table']['items']}
     assert all(gtt_pages[label] == source_page for label, source_page in {'Figure 1': 3, 'Figure 2': 8, 'Figure 3': 8, 'Figure 4': 9, 'Table 18': 25, 'Figure 8': 26}.items())
@@ -154,6 +154,8 @@ with sync_playwright() as pw:
                 video.evaluate('(v) => v.readyState >= 1 || new Promise(r => v.addEventListener("loadedmetadata", r, {once: true}))')
                 assert 120 < video.evaluate('(v) => v.duration') < 135, 'Explainer video did not load'
             elif p['id'] == 'graph-to-table':
+                assert page.locator('figure[data-label="Table 18"], img[src$="table-18.png"]').count() == 0
+                assert 'Table 18' not in page.locator('#content').inner_text()
                 assert page.locator('.paper-authors').inner_text() == gtt['authors']
                 assert all(word in page.locator('.paper-venue').inner_text().lower() for word in ['log', 'accepted', 'oral'])
                 assert set(page.locator('.paper-links a.plink').evaluate_all('(links) => links.map(a => a.getAttribute("href"))')) == set(gtt['links'].values())

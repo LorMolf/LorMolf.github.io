@@ -638,3 +638,16 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offs
 /* leaned plates, as in Figure 2 */
 .sx-mini-edge{fill:color-mix(in srgb,var(--ink) 26%,transparent)}
 .sx-plate{transition:opacity .25s ease}
+
+/* Graph-to-Table: the project page's palette, scoped to this article only. */
+#content:has(#gtt-interface) .accent{--ink:#252b31;color:var(--ink);padding:.08em .18em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#content:has(#gtt-interface) .accent-blue{background:#b2d9ff}
+#content:has(#gtt-interface) .accent-gold{background:#ffe0c2}
+#content:has(#gtt-interface) .accent-green{background:#b2e0b2}
+#content:has(#gtt-interface) .accent-pink{background:#f9dfef;font-weight:700}
+#content:has(#gtt-interface) .callout{--ink:#252b31;color:var(--ink);background:#edf4ee;border-left-color:#285d50}
+#content:has(#gtt-interface) .callout-note{background:#eaf2f8;border-left-color:#255e87}
+#content:has(#gtt-interface) .callout-h{color:var(--ink)}
+#content:has(#gtt-interface) .paper-h{color:#255e87;background:#eaf2f8;border-color:#d3dfe4;box-shadow:3px 3px 0 #b0147a}
+#content:has(#gtt-interface) .paper-links .plink{--ink:#b0147a;--green:#b0147a;--paper:#fff9fd;--wash-gold:#f9dfef;background:#fff9fd;border-color:#b0147a}
+#content:has(#gtt-interface) .paper-links .plink:hover{background:#f9dfef}
