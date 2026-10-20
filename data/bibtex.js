@@ -1,6 +1,15 @@
-// Official BibTeX entries (DBLP) for each paper.
-// For papers not yet on DBLP, a faithful entry is provided and flagged in `note`.
+// Official citation records from DBLP, publishers and arXiv.
+// Other faithful entries identify their provenance in `note`.
 export const bibTeX = {
+  'graph-to-table': `@misc{cagiano2026graphtotableinterfacescontrolrelational,
+      title={Graph-to-Table Interfaces Control Relational Generalisation},\x20
+      author={Alessandro Cagiano and Lorenzo Molfetta and Gianluca Moro and Matteo Zignani and Pasquale Minervini},
+      year={2026},
+      eprint={2610.25993},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2610.25993},\x20
+}`,
   'jab': `@article{COCCHIERI2026113033,
   title = {Java academic benchmark: Exam-based evaluation of LLMs on object-oriented programming},
   author = {Alessio Cocchieri and Luca Ragazzi and Gianluca Aguzzi and Giacomo Frisoni and Lorenzo Molfetta and Gianluca Moro and Mirko Viroli},

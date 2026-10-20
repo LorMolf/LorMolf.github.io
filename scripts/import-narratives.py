@@ -11,6 +11,8 @@ root = Path(__file__).resolve().parents[1]
 review = Path(sys.argv[1])
 data = json.loads(subprocess.check_output(['node', '--input-type=module', '-e',
     'import * as d from "./data/publications.js"; console.log(JSON.stringify(d))'], cwd=root))
+ids = [paper['id'] for paper in data['publications']]
+assert ids and len(ids) == len(set(ids)), 'Empty or duplicate publication IDs'
 report = []
 for paper in data['publications']:
     pid = paper['id']
@@ -50,7 +52,7 @@ for paper in data['publications']:
     paper['sections'] = sections
     paper['visualSelection'] = {'main': main, 'appendix': appendix}
     report.append({'id': pid, 'main': len(main), 'appendix': len(appendix), 'omitted': len(omitted), 'sections': len(sections)})
-assert len(report) == 11
+assert len(report) == len(ids) and {entry['id'] for entry in report} == set(ids), 'Narrative collection coverage mismatch'
 # Preserve all exported metadata values; only sections and selection are changed.
 output = '\n\n'.join('export const ' + key + ' = ' + json.dumps(data[key], ensure_ascii=False, indent=2) + ';'
     for key in ['me', 'publications']) + '\n'

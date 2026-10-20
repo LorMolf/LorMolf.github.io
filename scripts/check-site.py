@@ -34,6 +34,16 @@ with sync_playwright() as pw:
     spsd = next(p for p in pubs if p['id'] == 'spsd')
     assert spsd['type'] == 'preprint' and spsd['venue'] == 'arXiv preprint'
     assert len(spsd['authors'].split(', ')) == 8 and spsd.get('links') == {'arxiv': 'https://arxiv.org/abs/2609.30936'}, 'SPSD links only the public arXiv version'
+    gtt = next(p for p in pubs if p['id'] == 'graph-to-table')
+    assert gtt['title'] == 'Graph-to-Table Interfaces Control Relational Generalisation'
+    assert gtt['authors'] == 'Alessandro Cagiano, Lorenzo Molfetta, Gianluca Moro, Matteo Zignani, Pasquale Minervini'
+    assert gtt['type'] == 'conference' and gtt['selected'] and gtt['year'] == 2026
+    assert all(word in gtt['venue'].lower() for word in ['log', 'accepted', 'oral'])
+    assert gtt['links'] == {'arxiv': 'https://arxiv.org/abs/2610.25993', 'pdf': 'https://arxiv.org/pdf/2610.25993v1', 'code': 'https://github.com/cagianoaless/tab_repres_gen'}
+    assert gtt['visualSelection'] == {'main': ['Figure 1', 'Figure 2', 'Figure 3', 'Figure 4'], 'appendix': ['Table 18', 'Figure 8']}
+    assert catalog['graph-to-table']['expected'] == {'figures': [f'Figure {i}' for i in range(1, 13)], 'tables': [f'Table {i}' for i in range(1, 21)]}
+    gtt_pages = {v['label']: v['page'] for v in catalog['graph-to-table']['items']}
+    assert all(gtt_pages[label] == source_page for label, source_page in {'Figure 1': 3, 'Figure 2': 8, 'Figure 3': 8, 'Figure 4': 9, 'Table 18': 25, 'Figure 8': 26}.items())
     routes = ['/', '/publications/', '/cv/'] + [f"/publications/{p['id']}/" for p in pubs]
     internal = set(routes)
     for route in routes:
@@ -51,7 +61,10 @@ with sync_playwright() as pw:
             assert page.locator('.news-list .mk, .section-head .mark').count() == 0
             assert page.locator('.news-item .typelabel').count() == page.locator('.news-item').count()
             assert page.locator('.pub-item').count() == sum(bool(p.get('selected')) for p in pubs)
-            assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/spsd/'
+            assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/graph-to-table/'
+            announcement = page.locator('.news-item').filter(has_text=gtt['title'])
+            assert announcement.count() == 1 and 'oral' in announcement.inner_text().lower()
+            assert announcement.locator('a').last.get_attribute('href') == '/publications/graph-to-table/'
             assert page.locator('.status-item .out').all_text_contents() == ['finishing my PhD at the end of October.', 'back in Bologna.']
             assert page.locator('.status-item .out').evaluate_all('(nodes) => nodes.every(e => getComputedStyle(e).fontFamily.includes("Computer Modern Typewriter"))')
             assert page.locator('.status-item .prompt').evaluate_all('(nodes) => nodes.every(e => getComputedStyle(e).fontFamily.includes("Archivo Black"))')
@@ -87,7 +100,7 @@ with sync_playwright() as pw:
             assert 'Service' not in page.locator('.cv-h').all_text_contents()
             assert 'Reviewer / subreviewer' not in page.locator('#content').inner_text()
         elif route == '/publications/':
-            assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/spsd/'
+            assert page.locator('.pub-item .pt').first.get_attribute('href') == '/publications/graph-to-table/'
             for kind in ['conference', 'journal', 'preprint', 'submitted', 'thesis', 'all']:
                 page.locator(f'[data-f="{kind}"]').click()
                 expected = len(pubs) if kind == 'all' else sum(p['type'] == kind for p in pubs)
@@ -140,6 +153,18 @@ with sync_playwright() as pw:
                 }'''), 'Explainer video must sit above the section nav'
                 video.evaluate('(v) => v.readyState >= 1 || new Promise(r => v.addEventListener("loadedmetadata", r, {once: true}))')
                 assert 120 < video.evaluate('(v) => v.duration') < 135, 'Explainer video did not load'
+            elif p['id'] == 'graph-to-table':
+                assert page.locator('.paper-authors').inner_text() == gtt['authors']
+                assert all(word in page.locator('.paper-venue').inner_text().lower() for word in ['log', 'accepted', 'oral'])
+                assert set(page.locator('.paper-links a.plink').evaluate_all('(links) => links.map(a => a.getAttribute("href"))')) == set(gtt['links'].values())
+                assert page.locator('.paper-body a[href="https://cagianoaless.github.io/tab_repres_gen/"]').count() == 1
+                assert page.locator('#bib').inner_text().startswith('@misc{cagiano2026graphtotableinterfacescontrolrelational,')
+                assert 'eprint={2610.25993}' in page.locator('#bib').inner_text() and 'primaryClass={cs.LG}' in page.locator('#bib').inner_text()
+                assert 'Public arXiv v1 (19 October 2026)' in page.locator('.paper-source').first.inner_text()
+                assert page.locator('.paper-body').evaluate_all('(sections) => sections.every(s => s.querySelectorAll(".accent").length >= 2 && s.querySelector("strong") && s.querySelector(".callout"))'), 'Graph-to-Table section styling is missing'
+                narrative = '\n'.join(page.locator('.paper-body').all_text_contents())
+                assert not any(marker in narrative for marker in ['{{visual:', ':::', '[c:', '[/c]', '—']), 'Unrendered markup or em dash in Graph-to-Table'
+                assert all(phrase in narrative for phrase in ['28.9%', '10.3%', '18.7%', '+0.065', '−0.157', '−0.079', '+0.048 to +0.129', '+0.006', '−0.035', '5/4/48']), 'Graph-to-Table result coverage is missing'
         assert page.locator('img').evaluate_all('(images) => images.every(i => i.complete && i.naturalWidth > 0)'), (route, 'Broken image')
         internal.update(page.locator('a[href^="/"]').evaluate_all('(links) => links.map(a => new URL(a.href).pathname)'))
         checks = []

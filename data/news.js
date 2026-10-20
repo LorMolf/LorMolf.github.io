@@ -1,5 +1,8 @@
 export const news = [
   { date: "2026",
+    publicationId: "graph-to-table",
+    text: "\"Graph-to-Table Interfaces Control Relational Generalisation\" accepted as an oral presentation at LoG 2026." },
+  { date: "2026",
     publicationId: "spsd",
     text: "SPSD: Self-Play Search Distillation for Large Language Model Reasoning released on arXiv." },
   { date: "2026",
