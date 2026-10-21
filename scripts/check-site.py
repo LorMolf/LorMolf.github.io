@@ -39,7 +39,7 @@ with sync_playwright() as pw:
     assert gtt['authors'] == 'Alessandro Cagiano, Lorenzo Molfetta, Gianluca Moro, Matteo Zignani, Pasquale Minervini'
     assert gtt['type'] == 'conference' and gtt['selected'] and gtt['year'] == 2026
     assert all(word in gtt['venue'].lower() for word in ['log', 'accepted', 'oral'])
-    assert gtt['links'] == {'arxiv': 'https://arxiv.org/abs/2610.25993', 'pdf': 'https://arxiv.org/pdf/2610.25993v1', 'code': 'https://github.com/cagianoaless/tab_repres_gen'}
+    assert gtt['links'] == {'arxiv': 'https://arxiv.org/abs/2610.25993', 'pdf': 'https://arxiv.org/pdf/2610.25993v1', 'code': 'https://github.com/cagianoaless/tab_repres_gen', 'project': 'https://cagianoaless.github.io/tab_repres_gen/'}
     assert gtt['visualSelection'] == {'main': ['Figure 1', 'Figure 2', 'Figure 3', 'Figure 4'], 'appendix': ['Figure 8']}
     assert catalog['graph-to-table']['expected'] == {'figures': [f'Figure {i}' for i in range(1, 13)], 'tables': [f'Table {i}' for i in range(1, 21)]}
     gtt_pages = {v['label']: v['page'] for v in catalog['graph-to-table']['items']}
@@ -140,6 +140,10 @@ with sync_playwright() as pw:
             page.locator('#copy-bib').click()
             assert page.evaluate('navigator.clipboard.readText()') == page.locator('#bib').inner_text()
             venue_links = page.locator('.paper-venue a').evaluate_all('(a) => a.map(x => x.getAttribute("href"))')
+            project_link = page.locator('.paper-links a.plink', has_text='project page')
+            assert project_link.count() == bool((p.get('links') or {}).get('project')), (route, 'Project link visibility')
+            if p.get('links', {}).get('project'):
+                assert project_link.get_attribute('href') == p['links']['project']
             paper_url = (p.get('links') or {}).get('read') or (p.get('links') or {}).get('doi')
             assert venue_links == ([paper_url] if paper_url else []), (route, 'Venue must link to this paper, or nowhere', venue_links)
             if p['id'] == 'spsd':

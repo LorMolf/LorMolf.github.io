@@ -141,6 +141,7 @@ export function renderPaper(){
   const doi = p.links && p.links.doi;
   const pdf = p.links && p.links.pdf;
   const read = p.links && p.links.read;
+  const project = p.links && p.links.project;
 
   const sections = Array.isArray(p.sections) ? p.sections : [];
   const visuals = paperVisuals[p.id];
@@ -162,6 +163,7 @@ export function renderPaper(){
       ${pdf?`<a class="plink" href="${escapeHtml(pdf)}" target="_blank" rel="noopener">PDF ↗</a>`:""}
       ${code?`<a class="plink" href="${escapeHtml(code)}" target="_blank" rel="noopener">code ↗</a>`:""}
       ${doi?`<a class="plink" href="${escapeHtml(doi)}" target="_blank" rel="noopener">DOI ↗</a>`:""}
+      ${project?`<a class="plink" href="${escapeHtml(project)}" target="_blank" rel="noopener">project page ↗</a>`:""}
     </div>
     ${p.video ? `<figure class="paper-video">
       <video controls preload="metadata" playsinline poster="${escapeHtml(p.video.poster)}" aria-label="${escapeHtml(p.video.title)}">
