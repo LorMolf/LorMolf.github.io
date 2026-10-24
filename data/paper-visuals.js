@@ -398,6 +398,296 @@ export const paperVisuals = {
       }
     ]
   },
+  "umls": {
+    "source": {
+      "url": null,
+      "note": ""
+    },
+    "expected": {
+      "figures": [
+        "Figure 1",
+        "Figure 2",
+        "Figure 3",
+        "Figure 4",
+        "Figure 5",
+        "Figure 6",
+        "Figure 7",
+        "Figure 8",
+        "Figure 9",
+        "Figure 10"
+      ],
+      "tables": [
+        "Table 1",
+        "Table 2",
+        "Table 3",
+        "Table 4",
+        "Table 5",
+        "Table 6",
+        "Table 7",
+        "Table 8",
+        "Table 9",
+        "Table 10",
+        "Table 11",
+        "Table 12",
+        "Table 13"
+      ]
+    },
+    "items": [
+      {
+        "kind": "figure",
+        "label": "Figure 1",
+        "caption": "Review pipeline and venue profile of the surveyed literature. NLP-oriented conferences account for the majority of the corpus.",
+        "page": 2,
+        "src": "/assets/paper-img/umls/complete/figure-1.png",
+        "width": 890,
+        "height": 408,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 2",
+        "caption": "UMLS data inconsistency across publications and widespread under-reporting. (a) Reporting of UMLS release and filtering strategy. (b) Difference in CUI and vocabulary count over seven selected releases.",
+        "page": 3,
+        "src": "/assets/paper-img/umls/complete/figure-2.png",
+        "width": 1831,
+        "height": 600,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 3",
+        "caption": "The gap between UMLS expressiveness and its use in language model injection. Top: the 6 CUI-centric tables of the UMLS Metathesaurus (2025AB release) illustrated on the concept Esophageal Achalasia; the remaining 17 tables are omitted as they serve infrastructure, versioning, or cross-vocabulary alignment purposes rather than encoding concept-level knowledge. Bottom: usage frequency of each table across surveyed publications.",
+        "page": 3,
+        "src": "/assets/paper-img/umls/complete/figure-3.png",
+        "width": 1831,
+        "height": 889,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 4",
+        "caption": "Construction pattern for UMLS use in MQA. Surveyed systems ground input text to UMLS concepts, construct a task-specific graph or evidence object, and expose the resulting representation through textual, structural, or training-time injection.",
+        "page": 4,
+        "src": "/assets/paper-img/umls/complete/figure-4.png",
+        "width": 1248,
+        "height": 600,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 5",
+        "caption": "Linked UMLS 2020AA concepts per instance on the test sets of three multiple-choice MQA benchmarks under two entity linkers. Dots denote mean; bars span the minimum and maximum. Q and A denote question stems and answer options, respectively.",
+        "page": 5,
+        "src": "/assets/paper-img/umls/complete/figure-5.png",
+        "width": 890,
+        "height": 517,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 1",
+        "caption": "Manual linking precision on MedQA dev answer options (UMLS 2023AA). 83 of the 219 links are returned by both linkers. Grounded: options with at least one link labeled C.",
+        "page": 5,
+        "src": "/assets/paper-img/umls/complete/table-1.png",
+        "width": 890,
+        "height": 249,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 2",
+        "caption": "Linked UMLS concepts per instance across four releases and two source subsets. scispaCy with the mention model held fixed and only the concept knowledge base swapped †: its shipped default). μ: mean per instance, with answer-side counts taken as the union across the four options. PubMedQA contributes question-side coverage only.",
+        "page": 5,
+        "src": "/assets/paper-img/umls/complete/table-2.png",
+        "width": 890,
+        "height": 493,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 3",
+        "caption": "MedQA subgraph scale under two connectivity rules. Node and edge counts at K=2 under pooled all-linked-concept versus question-to-answer retrieval.",
+        "page": 6,
+        "src": "/assets/paper-img/umls/complete/table-3.png",
+        "width": 890,
+        "height": 300,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 6",
+        "caption": "Growth of UMLS neighborhoods under K-hop expansion. Mean node and edge counts over PubMedQA test instances, seeded by scispaCy, for full UMLS 2025AB and the DRAGON-filtered subset. Error bars denote mean ± one standard deviation. Log scale.",
+        "page": 7,
+        "src": "/assets/paper-img/umls/complete/figure-6.png",
+        "width": 890,
+        "height": 495,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 4",
+        "caption": "End-to-end accuracy of two systems across UMLS constructions. MedQA accuracy (%), mean ± standard deviation over three seeds (†: the published configuration; releases abbreviated, e.g. 20AA for 2020AA). Empty keeps only the placeholder concepts the system falls back to on linking failure.",
+        "page": 8,
+        "src": "/assets/paper-img/umls/complete/table-4.png",
+        "width": 890,
+        "height": 209,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 7",
+        "caption": "Record-level UMLS evidence contribution across readers and benchmarks. Accuracy gain (+%) and 95% CI over zero-shot on the baseline-wrong subset, for 10 readers from 5 families under 3 KI.",
+        "page": 9,
+        "src": "/assets/paper-img/umls/complete/figure-7.png",
+        "width": 890,
+        "height": 671,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 5",
+        "caption": "Evidence view under chain-of-thought prompting. Recovery rate (%) on a chain-of-thought pilot over a subsample of the MedQA test split, under scispaCy linking, best view per row in bold. Rel.: MRCONSO+MRREL neighborhoods; QA: the same restricted to question-to-answer paths; +Meta: paths with MRDEF definitions and MRSTY semantic types.",
+        "page": 9,
+        "src": "/assets/paper-img/umls/complete/table-5.png",
+        "width": 890,
+        "height": 661,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 8",
+        "caption": "Question-to-answer path length effect on the Qwen3.5 ladder. Accuracy gain (+%) and 95% CI on MedQA over zero-shot across KSR configurations. Each k setting uses only pairs where every answer option is reachable from a question node by an exact k-hop path.",
+        "page": 9,
+        "src": "/assets/paper-img/umls/complete/figure-8.png",
+        "width": 890,
+        "height": 465,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 9",
+        "caption": "Structured search query. Used to retrieve literature on knowledge graphs and language models for question answering and reasoning from Scopus.",
+        "page": 15,
+        "src": "/assets/paper-img/umls/complete/figure-9.png",
+        "width": 890,
+        "height": 1398,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 6",
+        "caption": "Verbatim representative items from each QA benchmark used in the reviewed studies. Correct or reference answers are highlighted in green.",
+        "page": 17,
+        "src": "/assets/paper-img/umls/complete/table-6.png",
+        "width": 1831,
+        "height": 1192,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 7",
+        "caption": "Per-paper annotations of UMLS operationalization across the reviewed systems.",
+        "page": 18,
+        "src": "/assets/paper-img/umls/complete/table-7.png",
+        "width": 2382,
+        "height": 3368,
+        "displayWidth": 640,
+        "captionIncluded": true
+      },
+      {
+        "kind": "table",
+        "label": "Table 8",
+        "caption": "Minimum reporting checklist for UMLS-augmented MQA. Each item changes the UMLS evidence reaching the model and should be reported for a gain to be attributable to UMLS.",
+        "page": 19,
+        "src": "/assets/paper-img/umls/complete/table-8.png",
+        "width": 890,
+        "height": 710,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 9",
+        "caption": "Per-question entity counts on MedQA dev (n=1,272) using UMLS 2020AA. Answer-option counts are the union of the concepts linked across the four options, not their sum. Diff(M-S) gives the per-question difference between MetaMap and scispaCy.",
+        "page": 19,
+        "src": "/assets/paper-img/umls/complete/table-9.png",
+        "width": 890,
+        "height": 321,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 10",
+        "caption": "Linking coverage on MedQA preprocessing artifacts from QA-GNN, GREASELM, and DRAGON, and our MetaMap processing. Present: at least one UMLS concept linked. Empty: no concept linked. Both Empty: neither question stem nor answer-option set produced any linked concept.",
+        "page": 19,
+        "src": "/assets/paper-img/umls/complete/table-10.png",
+        "width": 890,
+        "height": 484,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 11",
+        "caption": "Subgraph pruning across QA-GNN, GREASELM, and DRAGON.",
+        "page": 19,
+        "src": "/assets/paper-img/umls/complete/table-11.png",
+        "width": 890,
+        "height": 211,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 12",
+        "caption": "Injection mechanism choices. Counts are restricted to systems with explicit UMLS injection mechanisms.",
+        "page": 20,
+        "src": "/assets/paper-img/umls/complete/table-12.png",
+        "width": 890,
+        "height": 250,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "figure",
+        "label": "Figure 10",
+        "caption": "Zero-shot prompt with UMLS evidence for medical multiple-choice question answering.",
+        "page": 20,
+        "src": "/assets/paper-img/umls/complete/figure-10.png",
+        "width": 890,
+        "height": 911,
+        "displayWidth": 640,
+        "captionIncluded": false
+      },
+      {
+        "kind": "table",
+        "label": "Table 13",
+        "caption": "Inference configuration. Serving and decoding settings used for all reader evaluations.",
+        "page": 20,
+        "src": "/assets/paper-img/umls/complete/table-13.png",
+        "width": 890,
+        "height": 465,
+        "displayWidth": 640,
+        "captionIncluded": false
+      }
+    ]
+  },
   "spsd": {
     "source": {
       "url": null,

@@ -74,6 +74,92 @@ export const publications = [
     }
   },
   {
+    "id": "umls",
+    "title": "Are We Done with UMLS Injection into Language Models for Medical Question Answering?",
+    "authors": "Yiran Zeng, Giacomo Frisoni, Lorenzo Molfetta, Gianluca Moro",
+    "venue": "Author manuscript",
+    "year": 2026,
+    "type": "preprint",
+    "selected": true,
+    "tags": [
+      "Medical question answering",
+      "Knowledge graphs",
+      "UMLS"
+    ],
+    "tldr": "We trace how UMLS releases, source filters, entity linking and evidence construction change the biomedical knowledge a model can use, and isolate their effects on medical question answering.",
+    "abstract": "Maybe not. The Unified Medical Language System (UMLS) has become an oracle for millions of clinicians and health system developers worldwide. Researchers have increasingly used knowledge graphs derived from UMLS to enhance language models' factual accuracy and reasoning traceability in high-stakes tasks. Medical Question Answering (MQA) is a prime testbed for integration, with benchmarks usually involving professional exercises such as disease diagnosis and drug prescription from patient history. Despite the assumed benefits, empirical evidence shows that UMLS-based graph injection typically yields modest performance gains. This paper reviews existing MQA work, critically analyzing the selected UMLS sources and their usage with language models, and probes each of these choices in isolation. We uncover methodological issues never discussed in prior work, from low UMLS coverage to weak subgraph retrieval pipelines. Based on our findings, we provide actionable recommendations to unlock the untapped potential of UMLS as an external knowledge source.",
+    "links": {
+      "code": "https://github.com/disi-unibo-nlp/are-we-done-with-umls",
+      "project": "https://disi-unibo-nlp.github.io/are-we-done-with-umls/"
+    },
+    "abstractRich": "**[c:red]Maybe not.[/c]** The Unified Medical Language System (UMLS) has become an oracle for millions of clinicians and health system developers worldwide. Researchers have increasingly used knowledge graphs derived from UMLS to enhance language models' factual accuracy and reasoning traceability in high-stakes tasks. Medical Question Answering (MQA) is a prime testbed for integration, with benchmarks usually involving professional exercises such as disease diagnosis and drug prescription from patient history. Despite the assumed benefits, empirical evidence shows that UMLS-based graph injection typically yields modest performance gains. This paper reviews existing MQA work, critically analyzing the selected UMLS sources and their usage with language models, and **probes each of these choices in isolation**. We uncover methodological issues never discussed in prior work, from **[c:blue]low UMLS coverage[/c]** to **[c:gold]weak subgraph retrieval pipelines[/c]**. Based on our findings, we provide actionable recommendations to unlock the untapped potential of UMLS as an external knowledge source.",
+    "sections": [
+      {
+        "id": "umls-construction",
+        "title": "The model sees a constructed fragment of UMLS",
+        "body": "A language model receives the UMLS concepts that its pipeline can link, retrieve and expose. Each step changes the biomedical evidence available for an answer. We study **[c:red]how much of UMLS survives that construction[/c]** and whether a reported accuracy gain can be attributed to the resulting evidence.\n\nThe construction has three stages. [c:blue]Named entity linking[/c] maps question and answer spans to concept identifiers. [c:gold]Knowledge subgraph retrieval[/c] connects those concepts and selects an evidence object. [c:green]Knowledge injection[/c] exposes it as text, a graph representation or training supervision.\n\n{{visual:Figure 4}}\n\nWe reviewed **25 studies published between 2020 and 2025** in medical question answering and closely related reasoning settings. Each had to use UMLS substantively and describe its method sufficiently for comparison. Two medical NLP researchers independently annotated the papers, with 90.2% agreement before discussion.\n\n{{visual:Figure 1}}\n\nOnly **44% released code**, and **24% supplied enough information for operational reproducibility**. We complement that review with controlled comparisons of the resource, linker, connectivity rule and evidence representation.\n\n:::key Evidence construction\nAn attribution to UMLS requires identifying **which knowledge reached the prediction**. Naming the resource leaves the release, filters and instance-specific evidence unresolved.\n:::"
+      },
+      {
+        "id": "umls-resource",
+        "title": "Most of the concept record never reaches the model",
+        "body": "UMLS integrates biomedical vocabularies while preserving their source semantics. Its Metathesaurus stores concept names, relations, definitions, semantic types, hierarchical contexts and attributes. The Semantic Network describes the types and their relations, while the SPECIALIST Lexicon supports lexical normalization. **[c:gold]A concept record contains much more than a list of edges[/c].**\n\nThe **2025AB snapshot used in our analysis** contains 3.49 million concepts, 17.39 million names and 190 source vocabularies across 29 languages. Its Metathesaurus has 23 tables. Six of them describe concept-level knowledge directly, as the example below illustrates.\n\n{{visual:Figure 3}}\n\nAcross the review, names are used universally and relations in **84%** of systems. Semantic types appear in **20%**, definitions in **8%**, and hierarchical contexts and attributes remain unused. **[c:blue]The names-and-relations view[/c] therefore captures only part of the available concept description.\n\n:::claim Selective use of concept metadata\nThe reviewed systems primarily expose names and relations. Definitions and semantic types provide additional information about what a concept denotes, while source selection determines which concepts can appear at all.\n:::\n\nThese distinctions motivate separate tests of the available resource and the representation shown to the reader."
+      },
+      {
+        "id": "umls-releases",
+        "title": "A fixed linker still reads a different resource",
+        "body": "**[c:red]84% of the reviewed publications omit the UMLS release identifier[/c].** The four that report it use four different releases. Their source-vocabulary and concept counts differ, so two systems described as using UMLS may begin with different biomedical knowledge.\n\n{{visual:Figure 2}}\n\nTo isolate this choice, we hold scispaCy's mention-detection model fixed and replace only its concept knowledge base. On MedQA development questions, moving from **2020AA to 2021AA** increases the mean linked concepts from **57.67 to 71.76**. On PubMedQA questions, the corresponding means rise from **68.46 to 78.77**.\n\n{{visual:Table 2}}\n\n[c:gold]Source filtering has a larger effect on coverage[/c]. Within 2023AA, restricting all sources to DrugBank and the Disease Database reduces mean question-side concepts from **67.53 to 0.99 on MedQA**, and from **76.46 to 0.96 on PubMedQA**. PubMedQA contributes question-side measurements because its yes/no/maybe answers have no medical concepts to link.\n\n:::claim Resource configuration\nA fixed span detector can return a different linked set when only the UMLS release or source subset changes. Release and vocabulary selection are part of the evidence intervention.\n:::"
+      },
+      {
+        "id": "umls-linking",
+        "title": "Answer options lose evidence before retrieval begins",
+        "body": "Question coverage conceals a large answer-side difference. On MedQA, both linkers ground every test question stem. MetaMap reaches a concept from the **correct answer in 98.2%** of items, against **86.1% for scispaCy**. Coverage of every answer option is **96.4% versus 65.0%**. A question-to-answer path needs both endpoints to enter the concept space.\n\n[c:blue]Linker yield also changes across benchmarks[/c]. Under the same UMLS 2020AA release, MetaMap returns about twice as many question-side concepts as scispaCy on MedQA. Both return substantially fewer concepts on MedMCQA.\n\n{{visual:Figure 5}}\n\nA larger linked set carries more opportunities for incorrect mappings. We rerun both tools against **UMLS 2023AA** and manually assess the 219 distinct links returned for **40 answer options from ten MedQA development questions**. A link is correct when the option expresses that concept in the intended sense.\n\n{{visual:Table 1}}\n\nThe correct-link proportions are **35.6% for MetaMap and 46.7% for scispaCy**. MetaMap nevertheless supplies a correct concept for every audited option, while scispaCy does so for 90%. This small option-level audit measures mapping quality under its stated release and sample.\n\n:::key Reachability and mapping quality\n[c:gold]More reachable concepts[/c] and **more precise links** measure different properties. Report question grounding, correct-answer grounding and full-option grounding alongside a precision assessment.\n:::"
+      },
+      {
+        "id": "umls-retrieval",
+        "title": "Connectivity rules change the size of the evidence",
+        "body": "At a fixed depth of two hops on MedQA, full-UMLS retrieval produces a mean **46,871 nodes** when all linked concepts are pooled, against **537** when paths must connect a question concept to an answer concept. **[c:gold]The endpoint rule changes the evidence object[/c]** before any pruning budget is applied.\n\n{{visual:Table 3}}\n\nPooling permits paths between two question concepts or between two answer concepts. Question-to-answer retrieval retains the connections that cross that divide. These constructions expose different neighborhoods even with the same linked seeds and hop limit.\n\nOn PubMedQA, where answer-option concepts are unavailable, we instead examine expansion among question concepts. Under full UMLS 2025AB, the mean neighborhood grows from **3,755 nodes at two hops to 1,336,309 at five hops**. The DRAGON-filtered graph also grows rapidly.\n\n{{visual:Figure 6}}\n\nThe released QA-GNN, GREASELM and DRAGON pipelines eventually cap the graph at **200 nodes**. Their pre-pruning graphs exceed that budget in 70–73% of evaluation instances, and about 1.5 answer-side concepts per question-option pair survive the cap. [c:blue]Linking and pruning both reduce answer-side evidence[/c].\n\n:::claim Retrieval specification\nA hop count alone does not identify the retrieved evidence. The seed sides, permitted endpoint pairs, vocabulary filters, relevance scorer and node budget determine which biomedical connections survive.\n:::"
+      },
+      {
+        "id": "umls-retraining",
+        "title": "Construction changes can disappear in the final score",
+        "body": "We retrain **QA-GNN and GREASELM on MedQA under seven constructions**, using three random seeds and retaining their published architectures, hyperparameters and schedules. Each linker is paired with a graph from the same release. The empty condition retains only the placeholder concepts used when grounding fails.\n\n**[c:red]QA-GNN test accuracy spans 37.5–38.7%[/c]** across the four releases and two source subsets. Its empty-graph condition reaches **37.4%**, within seed variation of the tested configurations.\n\n{{visual:Table 4}}\n\nGREASELM is similarly insensitive to the choice among the six graph constructions, with test accuracy spanning **37.7–39.3%**. Its empty-graph result falls below all six. [c:green]Whether graph evidence helps at all is system-dependent[/c], even when changes among nonempty constructions leave the final score similar. All uncertainties in this table are **standard deviations over three seeds**.\n\n:::claim Construction controls\nComparisons among graph releases and comparisons against an empty graph answer different questions. Both are needed to separate sensitivity to the evidence construction from dependence on a graph input.\n:::\n\nThese experiments concern the two structural-injection systems. The next comparisons expose UMLS records directly to language-model readers."
+      },
+      {
+        "id": "umls-evidence",
+        "title": "Evidence format depends on the benchmark and reader",
+        "body": "[c:gold]Metadata-enriched question-to-answer paths[/c] recover the most baseline errors for most MedQA and MedMCQA readers. On PubMedQA, **bare relation neighborhoods lead for nine of the ten readers**. The preferred evidence view changes with the benchmark and model family.\n\nOn MedQA and MedMCQA, we compare relation neighborhoods, question-to-answer paths, and paths enriched with definitions and semantic types across **ten readers from five families**. The PubMedQA panel contains only relation neighborhoods and metadata-enriched evidence because its yes/no/maybe answers have no medical concepts to link. Each intervention is evaluated on the items that its own zero-shot reader answered incorrectly.\n\n:::note Reader-specific recovery\nThe plotted percentage is the **fraction of a reader's baseline errors corrected after adding evidence**, with 95% confidence intervals. Each reader has its own denominator. Overall accuracy additionally requires tracking errors introduced on previously correct items.\n:::\n\n{{visual:Figure 7}}\n\nA definition identifies what a concept denotes, while its semantic type distinguishes a disease, finding, substance or procedure. Those fields can make a path easier to interpret, but the measured ordering remains specific to the benchmark and reader.\n\n[c:blue]The prompting regime changes that ordering again[/c]. In a chain-of-thought pilot on a subsample of the MedQA test split, the winning evidence view differs from the answer-only comparison.\n\n{{visual:Table 5}}\n\nThis pilot uses scispaCy linking and a subset of MedQA. It establishes a prompting-sensitive comparison within that setup, with the evidence view and reading procedure specified together."
+      },
+      {
+        "id": "umls-depth",
+        "title": "Useful paths can extend beyond two hops",
+        "body": "Within the Qwen3.5 scale ladder on MedQA, **the 9B reader peaks at three hops and the 35B reader at four**. Recovery is non-monotonic, so increasing path depth has a different effect across reader scales.\n\nWe compare [c:gold]two-, three- and four-hop question-to-answer paths[/c] under matched evidence availability. The analysis uses items for which the compared path lengths are available and every answer option remains reachable from a question concept.\n\n{{visual:Figure 8}}\n\n[c:green]Intermediate concepts can provide useful structure[/c] for answer selection. The shortest ontological connection and the most useful serialized explanation need not coincide. These percentages again describe recovery on reader-specific baseline errors, with 95% confidence intervals.\n\n:::claim Availability-matched path depth\nEvaluate path length while retaining answer reachability and a matched item population. Otherwise, a change in performance combines a different evidence depth with a different set of answerable instances.\n:::"
+      },
+      {
+        "id": "umls-reporting",
+        "title": "Report the construction that reaches each answer",
+        "body": "A UMLS-based result is interpretable when the biomedical evidence can be traced through its construction. Our reporting checklist records the choices that determine [c:blue]what can be linked[/c], [c:gold]which connections survive[/c] and [c:green]how the model receives them[/c].\n\n- Identify the UMLS release and consulted tables.\n- State source-vocabulary, language, relation and semantic-type filters.\n- Report the linker and its configuration, with question-side and answer-side coverage.\n- Define the seeds and permitted endpoint pairs.\n- Give the expansion depth and connectivity rule.\n- Specify the relevance scorer and pruning budget.\n- Describe the fallback when grounding fails.\n- Identify the injection mechanism and the fields exposed to the model.\n- Report resource and empty-evidence controls, the evaluated population and the uncertainty measure.\n\n:::key Attribution to UMLS evidence\nDocument the **constructed evidence reaching each prediction**, then vary its components under matched conditions. This makes a performance comparison informative about a release, a retrieval decision or an evidence representation.\n:::\n\nThe [research repository](https://github.com/disi-unibo-nlp/are-we-done-with-umls) contains the code and paper-level literature annotations. The review documents selective resource use, while the controlled experiments show how release, grounding and evidence representation change what a reader can recover."
+      }
+    ],
+    "visualSelection": {
+      "main": [
+        "Figure 1",
+        "Figure 2",
+        "Figure 3",
+        "Figure 4",
+        "Figure 5",
+        "Table 1",
+        "Table 2",
+        "Table 3",
+        "Figure 6",
+        "Table 4",
+        "Figure 7",
+        "Table 5",
+        "Figure 8"
+      ],
+      "appendix": []
+    }
+  },
+  {
     "id": "spsd",
     "title": "Self-Play Search Distillation for Large Language Model Reasoning",
     "authors": "Lorenzo Molfetta, Wai-Chung Kwan, Giacomo Frisoni, Luca Ragazzi, Gianluca Moro, Pavlos Vougiouklis, Jeff Z. Pan, Pasquale Minervini",

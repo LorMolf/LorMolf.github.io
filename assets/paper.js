@@ -172,7 +172,7 @@ export function renderPaper(){
       <figcaption>${escapeHtml(p.video.title)}</figcaption>
     </figure>` : ""}
     <nav class="paper-anchors" aria-label="On this page">${anchorLinks}</nav>
-    <p class="paper-source">${escapeHtml(visuals.source.note)} ${visuals.source.url ? `<a href="${escapeHtml(visuals.source.url)}" target="_blank" rel="noopener">Source ↗</a>` : ""}</p>
+    ${visuals.source.note || visuals.source.url ? `<p class="paper-source">${escapeHtml(visuals.source.note)} ${visuals.source.url ? `<a href="${escapeHtml(visuals.source.url)}" target="_blank" rel="noopener">Source ↗</a>` : ""}</p>` : ""}
 
     <h2 class="paper-h" id="abstract">Abstract</h2>
     <p class="paper-abs"${p.abstractRich ? ' data-abs-rich' : ''}>${p.abstract ? escapeHtml(p.abstract) : '<span class="muted">Official abstract to be added.</span>'}</p>

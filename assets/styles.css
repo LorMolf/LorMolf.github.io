@@ -639,6 +639,15 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offs
 .sx-mini-edge{fill:color-mix(in srgb,var(--ink) 26%,transparent)}
 .sx-plate{transition:opacity .25s ease}
 
+/* UMLS keeps the site's paper, ink and print-label treatments in both themes. */
+#content:has(#umls-construction) .accent{color:var(--ink);background:var(--wash-gold);padding:.08em .18em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#content:has(#umls-construction) .accent-blue{background:color-mix(in srgb,var(--cobalt) 14%,var(--paper))}
+#content:has(#umls-construction) .accent-green{background:var(--wash-green)}
+#content:has(#umls-construction) .accent-red{background:var(--wash-red)}
+#content:has(#umls-construction) .callout{border:2px solid var(--ink);background:var(--wash-gold);box-shadow:3px 3px 0 var(--red)}
+#content:has(#umls-construction) .callout-note{background:var(--wash-green)}
+#content:has(#umls-construction) .callout-h{color:var(--ink)}
+
 /* Graph-to-Table: the project page's palette, scoped to this article only. */
 #content:has(#gtt-interface) .accent{--ink:#252b31;color:var(--ink);padding:.08em .18em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 #content:has(#gtt-interface) .accent-blue{background:#b2d9ff}

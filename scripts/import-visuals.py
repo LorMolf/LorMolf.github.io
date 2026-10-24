@@ -68,6 +68,7 @@ for pid in ids:
                 'sycophants': 'Final ACL Anthology proceedings version.',
                 'ports': 'Final ACL Anthology proceedings version.',
                 'graph-to-table': 'Public arXiv v1 (19 October 2026). Accepted at LoG 2026 as an oral presentation.',
+                'umls': '',
                 'feast': 'arXiv source version.',
                 'graph-of-mark': 'arXiv source version.',
                 'nesy-survey': 'Source version identified in the link below.',

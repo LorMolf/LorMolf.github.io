@@ -1,6 +1,12 @@
 // Official citation records from DBLP, publishers and arXiv.
 // Other faithful entries identify their provenance in `note`.
 export const bibTeX = {
+  'umls': `@unpublished{zeng2026umls,
+  title = {Are We Done with {UMLS} Injection into Language Models for Medical Question Answering?},
+  author = {Yiran Zeng and Giacomo Frisoni and Lorenzo Molfetta and Gianluca Moro},
+  year = {2026},
+  note = {Author manuscript}
+}`,
   'graph-to-table': `@misc{cagiano2026graphtotableinterfacescontrolrelational,
       title={Graph-to-Table Interfaces Control Relational Generalisation},\x20
       author={Alessandro Cagiano and Lorenzo Molfetta and Gianluca Moro and Matteo Zignani and Pasquale Minervini},
