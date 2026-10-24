@@ -458,7 +458,7 @@ export const paperVisuals = {
       {
         "kind": "figure",
         "label": "Figure 3",
-        "caption": "The gap between UMLS expressiveness and its use in language model injection. Top: the 6 CUI-centric tables of the UMLS Metathesaurus (2025AB release) illustrated on the concept Esophageal Achalasia; the remaining 17 tables are omitted as they serve infrastructure, versioning, or cross-vocabulary alignment purposes rather than encoding concept-level knowledge. Bottom: usage frequency of each table across surveyed publications.",
+        "caption": "Concept information in UMLS and its use in language model injection. The upper panel illustrates the six CUI-centric Metathesaurus tables in UMLS 2025AB through Esophageal Achalasia. The remaining 17 tables support infrastructure, versioning and cross-vocabulary alignment. The lower panel gives table usage across the reviewed publications.",
         "page": 3,
         "src": "/assets/paper-img/umls/complete/figure-3.png",
         "width": 1831,
@@ -502,7 +502,7 @@ export const paperVisuals = {
       {
         "kind": "table",
         "label": "Table 2",
-        "caption": "Linked UMLS concepts per instance across four releases and two source subsets. scispaCy with the mention model held fixed and only the concept knowledge base swapped †: its shipped default). μ: mean per instance, with answer-side counts taken as the union across the four options. PubMedQA contributes question-side coverage only.",
+        "caption": "Linked concepts per instance across four UMLS releases and two source subsets. scispaCy uses a fixed mention detector with a different concept knowledge base for each condition. The dagger marks its shipped default. Means count concepts per instance, with answer-side counts given by the union across the four options. PubMedQA measurements cover question stems.",
         "page": 5,
         "src": "/assets/paper-img/umls/complete/table-2.png",
         "width": 890,
@@ -546,7 +546,7 @@ export const paperVisuals = {
       {
         "kind": "figure",
         "label": "Figure 7",
-        "caption": "Record-level UMLS evidence contribution across readers and benchmarks. Accuracy gain (+%) and 95% CI over zero-shot on the baseline-wrong subset, for 10 readers from 5 families under 3 KI.",
+        "caption": "Error recovery across ten readers from five families on MedQA, MedMCQA and PubMedQA, with 95% confidence intervals. Recovery is the fraction of each reader's zero-shot errors corrected with evidence. MedQA and MedMCQA compare three evidence views; PubMedQA compares relation neighborhoods with metadata-enriched evidence.",
         "page": 9,
         "src": "/assets/paper-img/umls/complete/figure-7.png",
         "width": 890,
@@ -568,7 +568,7 @@ export const paperVisuals = {
       {
         "kind": "figure",
         "label": "Figure 8",
-        "caption": "Question-to-answer path length effect on the Qwen3.5 ladder. Accuracy gain (+%) and 95% CI on MedQA over zero-shot across KSR configurations. Each k setting uses only pairs where every answer option is reachable from a question node by an exact k-hop path.",
+        "caption": "Error recovery on MedQA at two, three and four hops for the Qwen3.5 ladder, with 95% confidence intervals. The matched items admit all three path lengths, with every candidate answer reachable by an exact path of each evaluated length.",
         "page": 9,
         "src": "/assets/paper-img/umls/complete/figure-8.png",
         "width": 890,
@@ -612,7 +612,7 @@ export const paperVisuals = {
       {
         "kind": "table",
         "label": "Table 8",
-        "caption": "Minimum reporting checklist for UMLS-augmented MQA. Each item changes the UMLS evidence reaching the model and should be reported for a gain to be attributable to UMLS.",
+        "caption": "Reporting checklist for UMLS-augmented medical question answering. The items record resource selection, grounding, retrieval and the evidence supplied to the model.",
         "page": 19,
         "src": "/assets/paper-img/umls/complete/table-8.png",
         "width": 890,
@@ -623,7 +623,7 @@ export const paperVisuals = {
       {
         "kind": "table",
         "label": "Table 9",
-        "caption": "Per-question entity counts on MedQA dev (n=1,272) using UMLS 2020AA. Answer-option counts are the union of the concepts linked across the four options, not their sum. Diff(M-S) gives the per-question difference between MetaMap and scispaCy.",
+        "caption": "Per-question entity counts on MedQA dev (n=1,272) using UMLS 2020AA. Answer-option counts give the number of distinct concepts linked across all four options. Diff(M-S) gives the per-question difference between MetaMap and scispaCy.",
         "page": 19,
         "src": "/assets/paper-img/umls/complete/table-9.png",
         "width": 890,
@@ -656,7 +656,7 @@ export const paperVisuals = {
       {
         "kind": "table",
         "label": "Table 12",
-        "caption": "Injection mechanism choices. Counts are restricted to systems with explicit UMLS injection mechanisms.",
+        "caption": "Injection mechanisms across the 21 reviewed systems with an explicit UMLS injection route.",
         "page": 20,
         "src": "/assets/paper-img/umls/complete/table-12.png",
         "width": 890,

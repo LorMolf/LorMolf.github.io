@@ -127,7 +127,7 @@ with sync_playwright() as pw:
                 const section = f.closest('[data-section]');
                 if(!section) return false;
                 const siblings = [...section.children], at = siblings.indexOf(f);
-                const prose = e => e.matches('p,ul,ol,blockquote') && e.textContent.trim().split(/\s+/).length >= 12;
+                const prose = e => e.matches('p,ul,ol,blockquote,.callout') && e.textContent.trim().split(/\s+/).length >= 12;
                 return siblings.slice(0, at).some(prose) && siblings.slice(at+1).some(prose);
             })"""), (route, 'Visual lacks surrounding narrative')
             page.locator('.source-visual img').evaluate_all('(images) => images.forEach(i => i.loading = "eager")')
